@@ -136,9 +136,9 @@ function PDF({
               Dietary Restriction
             </h1>
 
-            {/* <DietaryRestriction
+            <DietaryRestriction
               dietaryRestrictions={user?.dietryRestrictions}
-            /> */}
+            />
           </div>
         </div>
       </div>

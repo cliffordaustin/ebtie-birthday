@@ -1,10 +1,14 @@
-// import { DietryRestriction } from "@prisma/client";
+import { DietryRestriction } from "@prisma/client";
 import React from "react";
 
-function DietaryRestriction() {
+function DietaryRestriction({
+  dietaryRestrictions,
+}: {
+  dietaryRestrictions: DietryRestriction[] | undefined;
+}) {
   return (
     <div className="flex flex-col gap-2 mt-4 ml-2">
-      {/* {dietaryRestrictions?.map((dietaryRestriction) => (
+      {dietaryRestrictions?.map((dietaryRestriction) => (
         <div
           className="flex items-center justify-between text-sm"
           key={dietaryRestriction.id}
@@ -14,7 +18,7 @@ function DietaryRestriction() {
             <p className="text-gray-600">{dietaryRestriction.name}</p>
           </div>
         </div>
-      ))} */}
+      ))}
     </div>
   );
 }
