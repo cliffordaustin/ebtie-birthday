@@ -107,9 +107,9 @@ async function UserProfile({
               Dietary Restriction
             </h1>
 
-            <DietaryRestriction
+            {/* <DietaryRestriction
               dietaryRestrictions={user?.dietryRestrictions}
-            />
+            /> */}
           </div>
         </ScrollShadow>
       </div>
