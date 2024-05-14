@@ -1,0 +1,73 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "./generated/client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum PaymentPlan {
+  MOJA_PLAN
+  PACHA_PLAN
+  TATU_PLAN
+}
+
+model User {
+  id                  String              @id @default(cuid())
+  email               String              @unique
+  name                String              @db.VarChar(255)
+  dietryRestrictions  DietryRestriction[]
+  arrivalDate         DateTime
+  arrivalFlightInfo   String
+  departureDate       DateTime
+  departureFlightInfo String
+  paymentPlan         PaymentPlan
+  createdAt           DateTime            @default(now())
+  updatedAt           DateTime            @updatedAt
+  tripAddOns          TripAddOn[]
+  package             Package?            @relation(fields: [packageId], references: [id])
+  packageId           String?
+}
+
+model DietryRestriction {
+  id     String @id @default(cuid())
+  name   String @db.VarChar(255)
+  users  User   @relation(references: [id], fields: [userId])
+  userId String
+}
+
+model TripAddOn {
+  id     String @id @default(cuid())
+  name   String @db.VarChar(255)
+  price  Float
+  users  User   @relation(fields: [userId], references: [id])
+  userId String
+}
+
+model Package {
+  id              String     @id @default(cuid())
+  name            String     @db.VarChar(255)
+  description     String?
+  imageUrl        String?
+  price           Float
+  availableVolume Int        @default(0)
+  properties      Property[]
+  User            User[]
+}
+
+model Property {
+  id        String  @id @default(cuid())
+  name      String  @db.VarChar(255)
+  room      String  @db.VarChar(255)
+  capacity  Int?    @default(0)
+  Package   Package @relation(fields: [packageId], references: [id])
+  packageId String
+}
