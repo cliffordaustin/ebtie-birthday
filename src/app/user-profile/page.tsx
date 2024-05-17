@@ -147,18 +147,20 @@ async function UserProfile({
           </ScrollShadow>
         </div>
         <div className="w-[40%] overflow-y-scroll bg-white border shadow">
-          {searchParams["edit"] === "departureDate" && (
+          {searchParams["edit"] === "departureDate" && user?.departureDate && (
             <DepartureDate departureDate={user?.departureDate}></DepartureDate>
           )}
-          {searchParams["edit"] === "arrivalDate" && (
+          {searchParams["edit"] === "arrivalDate" && user?.arrivalDate && (
             <ArrivalDate arrivalDate={user?.arrivalDate}></ArrivalDate>
           )}
-          {searchParams["edit"] === "arrivalInfo" && (
-            <ArrivalInfo info={user?.arrivalFlightInfo}></ArrivalInfo>
-          )}
-          {searchParams["edit"] === "departureInfo" && (
-            <DepartureInfo info={user?.departureFlightInfo}></DepartureInfo>
-          )}
+          {searchParams["edit"] === "arrivalInfo" &&
+            user?.arrivalFlightInfo && (
+              <ArrivalInfo info={user?.arrivalFlightInfo}></ArrivalInfo>
+            )}
+          {searchParams["edit"] === "departureInfo" &&
+            user?.departureFlightInfo && (
+              <DepartureInfo info={user?.departureFlightInfo}></DepartureInfo>
+            )}
           {searchParams["edit"] === "package" && (
             <EditPackage dbPackages={packages}></EditPackage>
           )}
