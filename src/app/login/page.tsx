@@ -1,7 +1,9 @@
+"use client";
+
 import Login from "@/components/Login";
 import React from "react";
 
-async function VerifyUserProfile() {
+function VerifyUserProfile() {
   return (
     <>
       <Login></Login>
