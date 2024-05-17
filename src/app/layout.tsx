@@ -3,6 +3,7 @@ import { Ubuntu } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
 import NextTopLoader from "nextjs-toploader";
+import "react-day-picker/dist/style.css";
 
 const inter = Ubuntu({
   weight: ["400", "500", "300", "700"],

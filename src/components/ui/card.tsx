@@ -68,6 +68,7 @@ export const Card = ({
             "bg-gradient-to-t from-zinc-900 to-zinc-900/10 backdrop-opacity-20",
         }}
         size="5xl"
+        radius="none"
         scrollBehavior="inside"
         closeButton={
           <Button
@@ -102,7 +103,7 @@ export const Card = ({
               <div className="flex w-full h-full">
                 <NextUiCard
                   radius="none"
-                  className="border-none rounded-tl-xl rounded-bl-xl after:bg-black after:inset-0 after:absolute after:bg-opacity-30 w-1/2 h-[100%] sticky left-0 !top-0 bottom-0"
+                  className="border-none after:bg-black after:inset-0 after:absolute after:bg-opacity-30 w-1/2 h-[100%] sticky left-0 !top-0 bottom-0"
                 >
                   {item?.imageUrl && (
                     <Image

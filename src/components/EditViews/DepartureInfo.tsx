@@ -1,23 +1,24 @@
 "use client";
 import { Button, Textarea } from "@nextui-org/react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import React from "react";
+import Cookies from "js-cookie";
 
-function DepartureInfo() {
+function DepartureInfo({ info }: { info: string | undefined }) {
   const [loading, setLoading] = React.useState(false);
-  const searchParams = useSearchParams();
+  const [departureFlightInfo, setDepartureFlightInfo] = React.useState(info);
   const router = useRouter();
 
-  const updateDepartureInfo = async (formData: FormData) => {
+  const updateDepartureInfo = async () => {
     setLoading(true);
 
-    const email = searchParams.get("email");
+    const email = Cookies.get("email");
     if (!email) return;
     const res = await fetch("/api/flight-departure-info", {
       method: "POST",
       body: JSON.stringify({
         email: email.toString(),
-        departureFlightInfo: formData.get("departureFlightInfo"),
+        departureFlightInfo: departureFlightInfo,
       }),
     });
 
@@ -30,7 +31,7 @@ function DepartureInfo() {
   };
 
   return (
-    <div className="p-3">
+    <div className="py-3 px-5">
       <h1 className="font-semibold text-xl my-3">
         Update your flight departure info
       </h1>
@@ -40,17 +41,24 @@ function DepartureInfo() {
           label="Flight Departure Info"
           placeholder="Enter your flight departure info here"
           rows={10}
+          radius="none"
+          value={departureFlightInfo}
+          onChange={(e) => {
+            setDepartureFlightInfo(e.target.value);
+          }}
           name="departureFlightInfo"
           disableAutosize
           className="w-full"
         />
 
-        <div className="flex justify-between">
+        <div className="flex mt-2 justify-between">
           <div></div>
           <Button
             isLoading={loading}
             type="submit"
-            className="bg-gradient-to-tr mt-4 from-slate-800 to-slate-700 text-white shadow-lg"
+            color="primary"
+            radius="none"
+            className="w-full text-white"
           >
             Update
           </Button>

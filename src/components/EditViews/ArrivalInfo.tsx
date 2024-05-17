@@ -1,24 +1,25 @@
 "use client";
 import { Button, Textarea } from "@nextui-org/react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
+import Cookies from "js-cookie";
 
-function ArrivalInfo() {
+function ArrivalInfo({ info }: { info: string | undefined }) {
   const [loading, setLoading] = useState(false);
+  const [arrivalFlightInfo, setArrivalFlightInfo] = useState(info);
 
-  const searchParams = useSearchParams();
   const router = useRouter();
 
-  const updateArrivalInfo = async (formData: FormData) => {
+  const updateArrivalInfo = async () => {
     setLoading(true);
 
-    const email = searchParams.get("email");
+    const email = Cookies.get("email");
     if (!email) return;
     const res = await fetch("/api/flight-arrival-info", {
       method: "POST",
       body: JSON.stringify({
         email: email.toString(),
-        arrivalFlightInfo: formData.get("arrivalFlightInfo"),
+        arrivalFlightInfo: arrivalFlightInfo,
       }),
     });
 
@@ -31,7 +32,7 @@ function ArrivalInfo() {
   };
 
   return (
-    <div className="p-3">
+    <div className="py-3 px-5">
       <h1 className="font-semibold text-xl my-3">
         Update your flight arrival info
       </h1>
@@ -41,17 +42,25 @@ function ArrivalInfo() {
           label="Flight Arrival Info"
           placeholder="Enter your flight arrival info here"
           rows={10}
+          radius="none"
+          value={arrivalFlightInfo}
+          onChange={(e) => {
+            setArrivalFlightInfo(e.target.value);
+          }}
           name="arrivalFlightInfo"
           disableAutosize
           className="w-full"
         />
 
-        <div className="flex justify-between">
+        <div className="flex mt-3 justify-between items-center">
           <div></div>
+
           <Button
             isLoading={loading}
+            color="primary"
             type="submit"
-            className="bg-gradient-to-tr mt-4 from-slate-800 to-slate-700 text-white shadow-lg"
+            radius="none"
+            className="text-white w-full"
           >
             Update
           </Button>

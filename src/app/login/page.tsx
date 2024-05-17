@@ -1,7 +1,7 @@
 import Login from "@/components/Login";
 import React from "react";
 
-function VerifyUserProfile() {
+async function VerifyUserProfile() {
   return (
     <>
       <Login></Login>

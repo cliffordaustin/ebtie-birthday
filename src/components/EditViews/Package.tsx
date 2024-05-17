@@ -8,18 +8,44 @@ import {
   Image,
   Select,
   SelectItem,
+  Textarea,
 } from "@nextui-org/react";
 import { Package } from "@prisma/client";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React, { useCallback } from "react";
 import parse from "html-react-parser";
+import Cookies from "js-cookie";
 
-function EditPackage({ packages }: { packages: Package[] }) {
+function EditPackage({ dbPackages }: { dbPackages: Package[] }) {
   const [value, setValue] = React.useState<any>(new Set([]));
 
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+
+  const [loading, setLoading] = React.useState(false);
+
+  const updatePackage = async () => {
+    setLoading(true);
+
+    const email = Cookies.get("email");
+    const packageId = searchParams.get("packageId");
+    if (!email || !packageId) return;
+    const res = await fetch("/api/packages", {
+      method: "POST",
+      body: JSON.stringify({
+        email: email.toString(),
+        packageId: packageId.toString(),
+      }),
+    });
+
+    if (res.ok) {
+      router.refresh();
+      setLoading(false);
+    } else {
+      setLoading(false);
+    }
+  };
 
   const createQueryString = useCallback(
     (name: string, value: string) => {
@@ -30,6 +56,8 @@ function EditPackage({ packages }: { packages: Package[] }) {
     },
     [searchParams]
   );
+
+  const [packages, setPackages] = React.useState<Package[]>(dbPackages);
 
   const [selectedPackage, setSelectedPackage] =
     React.useState<Package | null>();
@@ -43,6 +71,56 @@ function EditPackage({ packages }: { packages: Package[] }) {
       setSelectedPackage(selectedPackage);
     }
   }, [searchParams, packages]);
+
+  React.useEffect(() => {
+    setPackages([
+      ...packages,
+      {
+        id: "others",
+        name: "Others",
+        price: 0,
+        description: "",
+        imageUrl: "",
+        availableVolume: 0,
+      },
+    ]);
+  }, []);
+
+  const [userPackage, setUserPackage] = React.useState("");
+
+  const updatePackageToOthers = async () => {
+    setLoading(true);
+
+    const email = Cookies.get("email");
+    if (!email) return;
+
+    const message = `Email:${email}\nTrip Plan: ${userPackage}`;
+
+    try {
+      await fetch("/api/packages", {
+        method: "POST",
+        body: JSON.stringify({
+          email: email.toString(),
+          packageId: "others",
+          userPackage: userPackage,
+        }),
+      });
+
+      await fetch("/api/contact-us", {
+        method: "POST",
+        body: JSON.stringify({
+          message,
+          to: "+233555894688",
+        }),
+      });
+
+      router.refresh();
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="flex flex-col relative">
@@ -67,13 +145,7 @@ function EditPackage({ packages }: { packages: Package[] }) {
           }}
         >
           {packages.map((item) => (
-            <SelectItem
-              //   onClick={(item) => {
-              //     console.log("item", item);
-              //   }}
-              key={item.id}
-              value={item.id}
-            >
+            <SelectItem key={item.id} value={item.id}>
               {item.name}
             </SelectItem>
           ))}
@@ -81,7 +153,9 @@ function EditPackage({ packages }: { packages: Package[] }) {
 
         <Button
           radius="none"
-          // size="lg"
+          disabled={!searchParams.has("packageId")}
+          isLoading={loading}
+          onClick={updatePackage}
           color="primary"
           className="text-white px-4 !py-[27px]"
         >
@@ -89,7 +163,7 @@ function EditPackage({ packages }: { packages: Package[] }) {
         </Button>
       </div>
 
-      {selectedPackage && (
+      {selectedPackage && selectedPackage.id !== "others" && (
         <div className="mt-4">
           <Card
             radius="none"
@@ -118,6 +192,38 @@ function EditPackage({ packages }: { packages: Package[] }) {
             {selectedPackage?.description && parse(selectedPackage.description)}
           </div>
         </div>
+      )}
+
+      {selectedPackage && selectedPackage.id === "others" && (
+        <form className="my-4 px-4" action={updatePackageToOthers}>
+          <Textarea
+            label="Tell us what you want"
+            placeholder="Enter your package detail here"
+            rows={10}
+            radius="none"
+            value={userPackage}
+            onChange={(e) => {
+              setUserPackage(e.target.value);
+            }}
+            name="arrivalFlightInfo"
+            disableAutosize
+            className="w-full"
+          />
+
+          <div className="flex mt-3 justify-between items-center">
+            <div></div>
+
+            <Button
+              isLoading={loading}
+              color="primary"
+              type="submit"
+              radius="none"
+              className="text-white w-full"
+            >
+              Update
+            </Button>
+          </div>
+        </form>
       )}
     </div>
   );

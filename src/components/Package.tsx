@@ -7,6 +7,8 @@ import { Button, Divider, Tooltip } from "@nextui-org/react";
 import { Card } from "./ui/card";
 import { RiEdit2Line } from "react-icons/ri";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { FaUser, FaUsers } from "react-icons/fa6";
+import { HiUsers } from "react-icons/hi";
 
 function UserPackage({
   packageType,
@@ -52,7 +54,7 @@ function UserPackage({
             variant="light"
             className="hover:!bg-gray-100"
           >
-            Create a package
+            Change package
           </Button>
         )}
 
@@ -105,7 +107,32 @@ function UserPackage({
             <div className="ml-1" key={property.id}>
               <h1 className="font-medium">{property.name}</h1>
 
-              <p className="text-gray-500">{property.room}</p>
+              <div className="flex items-center gap-1">
+                <p className="text-gray-500">{property.room}</p>
+
+                {property.capacity === 3 ? (
+                  <FaUsers />
+                ) : property.capacity === 2 ? (
+                  <HiUsers />
+                ) : property.capacity === 4 ? (
+                  <div className="flex">
+                    <FaUser size={10} />
+                    <FaUser size={10} />
+                    <FaUser size={10} />
+                    <FaUser size={10} />
+                  </div>
+                ) : property.capacity === 5 ? (
+                  <div className="flex">
+                    <FaUser size={10} />
+                    <FaUser size={10} />
+                    <FaUser size={10} />
+                    <FaUser size={10} />
+                    <FaUser size={10} />
+                  </div>
+                ) : (
+                  <FaUser size={10} />
+                )}
+              </div>
             </div>
           ))}
         </div>

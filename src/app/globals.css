@@ -19,8 +19,8 @@ body {
   --rdp-selected-color: green;
 }
 
-.rdp {
+/* .rdp {
   --rdp-accent-color: var(--rdp-accent-color);
   --rdp-background-color: var(--rdp-background-color);
   --rdp-selected-color: var(--rdp-selected-color);
-}
+} */

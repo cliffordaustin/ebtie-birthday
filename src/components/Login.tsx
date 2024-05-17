@@ -5,7 +5,8 @@ import { BackgroundGradient } from "./ui/background-gradient";
 import { Button, Input } from "@nextui-org/react";
 import { BackgroundBeams } from "./ui/background-beam";
 import prisma from "@/db/db";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
+import Cookies from "js-cookie";
 
 function Login() {
   const [loading, setLoading] = React.useState(false);
@@ -25,7 +26,8 @@ function Login() {
     const data = await res.json();
 
     if (data.user) {
-      router.push(`/user-profile?email=${email}`);
+      Cookies.set("email", email.toString());
+      router.push(`/user-profile`);
     } else {
       setUserNotFound(true);
       setLoading(false);
@@ -36,7 +38,7 @@ function Login() {
       <BackgroundGradient className="max-w-[470px] p-4 sm:p-10 bg-white">
         <div className="flex flex-col gap-2">
           <h1 className="font-bold text-3xl">Enter your email to continue</h1>
-          <p>Use the email address we used in communicating with you.</p>
+          <p>Use the email you provided in the response form.</p>
         </div>
 
         <form action={checkUser}>

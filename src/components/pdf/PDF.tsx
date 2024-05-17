@@ -2,6 +2,7 @@
 
 import { Button, Divider } from "@nextui-org/react";
 import {
+  CardPaymentLink,
   DietryRestriction,
   Package,
   Property,
@@ -17,6 +18,7 @@ import TripAddons from "../TripAddons";
 import DietaryRestriction from "../DietaryRestriction";
 
 import { Ubuntu } from "next/font/google";
+import Payment from "../Payment";
 
 const inter = Ubuntu({
   weight: ["400", "500", "300", "700"],
@@ -30,6 +32,7 @@ function PDF({
     | ({ package: ({ properties: Property[] } & Package) | null } & User & {
           tripAddOns: TripAddOn[];
           dietryRestrictions: DietryRestriction[];
+          CardPaymentLink: CardPaymentLink[];
         })
     | null;
 }) {
@@ -118,17 +121,29 @@ function PDF({
               </div>
             )}
 
-            {!user?.package && (
+            {!user?.package && !user?.others && (
               <p className="text-gray-500 text-sm text-center mt-3">
                 No package added yet
               </p>
+            )}
+
+            {user?.others && !user.package && (
+              <div className="mt-4 flex flex-col gap-4 text-sm">
+                <h1 className="font-bold">Your requested trip plan</h1>
+
+                <p className="text-gray-500">{user?.others}</p>
+              </div>
             )}
 
             <Divider className="my-4" />
 
             <h1 className="font-semibold text-gray-800 text-xl">Trip Addons</h1>
 
-            <TripAddons tripAddons={user?.tripAddOns} />
+            <TripAddons
+              isPDFView={true}
+              tripAddons={user?.tripAddOns}
+              userId={user?.id}
+            />
 
             <Divider className="my-4" />
 
@@ -137,8 +152,18 @@ function PDF({
             </h1>
 
             <DietaryRestriction
+              isPDFView={true}
               dietaryRestrictions={user?.dietryRestrictions}
+              userId={user?.id}
             />
+
+            <Divider className="my-4" />
+
+            <h1 className="font-semibold text-gray-800 text-xl">
+              Payment Info
+            </h1>
+
+            <Payment paymentLinks={user?.CardPaymentLink} />
           </div>
         </div>
       </div>

@@ -1,21 +1,21 @@
 "use client";
 import { Button } from "@nextui-org/react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { DayPicker } from "react-day-picker";
 import "react-day-picker/dist/style.css";
+import Cookies from "js-cookie";
 
 function DepartureDate({ departureDate }: { departureDate: Date | undefined }) {
   const [selected, setSelected] = useState<Date | undefined>(departureDate);
   const [loading, setLoading] = useState(false);
 
-  const searchParams = useSearchParams();
   const router = useRouter();
 
   const updateDepartureDate = async () => {
     setLoading(true);
 
-    const email = searchParams.get("email");
+    const email = Cookies.get("email");
     if (!email) return;
     const res = await fetch("/api/date-departure-flight", {
       method: "POST",
@@ -43,13 +43,15 @@ function DepartureDate({ departureDate }: { departureDate: Date | undefined }) {
         onSelect={setSelected}
       />
 
-      <div className="flex mt-3 px-2 justify-between items-center">
+      <div className="flex mt-3 px-4 justify-between items-center">
         <div></div>
 
         <Button
           isLoading={loading}
           onClick={updateDepartureDate}
-          className="bg-gradient-to-tr from-slate-800 to-slate-700 text-white shadow-lg"
+          radius="none"
+          color="primary"
+          className="text-white w-full"
         >
           Update
         </Button>

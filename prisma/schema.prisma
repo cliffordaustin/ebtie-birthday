@@ -15,8 +15,9 @@ generator client {
 
 datasource db {
   provider  = "postgresql"
-  url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
-  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+  // url      = env("DATABASE_URL")
+  url       = env("POSTGRES_PRISMA_URL")
+  directUrl = env("POSTGRES_URL_NON_POOLING")
 }
 
 enum PaymentPlan {
@@ -38,8 +39,10 @@ model User {
   createdAt           DateTime            @default(now())
   updatedAt           DateTime            @updatedAt
   tripAddOns          TripAddOn[]
+  others              String?
   package             Package?            @relation(fields: [packageId], references: [id])
   packageId           String?
+  CardPaymentLink     CardPaymentLink[]
 }
 
 model DietryRestriction {
@@ -49,10 +52,17 @@ model DietryRestriction {
   userId String
 }
 
+model CardPaymentLink {
+  id        String   @id @default(cuid())
+  link      String
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  createdAt DateTime @default(now())
+}
+
 model TripAddOn {
   id     String @id @default(cuid())
   name   String @db.VarChar(255)
-  price  Float
   users  User   @relation(fields: [userId], references: [id])
   userId String
 }

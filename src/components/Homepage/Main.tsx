@@ -53,7 +53,7 @@ function Main({
           />
         </div>
 
-        <div className="z-50 absolute bottom-32 left-2/4 -translate-x-2/4 flex flex-col justify-center items-center w-full">
+        <div className="z-40 absolute bottom-32 left-2/4 -translate-x-2/4 flex flex-col justify-center items-center w-full">
           <p className="font-bold text-xl md:text-6xl lg:text-8xl text-center bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400 py-4">
             Ebitie&apos;s Birthday Trip.
           </p>
