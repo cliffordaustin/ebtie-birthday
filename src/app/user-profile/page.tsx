@@ -29,7 +29,7 @@ async function UserProfile({
 
   const user = await prisma.user.findUnique({
     where: {
-      email: email?.value,
+      email: email?.value || "",
     },
     include: {
       tripAddOns: true,
