@@ -2,7 +2,7 @@
 
 import { Button, Input, Tooltip } from "@nextui-org/react";
 import { TripAddOn } from "@prisma/client";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next-nprogress-bar";
 import React from "react";
 import { FaPlus } from "react-icons/fa6";
 import { FiDelete } from "react-icons/fi";

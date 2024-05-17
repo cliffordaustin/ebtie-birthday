@@ -5,7 +5,7 @@ import { DietryRestriction } from "@prisma/client";
 import React from "react";
 import { FaPlus } from "react-icons/fa6";
 import Cookies from "js-cookie";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next-nprogress-bar";
 import { MdDelete } from "react-icons/md";
 import { FiDelete } from "react-icons/fi";
 

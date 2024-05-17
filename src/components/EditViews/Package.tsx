@@ -11,10 +11,11 @@ import {
   Textarea,
 } from "@nextui-org/react";
 import { Package } from "@prisma/client";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import React, { useCallback } from "react";
 import parse from "html-react-parser";
 import Cookies from "js-cookie";
+import { useRouter } from "next-nprogress-bar";
 
 function EditPackage({ dbPackages }: { dbPackages: Package[] }) {
   const [value, setValue] = React.useState<any>(new Set([]));
@@ -24,6 +25,7 @@ function EditPackage({ dbPackages }: { dbPackages: Package[] }) {
   const searchParams = useSearchParams();
 
   const [loading, setLoading] = React.useState(false);
+  const [othersLoading, setOthersLoading] = React.useState(false);
 
   const updatePackage = async () => {
     setLoading(true);
@@ -89,7 +91,7 @@ function EditPackage({ dbPackages }: { dbPackages: Package[] }) {
   const [userPackage, setUserPackage] = React.useState("");
 
   const updatePackageToOthers = async () => {
-    setLoading(true);
+    setOthersLoading(true);
 
     const email = Cookies.get("email");
     if (!email) return;
@@ -118,7 +120,7 @@ function EditPackage({ dbPackages }: { dbPackages: Package[] }) {
     } catch (error) {
       console.error(error);
     } finally {
-      setLoading(false);
+      setOthersLoading(false);
     }
   };
 
@@ -195,7 +197,7 @@ function EditPackage({ dbPackages }: { dbPackages: Package[] }) {
       )}
 
       {selectedPackage && selectedPackage.id === "others" && (
-        <form className="my-4 px-4" action={updatePackageToOthers}>
+        <div className="my-4 px-4">
           <Textarea
             label="Tell us what you want"
             placeholder="Enter your package detail here"
@@ -214,16 +216,17 @@ function EditPackage({ dbPackages }: { dbPackages: Package[] }) {
             <div></div>
 
             <Button
-              isLoading={loading}
+              isLoading={othersLoading}
               color="primary"
               type="submit"
               radius="none"
               className="text-white w-full"
+              onClick={updatePackageToOthers}
             >
               Update
             </Button>
           </div>
-        </form>
+        </div>
       )}
     </div>
   );

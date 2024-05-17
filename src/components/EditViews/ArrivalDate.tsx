@@ -1,7 +1,7 @@
 "use client";
 import { Button } from "@nextui-org/react";
 import { revalidatePath } from "next/cache";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next-nprogress-bar";
 import React, { useState } from "react";
 import { DayPicker } from "react-day-picker";
 import Cookies from "js-cookie";

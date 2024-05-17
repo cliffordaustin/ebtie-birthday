@@ -12,7 +12,7 @@ import DepartureDate from "@/components/EditViews/DepartureDate";
 import ArrivalDate from "@/components/EditViews/ArrivalDate";
 import ArrivalInfo from "@/components/EditViews/ArrivalInfo";
 import DepartureInfo from "@/components/EditViews/DepartureInfo";
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import EditPackage from "@/components/EditViews/Package";
 import PDF from "@/components/pdf/PDF";
 import ContactUs from "@/components/ContactUs";
@@ -26,10 +26,6 @@ async function UserProfile({
 }) {
   const cookieStore = cookies();
   const email = cookieStore.get("email");
-
-  if (!email || !email.value) {
-    redirect("/login");
-  }
 
   const user = await prisma.user.findUnique({
     where: {
@@ -46,6 +42,14 @@ async function UserProfile({
       },
     },
   });
+
+  if (!email || !email.value || !user) {
+    redirect(
+      `/login?edit=${searchParams["edit"] || ""}&packageId=${
+        searchParams["packageId"] || ""
+      }`
+    );
+  }
 
   const packages = await prisma.package.findMany({
     include: {
@@ -97,25 +101,9 @@ async function UserProfile({
 
               <Divider className="my-4" />
 
-              {user?.package && (
-                <div className="mt-4 flex flex-col gap-5 text-sm">
-                  <Package packageType={user?.package} />
-                </div>
-              )}
-
-              {!user?.package && !user?.others && (
-                <p className="text-gray-500 text-sm text-center mt-3">
-                  No package created yet
-                </p>
-              )}
-
-              {user?.others && !user.package && (
-                <div className="mt-4 flex flex-col gap-4 text-sm">
-                  <h1 className="font-bold">Your requested trip plan</h1>
-
-                  <p className="text-gray-500">{user?.others}</p>
-                </div>
-              )}
+              <div className="mt-4 flex flex-col gap-5 text-sm">
+                <Package others={user?.others} packageType={user?.package} />
+              </div>
 
               <Divider className="my-4" />
 

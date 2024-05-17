@@ -68,7 +68,7 @@ function HowItWorks({
         >
           Select a package
         </Button>
-        <Link href={`/verify-user-profile`}>
+        <Link href={`/user-profile`}>
           <Button radius="none" color="primary" variant="bordered" size="lg">
             View your profile
           </Button>

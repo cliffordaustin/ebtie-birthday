@@ -3,10 +3,10 @@
 import { Package, Property, User } from "@prisma/client";
 import React, { useCallback } from "react";
 import moment from "moment";
-import parse from "html-react-parser";
 import { RiEdit2Line } from "react-icons/ri";
 import { Button, Tooltip } from "@nextui-org/react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
+import { useRouter } from "next-nprogress-bar";
 
 function Flight({
   user,
@@ -60,14 +60,18 @@ function Flight({
               variant="light"
               className="hover:!bg-gray-100"
             >
-              {moment(user?.arrivalDate).format("MMM Do YYYY")}
+              {user?.arrivalDate
+                ? moment(user?.arrivalDate).format("MMM Do YYYY")
+                : "No date"}
             </Button>
           </Tooltip>
         )}
 
         {isPDFView && (
           <p className="text-gray-600">
-            {moment(user?.arrivalDate).format("MMM Do YYYY")}
+            {user?.arrivalDate
+              ? moment(user?.arrivalDate).format("MMM Do YYYY")
+              : "No date"}
           </p>
         )}
       </div>
@@ -132,14 +136,18 @@ function Flight({
                 ></RiEdit2Line>
               }
             >
-              {moment(user?.departureDate).format("MMM Do YYYY")}
+              {user?.departureDate
+                ? moment(user?.departureDate).format("MMM Do YYYY")
+                : "No date"}
             </Button>
           </Tooltip>
         )}
 
         {isPDFView && (
           <p className="text-gray-600">
-            {moment(user?.departureDate).format("MMM Do YYYY")}
+            {user?.departureDate
+              ? moment(user?.departureDate).format("MMM Do YYYY")
+              : "No date"}
           </p>
         )}
       </div>

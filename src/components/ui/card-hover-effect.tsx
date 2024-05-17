@@ -42,7 +42,7 @@ export const HoverEffect = ({
               ${item.price.toLocaleString()}
             </h1>
             <div className="my-3">
-              <Link href={`/verify-user-profile`}>
+              <Link href={`/user-profile?edit=package&packageId=${item.id}`}>
                 <Button
                   color="primary"
                   radius="none"

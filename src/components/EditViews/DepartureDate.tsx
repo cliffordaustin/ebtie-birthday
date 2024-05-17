@@ -1,6 +1,6 @@
 "use client";
 import { Button } from "@nextui-org/react";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next-nprogress-bar";
 import React, { useState } from "react";
 import { DayPicker } from "react-day-picker";
 import "react-day-picker/dist/style.css";
@@ -36,11 +36,23 @@ function DepartureDate({ departureDate }: { departureDate: Date | undefined }) {
     <div className="p-3">
       <h1 className="font-semibold text-xl my-3">Update your departure date</h1>
       <DayPicker
-        className="bg-white shadow border p-2 rounded-md mt-2"
+        className="bg-white shadow border p-2 rounded-none mt-2"
         mode="single"
         selected={selected}
         defaultMonth={selected}
         onSelect={setSelected}
+        classNames={{
+          day_selected: "!bg-[#212529] !text-white",
+        }}
+        styles={{
+          cell: {
+            width: "4rem",
+            height: "3rem",
+          },
+          table: {
+            maxWidth: "100%",
+          },
+        }}
       />
 
       <div className="flex mt-3 px-4 justify-between items-center">

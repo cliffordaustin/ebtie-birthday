@@ -1,6 +1,6 @@
 "use client";
 import { Button, Textarea } from "@nextui-org/react";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next-nprogress-bar";
 import React from "react";
 import Cookies from "js-cookie";
 
@@ -36,34 +36,33 @@ function DepartureInfo({ info }: { info: string | undefined }) {
         Update your flight departure info
       </h1>
 
-      <form className="h-[200px]" action={updateDepartureInfo}>
-        <Textarea
-          label="Flight Departure Info"
-          placeholder="Enter your flight departure info here"
-          rows={10}
-          radius="none"
-          value={departureFlightInfo}
-          onChange={(e) => {
-            setDepartureFlightInfo(e.target.value);
-          }}
-          name="departureFlightInfo"
-          disableAutosize
-          className="w-full"
-        />
+      <Textarea
+        label="Flight Departure Info"
+        placeholder="Enter your flight departure info here"
+        rows={10}
+        radius="none"
+        value={departureFlightInfo}
+        onChange={(e) => {
+          setDepartureFlightInfo(e.target.value);
+        }}
+        name="departureFlightInfo"
+        disableAutosize
+        className="w-full"
+      />
 
-        <div className="flex mt-2 justify-between">
-          <div></div>
-          <Button
-            isLoading={loading}
-            type="submit"
-            color="primary"
-            radius="none"
-            className="w-full text-white"
-          >
-            Update
-          </Button>
-        </div>
-      </form>
+      <div className="flex mt-2 justify-between">
+        <div></div>
+        <Button
+          isLoading={loading}
+          type="submit"
+          color="primary"
+          onClick={updateDepartureInfo}
+          radius="none"
+          className="w-full text-white"
+        >
+          Update
+        </Button>
+      </div>
     </div>
   );
 }
