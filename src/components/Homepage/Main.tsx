@@ -69,19 +69,21 @@ function Main({
         </div>
       </div>
 
-      <div className="my-6 px-6">
-        <HowItWorks packageRef={packageRef} />
-      </div>
+      <div className="max-w-[1300px] w-full mx-auto">
+        <div className="my-6 px-6">
+          <HowItWorks packageRef={packageRef} />
+        </div>
 
-      <div className="my-6 px-6 w-full">
-        <Itinerary />
-      </div>
+        <div className="my-6 px-6 w-full">
+          <Itinerary />
+        </div>
 
-      <div className="p-8 flex flex-col items-center">
-        <h1 className="text-center font-bold text-2xl relative after:absolute after:bg-[#fca311] after:w-full after:h-[7px] after:z-0 after:bottom-0 after:left-0 after:right-0">
-          Select a Package to Continue
-        </h1>
-        <HoverEffect packageRef={packageRef} items={packages} />
+        <div className="p-8 flex flex-col items-center">
+          <h1 className="text-center font-bold text-2xl relative after:absolute after:bg-[#fca311] after:w-full after:h-[7px] after:z-0 after:bottom-0 after:left-0 after:right-0">
+            Select a Package to Continue
+          </h1>
+          <HoverEffect packageRef={packageRef} items={packages} />
+        </div>
       </div>
     </>
   );
