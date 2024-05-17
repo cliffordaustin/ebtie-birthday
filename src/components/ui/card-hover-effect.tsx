@@ -25,12 +25,12 @@ export const HoverEffect = ({
   return (
     <div
       ref={packageRef}
-      className={cn("flex w-full flex-wrap mt-4", className)}
+      className={cn("flex w-full flex-wrap justify-center mt-4", className)}
     >
       {items.map((item, idx) => (
         <div
           key={item.id}
-          className="relative group cursor-pointer block p-2 h-full w-1/3"
+          className="w-full sm:w-[48%] lg:w-1/3 relative group cursor-pointer block p-2 h-full"
         >
           <Card item={item}>
             <p className="text-sm text-gray-500">

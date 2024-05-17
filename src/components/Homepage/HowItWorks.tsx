@@ -36,11 +36,11 @@ function HowItWorks({
         How It Works
       </h1>
 
-      <div className="flex items-center gap-5 mt-4">
+      <div className="flex flex-wrap items-center gap-5 mt-4">
         {howItWorks.map((item, index) => (
           <div
             key={index}
-            className="w-1/3 bg-white flex shadow flex-col justify-center items-center gap-3 p-8"
+            className="w-full md:w-[48%] lg:w-1/3 bg-white flex shadow flex-col justify-center items-center gap-3 p-8"
           >
             <div className="w-[100px] h-[100px] relative">
               <Image src={item.image} layout="fill" alt="" />

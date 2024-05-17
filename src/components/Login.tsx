@@ -41,7 +41,7 @@ function Login() {
     }
   };
   return (
-    <div className="h-screen w-screen flex items-center justify-center">
+    <div className="md:h-screen h-[80vh] w-screen px-4 md:px-0 flex items-center justify-center">
       <BackgroundGradient className="max-w-[470px] p-4 sm:p-10 bg-white">
         <div className="flex flex-col gap-2">
           <h1 className="font-bold text-3xl">Enter your email to continue</h1>

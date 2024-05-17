@@ -100,10 +100,10 @@ export const Card = ({
         <ModalContent className="h-[550px]">
           {(onClose) => (
             <ModalBody className="p-0 h-full">
-              <div className="flex w-full h-full">
+              <div className="flex flex-col md:flex-row w-full h-full">
                 <NextUiCard
                   radius="none"
-                  className="border-none after:bg-black after:inset-0 after:absolute after:bg-opacity-30 w-1/2 h-[100%] sticky left-0 !top-0 bottom-0"
+                  className="border-none after:bg-black after:inset-0 after:absolute after:bg-opacity-30 w-full md:w-1/2 h-[100%] sticky left-0 !top-0 bottom-0"
                 >
                   {item?.imageUrl && (
                     <Image
@@ -115,7 +115,7 @@ export const Card = ({
                     />
                   )}
                   {!actionText && (
-                    <CardFooter className="flex bg-white/90 px-8 justify-between border-white/20 border-1 overflow-hidden py-1 absolute rounded-large bottom-3 w-[calc(100%_-_30px)] left-2/4 -translate-x-2/4 shadow-small ml-1 z-10">
+                    <CardFooter className="hidden md:flex bg-white/90 px-8 justify-between border-white/20 border-1 overflow-hidden py-1 absolute rounded-large bottom-3 w-[calc(100%_-_30px)] left-2/4 -translate-x-2/4 shadow-small ml-1 z-10">
                       <p className="text-sm font-bold text-slate-800/80">
                         ${item?.price.toLocaleString()}
                       </p>
@@ -133,7 +133,7 @@ export const Card = ({
                     </CardFooter>
                   )}
                 </NextUiCard>
-                <ScrollShadow className="w-1/2 p-6">
+                <ScrollShadow className="w-full md:w-1/2 p-6">
                   <div className="overflow-y-scroll">
                     <h1 className="text-3xl font-extrabold mb-5">
                       {item?.name}
@@ -185,6 +185,25 @@ export const Card = ({
                     </div>
                   </div>
                 </ScrollShadow>
+
+                {!actionText && (
+                  <div className="flex items-center md:hidden bg-gray-100 px-8 justify-between border-white/20 border-1 overflow-hidden py-1 absolute rounded-large bottom-3 w-[calc(100%_-_30px)] left-2/4 -translate-x-2/4 shadow-small ml-1 z-10">
+                    <p className="text-sm font-bold text-slate-800/80">
+                      ${item?.price.toLocaleString()}
+                    </p>
+                    <Link href={`/verify-user-profile`}>
+                      <Button
+                        className="text-sm font-medium text-white bg-black/80"
+                        variant="flat"
+                        color="default"
+                        radius="md"
+                        size="sm"
+                      >
+                        Select this package
+                      </Button>
+                    </Link>
+                  </div>
+                )}
               </div>
             </ModalBody>
           )}

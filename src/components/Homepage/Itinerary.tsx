@@ -11,6 +11,7 @@ import "swiper/css";
 
 // import required modules
 import { Autoplay } from "swiper/modules";
+import Steps from "rc-steps";
 
 function Itinerary() {
   const itinerary = [
@@ -55,10 +56,34 @@ function Itinerary() {
         Trip Overview
       </h1>
 
-      <div className="w-full bg-white flex shadow h-[400px] mt-5 overflow-y-scroll">
-        <div className="w-[60%]">
+      {/* <Steps
+        size="default"
+        direction="vertical"
+        className="h-[60px] w-full"
+        current={0}
+      >
+        <Steps.Step
+          title="first"
+          className="w-full"
+          subTitle="Hello world"
+          description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem id sit doloribus aspernatur pariatur, omnis ea architecto dicta quo eius cupiditate necessitatibus natus sunt, aliquid earum at illo minima sint."
+        />
+        <Steps.Step
+          title="second"
+          subTitle="Hello world!!"
+          description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem id sit doloribus aspernatur pariatur, omnis ea architecto dicta quo eius cupiditate necessitatibus natus sunt, aliquid earum at illo minima sint."
+        />
+        <Steps.Step
+          title="third"
+          subTitle="Hello world!!!"
+          description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem id sit doloribus aspernatur pariatur, omnis ea architecto dicta quo eius cupiditate necessitatibus natus sunt, aliquid earum at illo minima sint."
+        />
+      </Steps> */}
+
+      <div className="w-full bg-white flex md:shadow md:h-[400px] mt-5 md:overflow-y-scroll">
+        <div className="w-full md:w-[60%]">
           <ScrollShadow>
-            <div className="px-6 py-4 flex flex-col gap-4">
+            <div className="md:px-6 py-4 flex flex-col gap-4">
               {itinerary.map((item, index) => (
                 <div key={index} className="flex flex-col gap-2">
                   <h1 className="font-bold text-xl">{item.heading}</h1>
@@ -73,7 +98,7 @@ function Itinerary() {
             </div>
           </ScrollShadow>
         </div>
-        <div className="w-[40%] sticky top-0 right-0 h-full after:bg-black after:inset-0 after:absolute after:bg-opacity-30 after:z-20">
+        <div className="hidden md:block w-[40%] sticky top-0 right-0 h-full after:bg-black after:inset-0 after:absolute after:bg-opacity-30 after:z-20">
           <Swiper
             centeredSlides={true}
             autoplay={{

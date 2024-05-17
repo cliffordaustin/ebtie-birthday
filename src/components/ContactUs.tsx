@@ -43,7 +43,7 @@ function ContactUs() {
   };
 
   return (
-    <div className="px-8 py-2 border-b flex justify-between items-center">
+    <div className="px-8 py-2 border-b gap-1 flex justify-between items-center">
       <p className="">Looking for something different? Let us know.</p>
 
       <Button
