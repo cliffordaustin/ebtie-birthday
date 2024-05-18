@@ -57,7 +57,7 @@ function UserPackage({
             variant="light"
             className="hover:!bg-gray-100"
           >
-            Choose package
+            Choose a package
           </Button>
         )}
 
