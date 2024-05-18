@@ -20,15 +20,6 @@ function Main({
   return (
     <>
       <div className="h-[28rem] md:h-[34rem] flex w-full relative after:bg-black after:inset-0 after:absolute after:bg-opacity-40">
-        <div className="absolute z-20 top-2 md:top-4 right-4 md:right-8">
-          <Link href={`/user-profile`}>
-            <button className="px-8 py-2 backdrop-blur-sm border bg-yellow-300/10 border-yellow-500/20 text-white mx-auto text-center relative mt-4">
-              <span>View your profile</span>
-              <div className="absolute inset-x-0  h-px -bottom-px bg-gradient-to-r w-3/4 mx-auto from-transparent via-yellow-500 to-transparent" />
-            </button>
-          </Link>
-        </div>
-
         {/* <div className="w-1/3 h-full relative">
           <Image
             src="/homepage/image1.jpg"
@@ -58,15 +49,24 @@ function Main({
           <p className="font-bold text-5xl md:text-6xl lg:text-8xl text-center bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400 py-4">
             Ebitie&apos;s Birthday Trip.
           </p>
-          <button
-            onClick={() => {
-              packageRef.current?.scrollIntoView({ behavior: "smooth" });
-            }}
-            className="px-8 py-2 backdrop-blur-sm border bg-yellow-300/10 border-yellow-500/20 text-white mx-auto text-center relative mt-4"
-          >
-            <span>Select a package →</span>
-            <div className="absolute inset-x-0 h-px -bottom-px bg-gradient-to-r w-3/4 mx-auto from-transparent via-yellow-500 to-transparent" />
-          </button>
+          <div className="flex items-center justify-center gap-4">
+            <button
+              onClick={() => {
+                packageRef.current?.scrollIntoView({ behavior: "smooth" });
+              }}
+              className="px-8 py-2 backdrop-blur-sm border bg-yellow-300/10 border-yellow-500/20 text-white mx-auto text-center relative mt-4"
+            >
+              <span>Select a package →</span>
+              <div className="absolute inset-x-0 h-px -bottom-px bg-gradient-to-r w-3/4 mx-auto from-transparent via-yellow-500 to-transparent" />
+            </button>
+
+            <Link href={`/user-profile`}>
+              <button className="px-8 py-2 backdrop-blur-sm border bg-yellow-300/10 border-yellow-500/20 text-white mx-auto text-center relative mt-4">
+                <span>View your profile</span>
+                <div className="absolute inset-x-0  h-px -bottom-px bg-gradient-to-r w-3/4 mx-auto from-transparent via-yellow-500 to-transparent" />
+              </button>
+            </Link>
+          </div>
         </div>
       </div>
 
