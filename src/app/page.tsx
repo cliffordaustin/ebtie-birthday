@@ -8,6 +8,9 @@ export default async function Home() {
     include: {
       properties: true,
     },
+    orderBy: {
+      price: "asc",
+    },
   });
 
   return (

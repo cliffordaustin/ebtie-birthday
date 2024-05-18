@@ -117,7 +117,7 @@ function EditPackage({ dbPackages }: { dbPackages: Package[] }) {
         method: "POST",
         body: JSON.stringify({
           message,
-          to: "+233555894688",
+          to: "+254757629101",
         }),
       });
 

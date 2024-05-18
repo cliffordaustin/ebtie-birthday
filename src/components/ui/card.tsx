@@ -141,7 +141,10 @@ export const Card = ({
                       <p className="text-sm font-bold text-slate-800/80">
                         ${item?.price.toLocaleString()}
                       </p>
-                      <Link href={`/verify-user-profile`}>
+                      <Link
+                        href={`/user-profile?edit=package&packageId=${item?.id}`}
+                        target="_blank"
+                      >
                         <Button
                           className="text-sm font-medium text-white bg-black/80"
                           variant="flat"
@@ -149,7 +152,7 @@ export const Card = ({
                           radius="md"
                           size="sm"
                         >
-                          See more
+                          Add package
                         </Button>
                       </Link>
                     </CardFooter>
@@ -213,7 +216,10 @@ export const Card = ({
                     <p className="text-sm font-bold text-slate-800/80">
                       ${item?.price.toLocaleString()}
                     </p>
-                    <Link href={`/verify-user-profile`}>
+                    <Link
+                      href={`/user-profile?edit=package&packageId=${item?.id}`}
+                      target="_blank"
+                    >
                       <Button
                         className="text-sm font-medium text-white bg-black/80"
                         variant="flat"
@@ -221,7 +227,7 @@ export const Card = ({
                         radius="md"
                         size="sm"
                       >
-                        See more
+                        Add package
                       </Button>
                     </Link>
                   </div>

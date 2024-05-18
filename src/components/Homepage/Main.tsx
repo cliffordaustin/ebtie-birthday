@@ -7,6 +7,7 @@ import { HoverEffect } from "../ui/card-hover-effect";
 import { Package, Property } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
+import { Button } from "@nextui-org/react";
 
 function Main({
   packages,
@@ -28,15 +29,15 @@ function Main({
           </Link>
         </div>
 
-        <div className="w-1/3 h-full relative">
+        {/* <div className="w-1/3 h-full relative">
           <Image
             src="/homepage/image1.jpg"
             layout="fill"
             objectFit="cover"
             alt="hero"
           />
-        </div>
-        <div className="w-1/3 h-full relative">
+        </div> */}
+        <div className="w-1/2 h-full relative">
           <Image
             src="/homepage/image2.jpg"
             layout="fill"
@@ -44,7 +45,7 @@ function Main({
             alt="hero"
           />
         </div>
-        <div className="w-1/3 h-full relative">
+        <div className="w-1/2 h-full relative">
           <Image
             src="/homepage/image3.jpg"
             layout="fill"
@@ -83,6 +84,20 @@ function Main({
             Select a Package to Continue
           </h1>
           <HoverEffect packageRef={packageRef} items={packages} />
+        </div>
+
+        <div className="mt-4 mb-8 flex items-center justify-center">
+          <Link href="/login">
+            <Button
+              radius="none"
+              color="secondary"
+              className="text-white"
+              variant="solid"
+              size="lg"
+            >
+              Click here to login to your account
+            </Button>
+          </Link>
         </div>
       </div>
     </>
