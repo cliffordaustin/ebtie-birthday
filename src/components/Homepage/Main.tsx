@@ -60,7 +60,7 @@ function Main({
               <div className="absolute inset-x-0 h-px -bottom-px bg-gradient-to-r w-3/4 mx-auto from-transparent via-yellow-500 to-transparent" />
             </button>
 
-            <Link href={`/user-profile`}>
+            <Link href={`/user-profile`} target="_blank">
               <button className="px-8 py-2 backdrop-blur-sm border bg-yellow-300/10 border-yellow-500/20 text-white mx-auto text-center relative mt-4">
                 <span>View your profile</span>
                 <div className="absolute inset-x-0  h-px -bottom-px bg-gradient-to-r w-3/4 mx-auto from-transparent via-yellow-500 to-transparent" />
