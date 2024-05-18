@@ -108,14 +108,6 @@ async function UserProfile({
               <Divider className="my-4" />
 
               <h1 className="font-semibold text-gray-800 text-xl">
-                Trip Addons
-              </h1>
-
-              <TripAddons userId={user?.id} tripAddons={user?.tripAddOns} />
-
-              <Divider className="my-4" />
-
-              <h1 className="font-semibold text-gray-800 text-xl">
                 Dietary Restriction
               </h1>
 
@@ -123,6 +115,14 @@ async function UserProfile({
                 userId={user?.id}
                 dietaryRestrictions={user?.dietryRestrictions}
               />
+
+              <Divider className="my-4" />
+
+              <h1 className="font-semibold text-gray-800 text-xl">
+                Trip Addons
+              </h1>
+
+              <TripAddons userId={user?.id} tripAddons={user?.tripAddOns} />
 
               <Divider className="my-4" />
 

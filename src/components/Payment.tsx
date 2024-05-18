@@ -16,7 +16,7 @@ function Payment({
         </div>
 
         <div className="flex flex-col gap-3 ml-5">
-          {paymentLinks?.map((paymentLink) => (
+          {/* {paymentLinks?.map((paymentLink) => (
             <Link
               href={paymentLink.link}
               key={paymentLink.id}
@@ -25,11 +25,25 @@ function Payment({
             >
               {paymentLink.link}
             </Link>
-          ))}
+          ))} */}
+          <p className="text-gray-500 text-sm">
+            Credit card payments (we work with a third party processor, so
+            you&apos;ll have to sign a short agreement with them prior to making
+            payment here.)
+            <br />
+            <br />
+            <Link
+              href="https://drive.google.com/file/d/1uRcwQxcRpH5buDAUs_UjIWgGm-Nu6QcO/view?usp=sharing"
+              target="_blank"
+              className="text-sm text-blue-600 underline line-clamp-1"
+            >
+              https://drive.google.com/file/d/1uRcwQxcRpH5buDAUs_UjIWgGm-Nu6QcO/view?usp=sharing
+            </Link>
+          </p>
         </div>
       </div>
 
-      <div className="flex flex-col gap-1">
+      {/* <div className="flex flex-col gap-1">
         <div className="flex items-center gap-3">
           <div className="w-[7px] h-[7px] bg-gray-500 rounded-full"></div>
           <p className="text-sm">Kenya Bank Details</p>
@@ -46,7 +60,7 @@ function Payment({
           Account Currency: USD <br />
           Email: ndiko@winda.guide <br />
         </p>
-      </div>
+      </div> */}
 
       <div className="flex flex-col gap-1">
         <div className="flex items-center gap-3">
@@ -55,6 +69,10 @@ function Payment({
         </div>
 
         <p className="text-gray-500 text-sm ml-5">
+          Revolut (You can either do a direct transfer if you have revolut{" "}
+          <b>@karenmbi</b> or transfer using the details below)
+          <br />
+          <br />
           Beneficiary: Karen Mwaura <br />
           IBAN: GB23 REVO 0099 7088 7578 63 <br />
           BIC / SWIFT code: REVOGB21 <br />
@@ -71,6 +89,17 @@ function Payment({
         </div>
 
         <p className="text-gray-500 text-sm ml-5">
+          Transferwise (You can either do a direct transfer to{" "}
+          <Link
+            href="https://wise.com/pay/me/karena213"
+            target="_blank"
+            className="text-blue-600 underline"
+          >
+            https://wise.com/pay/me/karena213
+          </Link>{" "}
+          if you have wise or transfer using the details below)
+          <br />
+          <br />
           Account holder: Karen Ndiko Mwaura <br />
           ACH and Wire routing number: 084009519 <br />
           Account number: 9600003178812512 <br />
