@@ -18,7 +18,7 @@ function Main({
   const packageRef = useRef<HTMLDivElement>(null);
   return (
     <>
-      <div className="h-[28rem] md:h-[34rem] flex w-full relative after:bg-black after:inset-0 after:absolute after:bg-opacity-80">
+      <div className="h-[28rem] md:h-[34rem] flex w-full relative after:bg-black after:inset-0 after:absolute after:bg-opacity-40">
         <div className="absolute z-20 top-2 md:top-4 right-4 md:right-8">
           <Link href={`/user-profile`}>
             <button className="px-8 py-2 backdrop-blur-sm border bg-yellow-300/10 border-yellow-500/20 text-white mx-auto text-center relative mt-4">
@@ -30,6 +30,14 @@ function Main({
 
         <div className="w-1/3 h-full relative">
           <Image
+            src="/homepage/image1.jpg"
+            layout="fill"
+            objectFit="cover"
+            alt="hero"
+          />
+        </div>
+        <div className="w-1/3 h-full relative">
+          <Image
             src="/homepage/image2.jpg"
             layout="fill"
             objectFit="cover"
@@ -39,14 +47,6 @@ function Main({
         <div className="w-1/3 h-full relative">
           <Image
             src="/homepage/image3.jpg"
-            layout="fill"
-            objectFit="cover"
-            alt="hero"
-          />
-        </div>
-        <div className="w-1/3 h-full relative">
-          <Image
-            src="/homepage/image1.jpg"
             layout="fill"
             objectFit="cover"
             alt="hero"

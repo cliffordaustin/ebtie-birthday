@@ -72,6 +72,7 @@ model Package {
   name            String     @db.VarChar(255)
   description     String?
   imageUrl        String?
+  imageUrls       String[]
   price           Float
   availableVolume Int        @default(0)
   properties      Property[]

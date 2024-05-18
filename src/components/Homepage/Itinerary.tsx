@@ -40,20 +40,20 @@ function Itinerary() {
       heading: "🚊 Tue, October 22nd - Thur, 24th",
       description:
         "Early morning rise, head out to the Syokimau train station to catch your 8 am train to Mombasa. Arrive at 2 pm. You’ll be transferred by taxi to your hotel. Spend the next couple of days exploring Diani. See the list of activities below.",
-      subDescription: "Overnight Swahili Beach Resort, 2 Nights",
+      subDescription: "Overnight Nomad Beach Resort, 2 Nights",
     },
 
     {
       heading: "🏨 Thur, October 24th - Sat, 26th",
       description:
-        "Take the train back to Nairobi. Check in to the hotel. Explore some more. Next day (your birthday), you can pick one of the activities below to do then have dinner at Cultiva.",
+        "Take the train back to Nairobi. Check in to the hotel. Explore some more. Next day you can pick from the many activities to do.",
       subDescription: "Overnight Trademark Hotel, 2 Nights",
     },
   ];
   return (
     <div className="flex flex-col items-center w-full justify-center">
       <h1 className="font-bold text-2xl relative after:absolute after:bg-[#fca311] after:w-full after:h-[7px] after:z-0 after:bottom-0 after:left-0 after:right-0">
-        Trip Overview
+        Trip Itinerary
       </h1>
 
       {/* <Steps

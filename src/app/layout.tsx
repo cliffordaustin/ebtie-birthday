@@ -9,7 +9,7 @@ import "react-day-picker/dist/style.css";
 
 const inter = Ubuntu({
   weight: ["400", "500", "300", "700"],
-  subsets: ["latin"],
+  subsets: ["greek", "latin"],
 });
 
 export default function RootLayout({

@@ -25,7 +25,10 @@ export const HoverEffect = ({
   return (
     <div
       ref={packageRef}
-      className={cn("flex w-full flex-wrap justify-center mt-4", className)}
+      className={cn(
+        "flex w-full flex-wrap mt-4 justify-center lg:justify-start",
+        className
+      )}
     >
       {items.map((item, idx) => (
         <div
@@ -42,13 +45,16 @@ export const HoverEffect = ({
               ${item.price.toLocaleString()}
             </h1>
             <div className="my-3">
-              <Link href={`/user-profile?edit=package&packageId=${item.id}`}>
+              <Link
+                href={`/user-profile?edit=package&packageId=${item.id}`}
+                target="_blank"
+              >
                 <Button
                   color="primary"
                   radius="none"
                   className="w-full text-white"
                 >
-                  Select package
+                  See more
                 </Button>
               </Link>
             </div>

@@ -16,6 +16,10 @@ import React, { useCallback } from "react";
 import parse from "html-react-parser";
 import Cookies from "js-cookie";
 import { useRouter } from "next-nprogress-bar";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/navigation";
 
 function EditPackage({ dbPackages }: { dbPackages: Package[] }) {
   const [value, setValue] = React.useState<any>(new Set([]));
@@ -84,6 +88,7 @@ function EditPackage({ dbPackages }: { dbPackages: Package[] }) {
         description: "",
         imageUrl: "",
         availableVolume: 0,
+        imageUrls: [],
       },
     ]);
   }, []);
@@ -179,7 +184,26 @@ function EditPackage({ dbPackages }: { dbPackages: Package[] }) {
                 {selectedPackage.name}
               </h4>
             </CardHeader>
-            {selectedPackage.imageUrl && (
+            <Swiper
+              centeredSlides={true}
+              modules={[Navigation]}
+              slidesPerView={1}
+              navigation
+              className="h-full w-full"
+            >
+              {selectedPackage.imageUrls?.map((imageUrl, index) => (
+                <SwiperSlide key={index}>
+                  <Image
+                    removeWrapper
+                    src={imageUrl}
+                    alt=""
+                    radius="none"
+                    className="z-0 w-full h-full object-cover"
+                  />
+                </SwiperSlide>
+              ))}
+            </Swiper>
+            {/* {selectedPackage.imageUrl && (
               <Image
                 removeWrapper
                 alt=""
@@ -187,7 +211,7 @@ function EditPackage({ dbPackages }: { dbPackages: Package[] }) {
                 className="z-0 w-full h-full object-cover"
                 src={selectedPackage.imageUrl}
               />
-            )}
+            )} */}
           </Card>
 
           <div className="mb-8 px-8 mt-6 text-sm leading-6">

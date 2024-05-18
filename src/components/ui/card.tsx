@@ -22,6 +22,10 @@ import parse from "html-react-parser";
 import Link from "next/link";
 import { FaUser, FaUsers } from "react-icons/fa6";
 import { HiUsers } from "react-icons/hi";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/navigation";
 export const Card = ({
   className,
   children,
@@ -105,7 +109,25 @@ export const Card = ({
                   radius="none"
                   className="border-none after:bg-black after:inset-0 after:absolute after:bg-opacity-30 w-full md:w-1/2 h-[100%] sticky left-0 !top-0 bottom-0"
                 >
-                  {item?.imageUrl && (
+                  <Swiper
+                    centeredSlides={true}
+                    modules={[Navigation]}
+                    slidesPerView={1}
+                    navigation
+                    className="h-full w-full"
+                  >
+                    {item?.imageUrls?.map((imageUrl, index) => (
+                      <SwiperSlide key={index}>
+                        <Image
+                          src={imageUrl}
+                          layout="fill"
+                          objectFit="cover"
+                          alt=""
+                        />
+                      </SwiperSlide>
+                    ))}
+                  </Swiper>
+                  {/* {item?.imageUrl && (
                     <Image
                       alt=""
                       src={item.imageUrl}
@@ -113,7 +135,7 @@ export const Card = ({
                       className=""
                       objectFit="cover"
                     />
-                  )}
+                  )} */}
                   {!actionText && (
                     <CardFooter className="hidden md:flex bg-white/90 px-8 justify-between border-white/20 border-1 overflow-hidden py-1 absolute rounded-large bottom-3 w-[calc(100%_-_30px)] left-2/4 -translate-x-2/4 shadow-small ml-1 z-10">
                       <p className="text-sm font-bold text-slate-800/80">
@@ -127,7 +149,7 @@ export const Card = ({
                           radius="md"
                           size="sm"
                         >
-                          Select this package
+                          See more
                         </Button>
                       </Link>
                     </CardFooter>
@@ -199,7 +221,7 @@ export const Card = ({
                         radius="md"
                         size="sm"
                       >
-                        Select this package
+                        See more
                       </Button>
                     </Link>
                   </div>

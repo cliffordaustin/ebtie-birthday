@@ -36,11 +36,11 @@ function HowItWorks({
         How It Works
       </h1>
 
-      <div className="flex flex-wrap items-center gap-5 mt-4">
+      <div className="flex flex-wrap items-center mt-4 gap-4 lg:gap-0 justify-between">
         {howItWorks.map((item, index) => (
           <div
             key={index}
-            className="w-full md:w-[48%] lg:w-1/3 bg-white flex shadow flex-col justify-center items-center gap-3 p-8"
+            className="w-full md:w-[48%] lg:w-[32%] bg-white flex shadow flex-col justify-center items-center gap-3 p-8"
           >
             <div className="w-[100px] h-[100px] relative">
               <Image src={item.image} layout="fill" alt="" />
@@ -57,7 +57,7 @@ function HowItWorks({
       </div>
 
       <div className="mx-auto mt-6 flex gap-3">
-        <Button
+        {/* <Button
           onClick={() => {
             packageRef.current?.scrollIntoView({ behavior: "smooth" });
           }}
@@ -72,7 +72,26 @@ function HowItWorks({
           <Button radius="none" color="primary" variant="bordered" size="lg">
             View your profile
           </Button>
-        </Link>
+        </Link> */}
+
+        <p className="text-gray-700">
+          Welcome to Ebitie’s Birthday Trip! This page outlines the different
+          packages available to you. Please note that the packages are based on
+          the level of the room in each property plus whether you’re sharing or
+          in a single. The current packages are limited in number mainly because
+          of Nomad hotel in Diani. The rooms in this property are fixed as you
+          will be staying in their luxury villas which have 3 room types -
+          standard, superior (with a terrace) and luxury (with a terrace and
+          ocean view). Pick the package as it is, or feel free to reach out
+          incase you’d like to change a room level which is only possible in
+          Trademark and Enkewa. This page also contains your user profiles. You
+          can access these by logging in with the email you used to respond to
+          the initial trip questionnaire. Your user section will have all the
+          information you’ve filled out so far. It will also include the payment
+          instructions for your installments. If you’d like to pay by card, we
+          will add your unique payment links to your profile based on the
+          payment plan you chose. Looking forward to hosting you all!
+        </p>
       </div>
     </div>
   );
