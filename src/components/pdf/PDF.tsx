@@ -115,10 +115,19 @@ function PDF({
 
           <Divider className="my-4" />
 
-          <div className="mt-6">
-            <h1 className="font-semibold text-gray-800 text-xl">Flight Info</h1>
+          <h1 className="font-semibold text-gray-800 text-xl">Flight Info</h1>
 
-            <Flight isPDFView={true} user={user} />
+          <div className="mt-6">
+            {user?.arrivalDate ||
+            user?.departureDate ||
+            user?.arrivalFlightInfo ||
+            user?.departureFlightInfo ? (
+              <>
+                <Flight isPDFView={true} user={user} />
+              </>
+            ) : (
+              <p className="mt-1 ml-1 text-sm text-gray-600">None</p>
+            )}
 
             <Divider className="my-4" />
 
@@ -153,11 +162,15 @@ function PDF({
               Dietary Restriction
             </h1>
 
-            <DietaryRestriction
-              isPDFView={true}
-              dietaryRestrictions={user?.dietryRestrictions}
-              userId={user?.id}
-            />
+            {user?.dietryRestrictions && user.dietryRestrictions.length > 0 ? (
+              <DietaryRestriction
+                isPDFView={true}
+                dietaryRestrictions={user?.dietryRestrictions}
+                userId={user?.id}
+              />
+            ) : (
+              <p className="mt-1 ml-1 text-sm text-gray-600">None</p>
+            )}
 
             <Divider className="my-4" />
 
@@ -166,12 +179,16 @@ function PDF({
               transport)
             </h1>
 
-            <TripAddons
-              isPDFView={true}
-              allTripAddons={allTripAddOns}
-              userId={user?.id}
-              tripAddons={user?.tripAddOns}
-            />
+            {user?.tripAddOns && user.tripAddOns.length > 0 ? (
+              <TripAddons
+                isPDFView={true}
+                allTripAddons={allTripAddOns}
+                userId={user?.id}
+                tripAddons={user?.tripAddOns}
+              />
+            ) : (
+              <p className="mt-1 ml-1 text-sm text-gray-600">None</p>
+            )}
 
             <Divider className="my-4" />
 
@@ -179,13 +196,17 @@ function PDF({
               Trip Addons (Independently booked before or during the trip)
             </h1>
 
-            <TripAddons
-              isPDFView={true}
-              allTripAddons={allOnSiteTripAddOns}
-              userId={user?.id}
-              tripAddons={user?.onSiteTripAddOns}
-              isOnSite={true}
-            />
+            {user?.onSiteTripAddOns && user.onSiteTripAddOns.length > 0 ? (
+              <TripAddons
+                isPDFView={true}
+                allTripAddons={allOnSiteTripAddOns}
+                userId={user?.id}
+                tripAddons={user?.onSiteTripAddOns}
+                isOnSite={true}
+              />
+            ) : (
+              <p className="mt-1 ml-1 text-sm text-gray-600">None</p>
+            )}
 
             <Divider className="my-4" />
 
@@ -193,7 +214,11 @@ function PDF({
               Payment Plan
             </h1>
 
-            <PaymentPlan paymentPlan={user?.paymentPlan} isPDFView={true} />
+            {user?.paymentPlan ? (
+              <PaymentPlan paymentPlan={user?.paymentPlan} isPDFView={true} />
+            ) : (
+              <p className="mt-1 ml-1 text-sm text-gray-600">None</p>
+            )}
 
             <Divider className="my-4" />
 

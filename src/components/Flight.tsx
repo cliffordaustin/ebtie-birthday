@@ -108,10 +108,14 @@ function Flight({
           )}
         </div>
 
-        {displayParseHTML && (
+        {displayParseHTML && user?.arrivalFlightInfo && (
           <p className="text-gray-500 whitespace-pre-line">
             {user?.arrivalFlightInfo}
           </p>
+        )}
+
+        {!user?.arrivalFlightInfo && isPDFView && (
+          <p className="mt-1 ml-1 text-sm text-gray-600">None</p>
         )}
       </div>
 
@@ -184,10 +188,14 @@ function Flight({
           )}
         </div>
 
-        {displayParseHTML && (
+        {displayParseHTML && user?.departureFlightInfo && (
           <p className="text-gray-500 whitespace-pre-line">
             {user?.departureFlightInfo}
           </p>
+        )}
+
+        {!user?.departureFlightInfo && isPDFView && (
+          <p className="mt-1 ml-1 text-sm text-gray-600">None</p>
         )}
       </div>
     </div>

@@ -20,8 +20,6 @@ export async function POST(request: Request) {
       },
     });
 
-    console.log("user", user);
-
     if (user) {
       return NextResponse.json({ user });
     } else {

@@ -54,7 +54,7 @@ function Payment({
         method: "POST",
         body: JSON.stringify({
           message,
-          to: "+233555894688",
+          to: "+254757629101",
         }),
       });
     } catch (error) {
