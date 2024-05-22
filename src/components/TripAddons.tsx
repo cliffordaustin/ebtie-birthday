@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Input, Tooltip } from "@nextui-org/react";
+import { Button, Input, Select, SelectItem, Tooltip } from "@nextui-org/react";
 import { TripAddOn } from "@prisma/client";
 import { useRouter } from "next-nprogress-bar";
 import React from "react";
@@ -12,12 +12,16 @@ function TripAddons({
   tripAddons,
   userId,
   isPDFView,
+  allTripAddons,
+  isOnSite,
 }: {
   tripAddons: TripAddOn[] | undefined;
   userId: string | undefined;
   isPDFView?: boolean;
+  allTripAddons?: TripAddOn[] | undefined;
+  isOnSite?: boolean;
 }) {
-  const [addon, setAddon] = React.useState("");
+  const [addon, setAddon] = React.useState<any>(new Set([]));
   const [showAddOn, setShowAddOn] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
   const router = useRouter();
@@ -30,15 +34,16 @@ function TripAddons({
     const res = await fetch("/api/addon", {
       method: "POST",
       body: JSON.stringify({
-        userId: userId,
-        name: addon,
+        userId,
+        id: addon.anchorKey,
+        isOnSite,
       }),
     });
 
     if (res.ok) {
       router.refresh();
       setShowAddOn(false);
-      setAddon("");
+      setAddon(new Set([]));
       setLoading(false);
     } else {
       setLoading(false);
@@ -51,7 +56,9 @@ function TripAddons({
     const res = await fetch("/api/addon", {
       method: "DELETE",
       body: JSON.stringify({
-        id: id,
+        id,
+        userId,
+        isOnSite,
       }),
     });
 
@@ -60,6 +67,15 @@ function TripAddons({
     } else {
     }
   };
+
+  const [isOpen, setIsOpen] = React.useState(false);
+
+  // get allTripAddons except the ones already in tripAddons
+  const tripAddonsIds = tripAddons?.map((addon) => addon.id);
+
+  const filteredAddons = allTripAddons?.filter(
+    (addon) => !tripAddonsIds?.includes(addon.id)
+  );
 
   return (
     <div className="flex flex-col gap-2 mt-4 ml-2">
@@ -73,27 +89,31 @@ function TripAddons({
             <p className="text-sm text-gray-600">{addon.name}</p>
           </div>
 
-          {/* <p className="text-gray-600">${addon.price}</p> */}
-          {!isPDFView && (
-            <Tooltip showArrow placement="bottom" content="Delete">
-              <Button
-                className="text-lg"
-                color="danger"
-                size="sm"
-                isIconOnly
-                variant="light"
-                onClick={() => deleteAddon(addon.id)}
-              >
-                <FiDelete />
-              </Button>
-            </Tooltip>
-          )}
+          <div className="flex items-center gap-1">
+            {addon.price ? (
+              <p className="text-gray-600">${addon.price}</p>
+            ) : null}
+            {!isPDFView && (
+              <Tooltip showArrow placement="bottom" content="Delete">
+                <Button
+                  className="text-lg"
+                  color="danger"
+                  size="sm"
+                  isIconOnly
+                  variant="light"
+                  onClick={() => deleteAddon(addon.id)}
+                >
+                  <FiDelete />
+                </Button>
+              </Tooltip>
+            )}
+          </div>
         </div>
       ))}
 
-      {showAddOn && !isPDFView && (
+      {!isPDFView && (
         <div className="flex mt-2 items-center">
-          <Input
+          {/* <Input
             label="What else do you need?"
             variant="bordered"
             placeholder="Add an addon"
@@ -104,30 +124,66 @@ function TripAddons({
             onChange={(e) => {
               setAddon(e.target.value);
             }}
-          />
+          /> */}
+
+          {tripAddons && (
+            <Select
+              label="Addons"
+              variant="bordered"
+              placeholder="Select an addon"
+              selectedKeys={addon}
+              className="max-w-60"
+              classNames={{
+                popoverContent: "w-fit",
+              }}
+              radius="none"
+              onSelectionChange={(e: any) => {
+                setAddon(e);
+              }}
+              items={filteredAddons}
+              renderValue={(items) => {
+                return items.map((item) => (
+                  <span key={item.key} className="">
+                    {item.data?.name}
+                  </span>
+                ));
+              }}
+            >
+              {(item) => (
+                <SelectItem
+                  className="w-[450px]"
+                  key={item.id}
+                  textValue={item.name}
+                >
+                  <div className="flex items-center w-full justify-between">
+                    <span
+                      className={
+                        "text-ellipsis overflow-hidden " +
+                        (item.price ? "w-[80%]" : "w-full")
+                      }
+                    >
+                      {item.name}
+                    </span>
+                    {item.price && (
+                      <span className="self-end">${item.price}</span>
+                    )}
+                  </div>
+                </SelectItem>
+              )}
+            </Select>
+          )}
 
           <Button
             className="text-white ml-1 py-[27.5px]"
-            color="primary"
+            color={addon.size === 0 ? "default" : "primary"}
             radius="none"
             onClick={updateAddon}
             isLoading={loading}
+            disabled={addon.size === 0}
           >
             Update
           </Button>
         </div>
-      )}
-
-      {!isPDFView && (
-        <Button
-          className="text-blue-600 mt-2 w-fit"
-          variant="light"
-          radius="none"
-          onClick={() => setShowAddOn(!showAddOn)}
-          endContent={<FaPlus />}
-        >
-          Add an addon
-        </Button>
       )}
     </div>
   );

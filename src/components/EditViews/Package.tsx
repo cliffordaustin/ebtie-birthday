@@ -10,7 +10,7 @@ import {
   SelectItem,
   Textarea,
 } from "@nextui-org/react";
-import { Package } from "@prisma/client";
+import { Package, User } from "@prisma/client";
 import { usePathname, useSearchParams } from "next/navigation";
 import React, { useCallback } from "react";
 import parse from "html-react-parser";
@@ -18,10 +18,15 @@ import Cookies from "js-cookie";
 import { useRouter } from "next-nprogress-bar";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
+import toast, { Toaster } from "react-hot-toast";
 import "swiper/css";
 import "swiper/css/navigation";
 
-function EditPackage({ dbPackages }: { dbPackages: Package[] }) {
+function EditPackage({
+  dbPackages,
+}: {
+  dbPackages: ({ User: User[] } & Package)[];
+}) {
   const [value, setValue] = React.useState<any>(new Set([]));
 
   const router = useRouter();
@@ -36,7 +41,32 @@ function EditPackage({ dbPackages }: { dbPackages: Package[] }) {
 
     const email = Cookies.get("email");
     const packageId = searchParams.get("packageId");
-    if (!email || !packageId) return;
+
+    if (!email || !packageId) {
+      setLoading(false);
+      return;
+    }
+
+    const packageRes = await fetch(
+      `/api/packages?packageId=${packageId.toString()}`,
+      {
+        method: "GET",
+      }
+    );
+
+    if (packageRes.ok) {
+      const { packageUnique }: { packageUnique: { User: User[] } & Package } =
+        await packageRes.json();
+
+      if (packageUnique.User.length === packageUnique.availableVolume) {
+        toast.error("Sorry, Package is not available");
+        setLoading(false);
+        setValue(new Set([]));
+        router.refresh();
+        return;
+      }
+    }
+
     const res = await fetch("/api/packages", {
       method: "POST",
       body: JSON.stringify({
@@ -47,8 +77,10 @@ function EditPackage({ dbPackages }: { dbPackages: Package[] }) {
 
     if (res.ok) {
       router.refresh();
+      setValue(new Set([]));
       setLoading(false);
     } else {
+      setValue(new Set([]));
       setLoading(false);
     }
   };
@@ -63,7 +95,8 @@ function EditPackage({ dbPackages }: { dbPackages: Package[] }) {
     [searchParams]
   );
 
-  const [packages, setPackages] = React.useState<Package[]>(dbPackages);
+  const [packages, setPackages] =
+    React.useState<({ User: User[] } & Package)[]>(dbPackages);
 
   const [selectedPackage, setSelectedPackage] =
     React.useState<Package | null>();
@@ -79,8 +112,11 @@ function EditPackage({ dbPackages }: { dbPackages: Package[] }) {
   }, [searchParams, packages]);
 
   React.useEffect(() => {
+    const filteredPackages = packages.filter(
+      (item) => item.availableVolume - item.User.length > 0
+    );
     setPackages([
-      ...packages,
+      ...filteredPackages,
       {
         id: "others",
         name: "Others",
@@ -89,6 +125,7 @@ function EditPackage({ dbPackages }: { dbPackages: Package[] }) {
         imageUrl: "",
         availableVolume: 0,
         imageUrls: [],
+        User: [],
       },
     ]);
   }, []);
@@ -124,10 +161,13 @@ function EditPackage({ dbPackages }: { dbPackages: Package[] }) {
       router.refresh();
     } catch (error) {
       console.error(error);
+      setOthersLoading(false);
     } finally {
       setOthersLoading(false);
     }
   };
+
+  const [isOpen, setIsOpen] = React.useState(false);
 
   return (
     <div className="flex flex-col relative">
@@ -160,10 +200,18 @@ function EditPackage({ dbPackages }: { dbPackages: Package[] }) {
 
         <Button
           radius="none"
-          disabled={!searchParams.has("packageId")}
+          disabled={
+            !searchParams.has("packageId") ||
+            searchParams.get("packageId") === ""
+          }
           isLoading={loading}
           onClick={updatePackage}
-          color="primary"
+          color={
+            !searchParams.has("packageId") ||
+            searchParams.get("packageId") === ""
+              ? "default"
+              : "primary"
+          }
           className="text-white px-4 !py-[27px]"
         >
           Update Package
@@ -252,6 +300,8 @@ function EditPackage({ dbPackages }: { dbPackages: Package[] }) {
           </div>
         </div>
       )}
+
+      <Toaster />
     </div>
   );
 }

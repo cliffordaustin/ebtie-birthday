@@ -4,7 +4,7 @@ import { cn } from "@/utils/cn";
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
 import { useState } from "react";
-import { Package, Property } from "@prisma/client";
+import { Package, Property, User } from "@prisma/client";
 import { Card } from "./card";
 import { FaUser } from "react-icons/fa6";
 import { HiUsers } from "react-icons/hi";
@@ -41,6 +41,7 @@ export const HoverEffect = ({
 }: {
   items: ({
     properties: Property[];
+    User: User[];
   } & Package)[];
   packageRef: React.RefObject<HTMLDivElement>;
   className?: string;
@@ -60,29 +61,44 @@ export const HoverEffect = ({
       {items.map((item, idx) => (
         <div
           key={item.id}
-          className="w-full sm:w-[48%] lg:w-1/3 relative group cursor-pointer block p-2 h-full"
+          className="w-full sm:w-[48%] lg:w-1/3 relative group block p-2 h-full"
         >
           <Card item={item}>
-            <p className="text-sm text-gray-500">
-              {item.availableVolume}{" "}
-              {item.availableVolume > 1 ? "slots" : "slot"} left
-            </p>
+            {item.availableVolume - item.User.length > 0 && (
+              <p className="text-sm text-gray-500">
+                {item.availableVolume - item.User.length}{" "}
+                {item.availableVolume - item.User.length > 1 ? "slots" : "slot"}{" "}
+                left
+              </p>
+            )}
+
+            {item.availableVolume - item.User.length < 1 && (
+              <p className="text-sm text-gray-500">No available slots left</p>
+            )}
             <CardTitle>{item.name}</CardTitle>
             <h1 className="my-4 text-2xl font-extrabold">
               ${item.price.toLocaleString()}
             </h1>
             <div className="my-3">
-              <Button
-                color="primary"
-                radius="none"
-                className="w-full text-white"
-                onClick={() => {
-                  setSelectedPackage(item);
-                  onOpen();
-                }}
-              >
-                See more
-              </Button>
+              {item.availableVolume - item.User.length > 0 && (
+                <Button
+                  color="primary"
+                  radius="none"
+                  className="w-full text-white"
+                  onClick={() => {
+                    setSelectedPackage(item);
+                    onOpen();
+                  }}
+                >
+                  See more
+                </Button>
+              )}
+
+              {item.availableVolume - item.User.length < 1 && (
+                <Button radius="none" className="w-full text-gray-800" disabled>
+                  Sold out
+                </Button>
+              )}
             </div>
             <div className="flex flex-col">
               <h1 className="text-sm font-bold">What&apos;s included?</h1>

@@ -43,10 +43,9 @@ export const Card = ({
       {!actionText && (
         <div
           className={cn(
-            "h-full w-full shadow p-2 overflow-hidden bg-white border border-transparent dark:border-white/[0.2] group-hover:border-slate-300 relative z-20",
+            "h-full w-full shadow p-2 overflow-hidden bg-white border border-transparent dark:border-white/[0.2] relative z-20",
             className
           )}
-          onClick={onOpen}
         >
           <div className="relative z-50">
             <div className="p-4">{children}</div>

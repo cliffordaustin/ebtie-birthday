@@ -91,7 +91,7 @@ function DietaryRestriction({
         </div>
       ))}
 
-      {showDietaryRestriction && !isPDFView && (
+      {!isPDFView && (
         <div className="flex mt-2 items-center">
           <Input
             label="Add dietary restriction"
@@ -108,26 +108,15 @@ function DietaryRestriction({
 
           <Button
             className="text-white ml-1 py-[27.5px]"
-            color="primary"
+            color={!dietaryRestriction ? "default" : "primary"}
             radius="none"
             onClick={updateDietaryRestriction}
             isLoading={loading}
+            disabled={!dietaryRestriction}
           >
             Update
           </Button>
         </div>
-      )}
-
-      {!isPDFView && (
-        <Button
-          className="text-blue-600 mt-2 w-fit"
-          variant="light"
-          radius="none"
-          onClick={() => setShowDietaryRestriction(!showDietaryRestriction)}
-          endContent={<FaPlus />}
-        >
-          Add dietary restriction
-        </Button>
       )}
     </div>
   );

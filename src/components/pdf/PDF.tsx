@@ -19,6 +19,8 @@ import DietaryRestriction from "../DietaryRestriction";
 
 import { Ubuntu } from "next/font/google";
 import Payment from "../Payment";
+import PaymentPlan from "../PaymentPlan";
+import Link from "next/link";
 
 const inter = Ubuntu({
   weight: ["400", "500", "300", "700"],
@@ -27,14 +29,19 @@ const inter = Ubuntu({
 
 function PDF({
   user,
+  allTripAddOns,
+  allOnSiteTripAddOns,
 }: {
   user:
     | ({ package: ({ properties: Property[] } & Package) | null } & User & {
           tripAddOns: TripAddOn[];
+          onSiteTripAddOns: TripAddOn[];
           dietryRestrictions: DietryRestriction[];
           CardPaymentLink: CardPaymentLink[];
         })
     | null;
+  allTripAddOns: TripAddOn[];
+  allOnSiteTripAddOns: TripAddOn[];
 }) {
   const componentRef = useRef<HTMLDivElement>(null);
   const handlePrint = useReactToPrint({
@@ -117,7 +124,12 @@ function PDF({
 
             {user?.package && (
               <div className="mt-4 flex flex-col gap-5 text-sm">
-                <UserPackage isPDFView={true} packageType={user?.package} />
+                <UserPackage
+                  userId={user.id}
+                  isPDFView={true}
+                  packageType={user?.package}
+                  packageDescription={user.doubleRoomDescription}
+                />
               </div>
             )}
 
@@ -137,16 +149,6 @@ function PDF({
 
             <Divider className="my-4" />
 
-            <h1 className="font-semibold text-gray-800 text-xl">Trip Addons</h1>
-
-            <TripAddons
-              isPDFView={true}
-              tripAddons={user?.tripAddOns}
-              userId={user?.id}
-            />
-
-            <Divider className="my-4" />
-
             <h1 className="font-semibold text-gray-800 text-xl">
               Dietary Restriction
             </h1>
@@ -159,11 +161,64 @@ function PDF({
 
             <Divider className="my-4" />
 
+            <h1 className="font-semibold flex items-center gap-2 text-gray-800 text-lg">
+              Trip Addons (Must be booked in advance, per person, excludes
+              transport)
+            </h1>
+
+            <TripAddons
+              isPDFView={true}
+              allTripAddons={allTripAddOns}
+              userId={user?.id}
+              tripAddons={user?.tripAddOns}
+            />
+
+            <Divider className="my-4" />
+
+            <h1 className="font-semibold flex items-center gap-2 text-gray-800 text-lg">
+              Trip Addons (Independently booked before or during the trip)
+            </h1>
+
+            <TripAddons
+              isPDFView={true}
+              allTripAddons={allOnSiteTripAddOns}
+              userId={user?.id}
+              tripAddons={user?.onSiteTripAddOns}
+              isOnSite={true}
+            />
+
+            <Divider className="my-4" />
+
+            <h1 className="font-semibold text-gray-800 text-xl">
+              Payment Plan
+            </h1>
+
+            <PaymentPlan paymentPlan={user?.paymentPlan} isPDFView={true} />
+
+            <Divider className="my-4" />
+
             <h1 className="font-semibold text-gray-800 text-xl">
               Payment Info
             </h1>
 
-            <Payment paymentLinks={user?.CardPaymentLink} />
+            <Payment
+              paymentMethods={user?.paymentMethod}
+              paymentLinks={user?.CardPaymentLink}
+              isPDFView={true}
+            />
+
+            <Divider className="my-4" />
+
+            <h1 className="font-semibold mt-4 text-gray-800 text-xl">
+              Pre-Travel Checklist
+            </h1>
+
+            <Link
+              href="https://docs.google.com/presentation/d/1aqy-FGL02KV3Or0O-vz9uO9cCuzZP7Cyytu5VOgXuEQ/edit#slide=id.g2c25874eeee_0_0"
+              className="ml-2 mt-2 line-clamp-1 text-blue-600 hover:underline"
+            >
+              https://docs.google.com/presentation/d/1aqy-FGL02KV3Or0O-vz9uO9cCuzZP7Cyytu5VOgXuEQ/edit#slide=id.g2c25874eeee_0_0
+            </Link>
           </div>
         </div>
       </div>

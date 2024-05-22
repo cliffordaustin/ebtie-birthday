@@ -1,26 +1,19 @@
-import prisma from "@/db/db";
+import prisma from "../../../db/db";
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
   const body = await request.json();
 
   try {
-    const user = await prisma.user.findUnique({
+    const user = await prisma.user.update({
       where: {
         email: body.email,
       },
-      include: {
-        tripAddOns: true,
-        dietryRestrictions: true,
-        package: {
-          include: {
-            properties: true,
-          },
-        },
+
+      data: {
+        doubleRoomDescription: body.doubleRoomDescription,
       },
     });
-
-    console.log("user", user);
 
     if (user) {
       return NextResponse.json({ user });

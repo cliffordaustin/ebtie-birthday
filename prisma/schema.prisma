@@ -26,23 +26,31 @@ enum PaymentPlan {
   TATU_PLAN
 }
 
+enum PaymentMethods {
+  CARD
+  BANK
+}
+
 model User {
-  id                  String              @id @default(cuid())
-  email               String              @unique
-  name                String              @db.VarChar(255)
-  dietryRestrictions  DietryRestriction[]
-  arrivalDate         DateTime?
-  arrivalFlightInfo   String?
-  departureDate       DateTime?
-  departureFlightInfo String?
-  paymentPlan         PaymentPlan
-  createdAt           DateTime            @default(now())
-  updatedAt           DateTime            @updatedAt
-  tripAddOns          TripAddOn[]
-  others              String?
-  package             Package?            @relation(fields: [packageId], references: [id])
-  packageId           String?
-  CardPaymentLink     CardPaymentLink[]
+  id                    String              @id @default(cuid())
+  email                 String              @unique
+  name                  String              @db.VarChar(255)
+  dietryRestrictions    DietryRestriction[]
+  arrivalDate           DateTime?
+  arrivalFlightInfo     String?
+  departureDate         DateTime?
+  departureFlightInfo   String?
+  paymentPlan           PaymentPlan?
+  paymentMethod         PaymentMethods?
+  doubleRoomDescription String?
+  createdAt             DateTime            @default(now())
+  updatedAt             DateTime            @updatedAt
+  tripAddOns            TripAddOn[]
+  onSiteTripAddOns      TripAddOn[]         @relation("UserOnSiteTripAddOns")
+  others                String?
+  package               Package?            @relation(fields: [packageId], references: [id])
+  packageId             String?
+  CardPaymentLink       CardPaymentLink[]
 }
 
 model DietryRestriction {
@@ -61,10 +69,12 @@ model CardPaymentLink {
 }
 
 model TripAddOn {
-  id     String @id @default(cuid())
-  name   String @db.VarChar(255)
-  users  User   @relation(fields: [userId], references: [id])
-  userId String
+  id                     String  @id @default(cuid())
+  name                   String  @db.VarChar(255)
+  price                  Float?
+  users                  User[]
+  userOnSiteTripAddOns   User[]  @relation("UserOnSiteTripAddOns")
+  advanceBookingRequired Boolean @default(false)
 }
 
 model Package {

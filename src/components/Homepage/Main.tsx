@@ -4,7 +4,7 @@ import React, { useRef } from "react";
 import HowItWorks from "./HowItWorks";
 import Itinerary from "./Itinerary";
 import { HoverEffect } from "../ui/card-hover-effect";
-import { Package, Property } from "@prisma/client";
+import { Package, Property, User } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@nextui-org/react";
@@ -14,6 +14,7 @@ function Main({
 }: {
   packages: ({
     properties: Property[];
+    User: User[];
   } & Package)[];
 }) {
   const packageRef = useRef<HTMLDivElement>(null);
@@ -87,7 +88,7 @@ function Main({
         </div>
 
         <div className="mt-4 mb-8 flex items-center justify-center">
-          <Link href="/login">
+          <Link href="/login" target="_blank">
             <Button
               radius="none"
               color="secondary"

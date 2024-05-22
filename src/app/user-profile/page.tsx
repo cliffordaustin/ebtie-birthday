@@ -18,6 +18,9 @@ import PDF from "@/components/pdf/PDF";
 import ContactUs from "@/components/ContactUs";
 import Payment from "@/components/Payment";
 import { redirect } from "next/navigation";
+import PaymentPlan from "@/components/PaymentPlan";
+import { BsFillInfoCircleFill } from "react-icons/bs";
+import Link from "next/link";
 
 async function UserProfile({
   searchParams,
@@ -33,6 +36,7 @@ async function UserProfile({
     },
     include: {
       tripAddOns: true,
+      onSiteTripAddOns: true,
       dietryRestrictions: true,
       CardPaymentLink: true,
       package: {
@@ -42,6 +46,20 @@ async function UserProfile({
       },
     },
   });
+
+  let tripAddOns = await prisma.tripAddOn.findMany();
+
+  let allTripAddOns = tripAddOns.filter(
+    (addon) =>
+      !user?.onSiteTripAddOns?.find((userAddon) => userAddon.id === addon.id)
+  );
+
+  //get all the trip addons excluding the ones in user.tripAddOns or the ones that has advanceBookingRequired as true
+  let allOnSiteTripAddOns = tripAddOns.filter(
+    (addon) =>
+      !user?.tripAddOns?.find((userAddon) => userAddon.id === addon.id) &&
+      !addon.advanceBookingRequired
+  );
 
   if (!email || !email.value || !user) {
     redirect(
@@ -54,6 +72,7 @@ async function UserProfile({
   const packages = await prisma.package.findMany({
     include: {
       properties: true,
+      User: true,
     },
   });
 
@@ -87,7 +106,11 @@ async function UserProfile({
                 </div>
               </div>
 
-              <PDF user={user} />
+              <PDF
+                user={user}
+                allTripAddOns={allTripAddOns}
+                allOnSiteTripAddOns={allOnSiteTripAddOns}
+              />
             </div>
 
             <Divider className="my-4" />
@@ -102,7 +125,12 @@ async function UserProfile({
               <Divider className="my-4" />
 
               <div className="mt-4 flex flex-col gap-5 text-sm">
-                <Package others={user?.others} packageType={user?.package} />
+                <Package
+                  userId={user.id}
+                  others={user?.others}
+                  packageType={user?.package}
+                  packageDescription={user.doubleRoomDescription}
+                />
               </div>
 
               <Divider className="my-4" />
@@ -118,19 +146,59 @@ async function UserProfile({
 
               <Divider className="my-4" />
 
-              <h1 className="font-semibold text-gray-800 text-xl">
-                Trip Addons
+              <h1 className="font-semibold flex items-center gap-2 text-gray-800 text-lg">
+                Trip Addons (Must be booked in advance, per person, excludes
+                transport)
               </h1>
 
-              <TripAddons userId={user?.id} tripAddons={user?.tripAddOns} />
+              <TripAddons
+                allTripAddons={allTripAddOns}
+                userId={user?.id}
+                tripAddons={user?.tripAddOns}
+              />
+
+              <Divider className="my-4" />
+
+              <h1 className="font-semibold flex items-center gap-2 text-gray-800 text-lg">
+                Trip Addons (Independently booked before or during the trip)
+              </h1>
+
+              <TripAddons
+                allTripAddons={allOnSiteTripAddOns}
+                userId={user?.id}
+                tripAddons={user?.onSiteTripAddOns}
+                isOnSite={true}
+              />
 
               <Divider className="my-4" />
 
               <h1 className="font-semibold text-gray-800 text-xl">
+                Payment Plan
+              </h1>
+
+              <PaymentPlan paymentPlan={user?.paymentPlan} />
+
+              <h1 className="font-semibold mt-4 text-gray-800 text-xl">
                 Payment Info
               </h1>
 
-              <Payment paymentLinks={user?.CardPaymentLink} />
+              <Payment
+                paymentMethods={user.paymentMethod}
+                paymentLinks={user?.CardPaymentLink}
+              />
+
+              <Divider className="my-4" />
+
+              <h1 className="font-semibold mt-4 text-gray-800 text-xl">
+                Pre-Travel Checklist
+              </h1>
+
+              <Link
+                href="https://docs.google.com/presentation/d/1aqy-FGL02KV3Or0O-vz9uO9cCuzZP7Cyytu5VOgXuEQ/edit#slide=id.g2c25874eeee_0_0"
+                className="ml-2 mt-2 line-clamp-1 text-blue-600 hover:underline"
+              >
+                https://docs.google.com/presentation/d/1aqy-FGL02KV3Or0O-vz9uO9cCuzZP7Cyytu5VOgXuEQ/edit#slide=id.g2c25874eeee_0_0
+              </Link>
             </div>
           </ScrollShadow>
         </div>
