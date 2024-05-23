@@ -33,14 +33,14 @@ function HowItWorks({
   ];
   return (
     <div className="flex flex-col justify-center">
-      <span className="font-bold text-5xl text-center">
+      <span className="font-bold text-3xl md:text-4xl lg:text-5xl text-center">
         Welcome to Ebitie’s Birthday Trip!
       </span>
 
-      <div className="text-lg mt-6 px-6">
+      <div className="text-base md:text-lg mt-6 md:px-6">
         <p className="mb-2">This page has 3 functions:</p>
 
-        <ul className="list-decimal ml-12">
+        <ul className="list-decimal ml-8 md:ml-12">
           <li>
             You can see the overall <span className="font-bold">itinerary</span>
             .
@@ -61,7 +61,7 @@ function HowItWorks({
         </ul>
       </div>
 
-      <div className="flex items-center mt-4 gap-3 flex-col text-lg">
+      <div className="flex items-center mt-4 gap-3 flex-col text-base md:text-lg">
         <p className="text-center">
           Please note: The property at the Coast has been upgraded to the Nomad
           Hotel in Diani where you will be staying in private villas. The

@@ -29,6 +29,7 @@ enum PaymentPlan {
 enum PaymentMethods {
   CARD
   BANK
+  REVOLUT_TRANSFERWISE
 }
 
 model User {

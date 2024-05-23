@@ -31,8 +31,8 @@ function DepartureInfo({ info }: { info: string | undefined }) {
   };
 
   return (
-    <div className="py-3 px-5">
-      <h1 className="font-semibold text-xl my-3">
+    <div className="md:mb-0 mb-2 md:py-3 md:px-5">
+      <h1 className="font-semibold text-xl my-3 hidden md:block">
         Update your flight departure info
       </h1>
 
@@ -55,10 +55,11 @@ function DepartureInfo({ info }: { info: string | undefined }) {
         <Button
           isLoading={loading}
           type="submit"
-          color="primary"
+          color={departureFlightInfo ? "primary" : "default"}
           onClick={updateDepartureInfo}
           radius="none"
           className="w-full text-white"
+          disabled={!departureFlightInfo}
         >
           Update
         </Button>

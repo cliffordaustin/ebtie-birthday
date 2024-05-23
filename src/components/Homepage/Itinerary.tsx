@@ -87,10 +87,10 @@ function Itinerary() {
               {itinerary.map((item, index) => (
                 <div key={index} className="flex flex-col gap-2">
                   <h1 className="font-bold text-xl">{item.heading}</h1>
-                  <p className="text-gray-600 text-sm mt-3">
+                  <p className="text-gray-600 text-base mt-3">
                     {item.description}
                   </p>
-                  <p className="text-gray-600 text-sm mt-6">
+                  <p className="text-gray-600 text-base mt-6">
                     {item.subDescription}
                   </p>
                 </div>

@@ -171,7 +171,7 @@ function EditPackage({
 
   return (
     <div className="flex flex-col relative">
-      <div className="flex items-center justify-between px-3 mt-3">
+      <div className="items-center justify-between px-3 mt-3 md:flex hidden">
         <h1 className="font-semibold text-gray-800 text-xl">Package</h1>
       </div>
 
@@ -181,7 +181,10 @@ function EditPackage({
           variant="bordered"
           placeholder="Select a package"
           selectedKeys={value}
-          className="max-w-60"
+          classNames={{
+            popoverContent: "w-fit",
+          }}
+          className="md:max-w-40 lg:max-w-60"
           radius="none"
           onSelectionChange={(e: any) => {
             setValue(e);
@@ -192,7 +195,7 @@ function EditPackage({
           }}
         >
           {packages.map((item) => (
-            <SelectItem key={item.id} value={item.id}>
+            <SelectItem className="w-[250px]" key={item.id} value={item.id}>
               {item.name}
             </SelectItem>
           ))}
@@ -214,7 +217,8 @@ function EditPackage({
           }
           className="text-white px-4 !py-[27px]"
         >
-          Update Package
+          <span className="hidden md:block">Update Package</span>
+          <span className="md:hidden">Update</span>
         </Button>
       </div>
 

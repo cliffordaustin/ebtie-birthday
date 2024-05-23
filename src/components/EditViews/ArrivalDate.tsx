@@ -30,10 +30,12 @@ function ArrivalDate({ arrivalDate }: { arrivalDate: Date | undefined }) {
     }
   };
   return (
-    <div className="p-3">
-      <h1 className="font-semibold text-xl my-3">Update your arrival date</h1>
+    <div className="md:p-3">
+      <h1 className="font-semibold text-xl my-3 hidden md:block">
+        Update your arrival date
+      </h1>
       <DayPicker
-        className="bg-white shadow border p-2 rounded-none mt-2"
+        className="md:bg-white md:shadow md:border md:p-2 rounded-none md:mt-2"
         mode="single"
         selected={selected}
         defaultMonth={selected}
@@ -58,9 +60,10 @@ function ArrivalDate({ arrivalDate }: { arrivalDate: Date | undefined }) {
         <Button
           isLoading={loading}
           onClick={updateArrivalDate}
-          color="primary"
+          color={!selected ? "default" : "primary"}
           radius="none"
           className="text-white w-full"
+          disabled={!selected}
         >
           Update
         </Button>

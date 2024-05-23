@@ -32,8 +32,8 @@ function ArrivalInfo({ info }: { info: string | undefined }) {
   };
 
   return (
-    <div className="py-3 px-5">
-      <h1 className="font-semibold text-xl my-3">
+    <div className="md:mb-0 mb-2 md:py-3 md:px-5">
+      <h1 className="font-semibold text-xl my-3 hidden md:block">
         Update your flight arrival info
       </h1>
 
@@ -56,11 +56,12 @@ function ArrivalInfo({ info }: { info: string | undefined }) {
 
         <Button
           isLoading={loading}
-          color="primary"
+          color={arrivalFlightInfo ? "primary" : "default"}
           type="submit"
           radius="none"
           onClick={updateArrivalInfo}
           className="text-white w-full"
+          disabled={!arrivalFlightInfo}
         >
           Update
         </Button>

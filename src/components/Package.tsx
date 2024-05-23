@@ -1,9 +1,19 @@
 "use client";
 
-import { Package, Property } from "@prisma/client";
+import { Package, Property, User } from "@prisma/client";
 import React, { useCallback } from "react";
 import parse from "html-react-parser";
-import { Button, Divider, Textarea, Tooltip } from "@nextui-org/react";
+import {
+  Button,
+  Divider,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalHeader,
+  Textarea,
+  Tooltip,
+  useDisclosure,
+} from "@nextui-org/react";
 import { Card } from "./ui/card";
 import { RiEdit2Line } from "react-icons/ri";
 import { usePathname, useSearchParams } from "next/navigation";
@@ -12,6 +22,7 @@ import { HiUsers } from "react-icons/hi";
 import { useRouter } from "next-nprogress-bar";
 import { FiDelete } from "react-icons/fi";
 import Cookies from "js-cookie";
+import EditPackage from "./EditViews/Package";
 
 function UserPackage({
   packageType,
@@ -19,12 +30,14 @@ function UserPackage({
   others,
   userId,
   packageDescription,
+  dbPackages,
 }: {
   packageType: ({ properties: Property[] } & Package) | null | undefined;
   isPDFView?: boolean;
   others?: string | null;
   userId: string | undefined;
   packageDescription: string | undefined | null;
+  dbPackages?: ({ User: User[] } & Package)[];
 }) {
   const [displayParseHTML, setDisplayParseHTML] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
@@ -89,6 +102,8 @@ function UserPackage({
     }
   };
 
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+
   return (
     <div className="flex flex-col gap-3">
       <div className="flex items-center justify-between">
@@ -110,7 +125,27 @@ function UserPackage({
               }}
               radius="none"
               variant="light"
-              className="hover:!bg-gray-100"
+              className="hover:!bg-gray-100 hidden md:flex"
+            >
+              Choose a package
+            </Button>
+
+            <Button
+              endContent={
+                <RiEdit2Line
+                  size={20}
+                  className="cursor-pointer text-blue-500"
+                />
+              }
+              onClick={() => {
+                router.replace(
+                  pathname + "?" + createQueryString("edit", "package")
+                );
+                onOpen();
+              }}
+              radius="none"
+              variant="light"
+              className="hover:!bg-gray-100 md:hidden"
             >
               Choose a package
             </Button>
@@ -138,6 +173,28 @@ function UserPackage({
 
         {isPDFView && <div></div>}
       </div>
+
+      <Modal
+        radius="none"
+        isOpen={isOpen}
+        placement="bottom"
+        onOpenChange={onOpenChange}
+      >
+        <ModalContent className="h-[500px] overflow-y-scroll">
+          {(onClose) => (
+            <>
+              <ModalHeader className="flex border-b flex-col gap-1">
+                Update package
+              </ModalHeader>
+              <ModalBody className="!p-0">
+                {dbPackages && (
+                  <EditPackage dbPackages={dbPackages}></EditPackage>
+                )}
+              </ModalBody>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
 
       {!packageType && !others && (
         <div className="flex justify-between items-center">

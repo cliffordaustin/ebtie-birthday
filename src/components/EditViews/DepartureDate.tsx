@@ -33,10 +33,12 @@ function DepartureDate({ departureDate }: { departureDate: Date | undefined }) {
     }
   };
   return (
-    <div className="p-3">
-      <h1 className="font-semibold text-xl my-3">Update your departure date</h1>
+    <div className="md:p-3">
+      <h1 className="font-semibold text-xl my-3 md:block hidden">
+        Update your departure date
+      </h1>
       <DayPicker
-        className="bg-white shadow border p-2 rounded-none mt-2"
+        className="md:bg-white md:shadow md:border md:p-2 rounded-none mt-2"
         mode="single"
         selected={selected}
         defaultMonth={selected}
@@ -62,8 +64,9 @@ function DepartureDate({ departureDate }: { departureDate: Date | undefined }) {
           isLoading={loading}
           onClick={updateDepartureDate}
           radius="none"
-          color="primary"
+          color={selected ? "primary" : "default"}
           className="text-white w-full"
+          disabled={!selected}
         >
           Update
         </Button>

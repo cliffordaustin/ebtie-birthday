@@ -1,0 +1,2 @@
+-- AlterEnum
+ALTER TYPE "PaymentMethods" ADD VALUE 'REVOLUT_TRANSFERWISE';

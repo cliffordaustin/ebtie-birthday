@@ -42,7 +42,10 @@ function Login() {
   };
   return (
     <div className="md:h-screen h-[80vh] w-screen px-4 md:px-0 flex items-center justify-center">
-      <BackgroundGradient className="max-w-[470px] p-4 sm:p-10 bg-white">
+      <BackgroundGradient
+        containerClassName="hidden md:block"
+        className="max-w-[470px] p-10 bg-white"
+      >
         <div className="flex flex-col gap-2">
           <h1 className="font-bold text-3xl">Enter your email to continue</h1>
           <p>Use the email you provided in the response form.</p>
@@ -77,7 +80,44 @@ function Login() {
         </Button>
       </BackgroundGradient>
 
-      <BackgroundBeams />
+      <div className="max-w-[470px] md:hidden p-4 sm:p-10">
+        <div className="flex flex-col gap-2">
+          <h1 className="font-bold text-3xl">Enter your email to continue</h1>
+          <p>Use the email you provided in the response form.</p>
+        </div>
+
+        <div className="mt-6">
+          <Input
+            isRequired
+            type="email"
+            name="email"
+            label="Email"
+            radius="none"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            onBlur={() => setUserNotFound(false)}
+            className="w-full"
+            isInvalid={userNotFound}
+            errorMessage={userNotFound ? "User not found" : ""}
+          />
+        </div>
+
+        <Button
+          type="submit"
+          radius="none"
+          color="primary"
+          isLoading={loading}
+          size="lg"
+          onClick={checkUser}
+          className="w-full mt-6 text-white"
+        >
+          Continue
+        </Button>
+      </div>
+
+      {/* <div className="hidden md:block">
+        <BackgroundBeams />
+      </div> */}
     </div>
   );
 }

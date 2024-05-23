@@ -78,9 +78,11 @@ async function UserProfile({
 
   return (
     <div>
-      <ContactUs></ContactUs>
-      <div className="w-screen h-screen p-5 flex gap-4">
-        <div className="w-[60%] py-5 pl-6 pr-4 overflow-y-scroll bg-white border shadow">
+      <div className="bg-white z-[50] sticky top-0 left-0 right-0 w-full">
+        <ContactUs></ContactUs>
+      </div>
+      <div className="w-screen md:h-screen md:p-5 flex gap-4">
+        <div className="w-full md:w-[55%] lg:w-[60%] py-5 md:px-5 px-6 md:pl-6 md:pr-4 overflow-y-scroll md:bg-white md:border md:shadow">
           <ScrollShadow>
             <div className="flex justify-between items-center">
               <div className="flex items-center gap-2">
@@ -101,16 +103,27 @@ async function UserProfile({
                 </div>
 
                 <div className="flex flex-col gap-1">
-                  <h1 className="text-2xl font-bold">{user?.name}</h1>
+                  <h1 className="text-xl md:text-2xl font-bold">
+                    {user?.name}
+                  </h1>
                   <p className="text-gray-500">{user?.email}</p>
+                  <div className="lg:hidden">
+                    <PDF
+                      user={user}
+                      allTripAddOns={allTripAddOns}
+                      allOnSiteTripAddOns={allOnSiteTripAddOns}
+                    />
+                  </div>
                 </div>
               </div>
 
-              <PDF
-                user={user}
-                allTripAddOns={allTripAddOns}
-                allOnSiteTripAddOns={allOnSiteTripAddOns}
-              />
+              <div className="hidden lg:block">
+                <PDF
+                  user={user}
+                  allTripAddOns={allTripAddOns}
+                  allOnSiteTripAddOns={allOnSiteTripAddOns}
+                />
+              </div>
             </div>
 
             <Divider className="my-4" />
@@ -130,6 +143,7 @@ async function UserProfile({
                   others={user?.others}
                   packageType={user?.package}
                   packageDescription={user.doubleRoomDescription}
+                  dbPackages={packages}
                 />
               </div>
 
@@ -202,7 +216,7 @@ async function UserProfile({
             </div>
           </ScrollShadow>
         </div>
-        <div className="w-[40%] overflow-y-scroll bg-white border shadow">
+        <div className="md:w-[45%] lg:w-[40%] hidden md:block overflow-y-scroll bg-white border shadow">
           {searchParams["edit"] === "departureDate" && user?.departureDate && (
             <DepartureDate departureDate={user?.departureDate}></DepartureDate>
           )}
