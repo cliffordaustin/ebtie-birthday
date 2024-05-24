@@ -42,6 +42,7 @@ export const HoverEffect = ({
   items: ({
     properties: Property[];
     User: User[];
+    userPackages: User[];
   } & Package)[];
   packageRef: React.RefObject<HTMLDivElement>;
   className?: string;
@@ -64,15 +65,17 @@ export const HoverEffect = ({
           className="w-full sm:w-[48%] lg:w-1/3 relative group block p-2 h-full"
         >
           <Card item={item}>
-            {item.availableVolume - item.User.length > 0 && (
+            {item.availableVolume - item.userPackages.length > 0 && (
               <p className="text-sm text-gray-500">
-                {item.availableVolume - item.User.length}{" "}
-                {item.availableVolume - item.User.length > 1 ? "slots" : "slot"}{" "}
+                {item.availableVolume - item.userPackages.length}{" "}
+                {item.availableVolume - item.userPackages.length > 1
+                  ? "slots"
+                  : "slot"}{" "}
                 left
               </p>
             )}
 
-            {item.availableVolume - item.User.length < 1 && (
+            {item.availableVolume - item.userPackages.length < 1 && (
               <p className="text-sm text-gray-500">No available slots left</p>
             )}
             <CardTitle>{item.name}</CardTitle>
@@ -80,7 +83,7 @@ export const HoverEffect = ({
               ${item.price.toLocaleString()}
             </h1>
             <div className="my-3">
-              {item.availableVolume - item.User.length > 0 && (
+              {item.availableVolume - item.userPackages.length > 0 && (
                 <Button
                   color="primary"
                   radius="none"
@@ -94,7 +97,7 @@ export const HoverEffect = ({
                 </Button>
               )}
 
-              {item.availableVolume - item.User.length < 1 && (
+              {item.availableVolume - item.userPackages.length < 1 && (
                 <Button radius="none" className="w-full text-gray-800" disabled>
                   Sold out
                 </Button>

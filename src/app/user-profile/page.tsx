@@ -21,6 +21,7 @@ import { redirect } from "next/navigation";
 import PaymentPlan from "@/components/PaymentPlan";
 import { BsFillInfoCircleFill } from "react-icons/bs";
 import Link from "next/link";
+import Logout from "@/components/Logout";
 
 async function UserProfile({
   searchParams,
@@ -38,6 +39,11 @@ async function UserProfile({
       tripAddOns: true,
       onSiteTripAddOns: true,
       dietryRestrictions: true,
+      userPackages: {
+        include: {
+          properties: true,
+        },
+      },
       CardPaymentLink: true,
       package: {
         include: {
@@ -73,6 +79,7 @@ async function UserProfile({
     include: {
       properties: true,
       User: true,
+      userPackages: true,
     },
   });
 
@@ -107,6 +114,7 @@ async function UserProfile({
                     {user?.name}
                   </h1>
                   <p className="text-gray-500">{user?.email}</p>
+                  <Logout />
                   <div className="lg:hidden">
                     <PDF
                       user={user}
@@ -141,7 +149,7 @@ async function UserProfile({
                 <Package
                   userId={user.id}
                   others={user?.others}
-                  packageType={user?.package}
+                  packageType={user?.userPackages}
                   packageDescription={user.doubleRoomDescription}
                   dbPackages={packages}
                 />
@@ -210,6 +218,7 @@ async function UserProfile({
               <Link
                 href="https://docs.google.com/presentation/d/1aqy-FGL02KV3Or0O-vz9uO9cCuzZP7Cyytu5VOgXuEQ/edit#slide=id.g2c25874eeee_0_0"
                 className="ml-2 mt-2 line-clamp-1 text-blue-600 hover:underline"
+                target="_blank"
               >
                 https://docs.google.com/presentation/d/1aqy-FGL02KV3Or0O-vz9uO9cCuzZP7Cyytu5VOgXuEQ/edit#slide=id.g2c25874eeee_0_0
               </Link>

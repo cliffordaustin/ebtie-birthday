@@ -15,6 +15,7 @@ function Main({
   packages: ({
     properties: Property[];
     User: User[];
+    userPackages: User[];
   } & Package)[];
 }) {
   const packageRef = useRef<HTMLDivElement>(null);

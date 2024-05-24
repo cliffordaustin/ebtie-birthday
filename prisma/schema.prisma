@@ -51,6 +51,7 @@ model User {
   others                String?
   package               Package?            @relation(fields: [packageId], references: [id])
   packageId             String?
+  userPackages          Package[]           @relation("UserPackages")
   CardPaymentLink       CardPaymentLink[]
 }
 
@@ -88,6 +89,7 @@ model Package {
   availableVolume Int        @default(0)
   properties      Property[]
   User            User[]
+  userPackages    User[]     @relation("UserPackages")
 }
 
 model Property {

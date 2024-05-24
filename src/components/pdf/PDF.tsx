@@ -33,7 +33,9 @@ function PDF({
   allOnSiteTripAddOns,
 }: {
   user:
-    | ({ package: ({ properties: Property[] } & Package) | null } & User & {
+    | ({ package: ({ properties: Property[] } & Package) | null } & {
+        userPackages: ({ properties: Property[] } & Package)[] | null;
+      } & User & {
           tripAddOns: TripAddOn[];
           onSiteTripAddOns: TripAddOn[];
           dietryRestrictions: DietryRestriction[];
@@ -136,7 +138,7 @@ function PDF({
                 <UserPackage
                   userId={user.id}
                   isPDFView={true}
-                  packageType={user?.package}
+                  packageType={user?.userPackages}
                   packageDescription={user.doubleRoomDescription}
                 />
               </div>

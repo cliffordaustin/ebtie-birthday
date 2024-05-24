@@ -6,9 +6,7 @@ import { Property } from "@prisma/client";
 const sortProperties = (properties: Property[]): Property[] => {
   const order = ["Trademark", "Enkewa", "Nomad"];
   return properties.sort((a, b) => {
-    return (
-      order.indexOf(a.name.toLowerCase()) - order.indexOf(b.name.toLowerCase())
-    );
+    return order.indexOf(a.name) - order.indexOf(b.name);
   });
 };
 
@@ -17,6 +15,7 @@ export default async function Home() {
     include: {
       properties: true,
       User: true,
+      userPackages: true,
     },
     orderBy: {
       price: "asc",

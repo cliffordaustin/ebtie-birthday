@@ -34,7 +34,11 @@ export async function POST(request: Request) {
         },
 
         data: {
-          packageId: body.packageId,
+          userPackages: {
+            connect: {
+              id: body.packageId,
+            },
+          },
         },
       });
 
@@ -61,6 +65,7 @@ export async function GET(request: Request) {
       },
       include: {
         User: true,
+        userPackages: true,
       },
     });
 
@@ -79,7 +84,11 @@ export async function DELETE(request: Request) {
         id: body.userId,
       },
       data: {
-        packageId: null,
+        userPackages: {
+          disconnect: {
+            id: body.packageId,
+          },
+        },
       },
     });
 

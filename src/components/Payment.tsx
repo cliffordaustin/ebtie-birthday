@@ -65,7 +65,7 @@ function Payment({
     } catch (error) {
       setLoading(false);
     } finally {
-      setPaymentOption(new Set([]));
+      // setPaymentOption(new Set([]));
       setLoading(false);
       router.refresh();
     }
@@ -283,6 +283,114 @@ function Payment({
               </div>
             </div>
           )}
+
+        {paymentMethods === "CARD" && !paymentOption && (
+          <div className="flex flex-col gap-1">
+            <div className="flex items-center gap-2">
+              <div className="w-1.5 h-1.5 rounded-full bg-gray-600"></div>
+              <p className="text-sm text-gray-600">
+                You will receive a link to a payment agreement to sign via
+                docusign.
+              </p>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <div className="w-1.5 h-1.5 rounded-full bg-gray-600"></div>
+              <p className="text-sm text-gray-600">
+                You will receive credit card links based on your payment plan.
+              </p>
+            </div>
+          </div>
+        )}
+
+        {paymentMethods === "BANK" && !paymentOption && (
+          <div className="flex flex-col gap-1">
+            <div className="flex items-center gap-2">
+              <div className="w-1.5 h-1.5 rounded-full bg-gray-600"></div>
+              <p className="text-sm text-gray-600">
+                You will receive a link to a payment agreement to sign via
+                docusign.
+              </p>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <div className="w-1.5 h-1.5 rounded-full bg-gray-600"></div>
+              <p className="text-sm text-gray-600">
+                You can proceed to make a payment to the bank account below
+                based on your payment plan.
+              </p>
+            </div>
+
+            <p className="mt-2">Bank details here</p>
+            <Link
+              href="https://drive.google.com/file/d/1EvFKBut_rqbeM_YgSOCks0BzXbnb0y-c/view?usp=sharing"
+              target="_blank"
+              className="text-blue-600 hover:underline"
+            >
+              https://drive.google.com/file/d/1EvFKBut_rqbeM_YgSOCks0BzXbnb0y-c/view?usp=sharing
+            </Link>
+          </div>
+        )}
+
+        {paymentMethods === "REVOLUT_TRANSFERWISE" && !paymentOption && (
+          <div className="flex flex-col gap-1">
+            <div className="">
+              <p className="text-sm text-gray-600 ml-1">
+                Revolut (You can either do a direct transfer if you have revolut{" "}
+                <b>@karenmbi</b> or transfer using the details below)
+              </p>
+
+              <p className="text-sm text-gray-600 ml-1 mt-2">
+                Beneficiary: Karen Mwaura
+                <br />
+                IBAN: GB23 REVO 0099 7088 7578 63
+                <br />
+                BIC / SWIFT code: REVOGB21
+                <br />
+                Bank Name and Address: Revolut Ltd, 7 Westferry Circus, E14 4HD,
+                London, United Kingdom
+                <br />
+                Correspondent BIC: CHASGB2L
+                <br />
+              </p>
+            </div>
+
+            <div className="mt-2">
+              <p className="text-sm text-gray-600 ml-1">
+                Transferwise (You can either do a direct transfer to{" "}
+                <Link
+                  className="text-blue-600 hover:underline"
+                  href="https://wise.com/pay/me/karena213"
+                  target="_blank"
+                >
+                  https://wise.com/pay/me/karena213
+                </Link>{" "}
+                if you have wise or transfer using the details below)
+              </p>
+
+              <p className="text-sm text-gray-600 ml-1 mt-2">
+                Account holder: Karen Ndiko Mwaura
+                <br />
+                ACH and Wire routing number: 084009519
+                <br />
+                Account number: 9600003178812512
+                <br />
+                Account type: Checking
+                <br />
+                Currency: USD
+                <br />
+                Wise&apos;s address: 30 W. 26th Street, Sixth Floor
+                <br />
+                New York NY 10010
+                <br />
+                United States
+                <br />
+                Email: ndikomwaura77@gmail.com
+                <br />
+              </p>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

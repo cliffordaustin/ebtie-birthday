@@ -25,7 +25,7 @@ import "swiper/css/navigation";
 function EditPackage({
   dbPackages,
 }: {
-  dbPackages: ({ User: User[] } & Package)[];
+  dbPackages: ({ User: User[] } & { userPackages: User[] } & Package)[];
 }) {
   const [value, setValue] = React.useState<any>(new Set([]));
 
@@ -55,10 +55,13 @@ function EditPackage({
     );
 
     if (packageRes.ok) {
-      const { packageUnique }: { packageUnique: { User: User[] } & Package } =
-        await packageRes.json();
+      const {
+        packageUnique,
+      }: {
+        packageUnique: { User: User[] } & { userPackages: User[] } & Package;
+      } = await packageRes.json();
 
-      if (packageUnique.User.length === packageUnique.availableVolume) {
+      if (packageUnique.userPackages.length === packageUnique.availableVolume) {
         toast.error("Sorry, Package is not available");
         setLoading(false);
         setValue(new Set([]));
@@ -96,7 +99,9 @@ function EditPackage({
   );
 
   const [packages, setPackages] =
-    React.useState<({ User: User[] } & Package)[]>(dbPackages);
+    React.useState<({ User: User[] } & { userPackages: User[] } & Package)[]>(
+      dbPackages
+    );
 
   const [selectedPackage, setSelectedPackage] =
     React.useState<Package | null>();
@@ -113,7 +118,7 @@ function EditPackage({
 
   React.useEffect(() => {
     const filteredPackages = packages.filter(
-      (item) => item.availableVolume - item.User.length > 0
+      (item) => item.availableVolume - item.userPackages.length > 0
     );
     setPackages([
       ...filteredPackages,
@@ -126,6 +131,7 @@ function EditPackage({
         availableVolume: 0,
         imageUrls: [],
         User: [],
+        userPackages: [],
       },
     ]);
   }, []);
