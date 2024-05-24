@@ -181,7 +181,10 @@ function UserPackage({
               </ModalHeader>
               <ModalBody className="!p-0">
                 {dbPackages && (
-                  <EditPackage dbPackages={dbPackages}></EditPackage>
+                  <EditPackage
+                    others={others}
+                    dbPackages={dbPackages}
+                  ></EditPackage>
                 )}
               </ModalBody>
             </>
@@ -194,14 +197,6 @@ function UserPackage({
           <p className="text-gray-500 text-sm text-center mt-3">
             No package created yet
           </p>
-        </div>
-      )}
-
-      {others && (!packageType || packageType.length === 0) && (
-        <div className="mt-4 flex flex-col gap-4 text-sm">
-          <h1 className="font-bold">Your requested trip plan</h1>
-
-          <p className="text-gray-500">{others}</p>
         </div>
       )}
 
@@ -507,6 +502,37 @@ function UserPackage({
             </div>
           </>
         ))}
+
+      <Divider className="my-4" />
+
+      {others && (
+        <div className="flex flex-col gap-4 text-base">
+          <div className="flex items-center justify-between">
+            <h1 className="font-bold">Your requested trip plan</h1>
+
+            <Button
+              onClick={() => {
+                router.replace(
+                  pathname + "?" + createQueryString("packageId", "others")
+                );
+              }}
+              radius="none"
+              variant="light"
+              className="hover:!bg-gray-100 !px-0 md:!px-4 !min-w-fit"
+              endContent={
+                <RiEdit2Line
+                  size={20}
+                  className="cursor-pointer text-blue-500"
+                ></RiEdit2Line>
+              }
+            >
+              Edit
+            </Button>
+          </div>
+
+          <p className="text-gray-500 whitespace-pre-line">{others}</p>
+        </div>
+      )}
     </div>
   );
 }

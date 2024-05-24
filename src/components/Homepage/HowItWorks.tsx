@@ -66,21 +66,24 @@ function HowItWorks({
           Please note: The property at the Coast has been upgraded to the Nomad
           Hotel in Diani where you will be staying in private villas. The
           package categories below are limited by the number of rooms available
-          at this hotel. You can choose a package as is or contact us to change
-          the room level, which is only possible at Trademark and Enkewa (on a
-          sharing/non-sharing basis only).
+          at this hotel.
         </p>
 
         <p className="text-wrap text-center">
-          To access your user profile, put in the email you used in the response
+          {/* To access your user profile, put in the email you used in the response
           form sent by Ebitie and you should be able to access your account. If
           it doesn’t work, <ContactUs isTextOnly={true}></ContactUs> and we’ll
-          help you log in.
+          help you log in. */}
+          To access your user profile, put in the email you{" "}
+          <b>used in the RSVP form</b> and you should be able to access your
+          account. If it doesn’t work, <ContactUs isTextOnly={true}></ContactUs>{" "}
+          and we’ll help you log in.
         </p>
 
-        <p>
-          For those participating in only a portion of the trip, please contact
-          us to get a custom quote.
+        <p className="text-center">
+          For those participating in only a portion of the trip, please select
+          {' "other"'} as your package option and we will send you a custom
+          quote based on your profile.
         </p>
 
         <p>Looking forward to hosting you all!</p>

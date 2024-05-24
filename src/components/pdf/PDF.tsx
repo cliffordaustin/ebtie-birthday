@@ -133,7 +133,7 @@ function PDF({
 
             <Divider className="my-4" />
 
-            {user?.package && (
+            {user?.userPackages && user?.userPackages.length > 0 && (
               <div className="mt-4 flex flex-col gap-5 text-sm">
                 <UserPackage
                   userId={user.id}
@@ -144,14 +144,16 @@ function PDF({
               </div>
             )}
 
-            {!user?.package && !user?.others && (
-              <p className="text-gray-500 text-sm text-center mt-3">
-                No package added yet
-              </p>
-            )}
+            {user?.userPackages &&
+              user?.userPackages.length === 0 &&
+              !user?.others && (
+                <p className="text-gray-500 text-sm text-center mt-3">
+                  No package added yet
+                </p>
+              )}
 
-            {user?.others && !user.package && (
-              <div className="mt-4 flex flex-col gap-4 text-sm">
+            {user?.others && (
+              <div className="flex flex-col gap-4 text-sm">
                 <h1 className="font-bold">Your requested trip plan</h1>
 
                 <p className="text-gray-500">{user?.others}</p>

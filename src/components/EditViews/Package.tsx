@@ -24,8 +24,10 @@ import "swiper/css/navigation";
 
 function EditPackage({
   dbPackages,
+  others,
 }: {
   dbPackages: ({ User: User[] } & { userPackages: User[] } & Package)[];
+  others?: string | null;
 }) {
   const [value, setValue] = React.useState<any>(new Set([]));
 
@@ -136,7 +138,7 @@ function EditPackage({
     ]);
   }, []);
 
-  const [userPackage, setUserPackage] = React.useState("");
+  const [userPackage, setUserPackage] = React.useState(others || "");
 
   const updatePackageToOthers = async () => {
     setOthersLoading(true);

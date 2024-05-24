@@ -241,7 +241,10 @@ async function UserProfile({
               <DepartureInfo info={user?.departureFlightInfo}></DepartureInfo>
             )}
           {searchParams["edit"] === "package" && (
-            <EditPackage dbPackages={packages}></EditPackage>
+            <EditPackage
+              dbPackages={packages}
+              others={user.others}
+            ></EditPackage>
           )}
         </div>
       </div>
