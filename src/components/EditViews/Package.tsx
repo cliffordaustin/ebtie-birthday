@@ -133,6 +133,7 @@ function EditPackage({
         availableVolume: 0,
         imageUrls: [],
         User: [],
+        selectedPackages: 1,
         userPackages: [],
       },
     ]);
