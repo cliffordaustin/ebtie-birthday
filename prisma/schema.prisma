@@ -53,6 +53,8 @@ model User {
   packageId             String?
   userPackages          Package[]           @relation("UserPackages")
   CardPaymentLink       CardPaymentLink[]
+  yellow_fever_vaccine  Boolean             @default(false)
+  visa_received         Boolean             @default(false)
 }
 
 model DietryRestriction {
@@ -80,16 +82,17 @@ model TripAddOn {
 }
 
 model Package {
-  id              String     @id @default(cuid())
-  name            String     @db.VarChar(255)
-  description     String?
-  imageUrl        String?
-  imageUrls       String[]
-  price           Float
-  availableVolume Int        @default(0)
-  properties      Property[]
-  User            User[]
-  userPackages    User[]     @relation("UserPackages")
+  id               String     @id @default(cuid())
+  name             String     @db.VarChar(255)
+  description      String?
+  imageUrl         String?
+  imageUrls        String[]
+  price            Float
+  availableVolume  Int        @default(0)
+  properties       Property[]
+  User             User[]
+  userPackages     User[]     @relation("UserPackages")
+  selectedPackages Int        @default(1)
 }
 
 model Property {

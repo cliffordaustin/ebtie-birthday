@@ -22,6 +22,7 @@ import PaymentPlan from "@/components/PaymentPlan";
 import { BsFillInfoCircleFill } from "react-icons/bs";
 import Link from "next/link";
 import Logout from "@/components/Logout";
+import ImportantInfo from "@/components/ImportantInfo";
 
 async function UserProfile({
   searchParams,
@@ -222,6 +223,14 @@ async function UserProfile({
               >
                 https://docs.google.com/presentation/d/1aqy-FGL02KV3Or0O-vz9uO9cCuzZP7Cyytu5VOgXuEQ/edit#slide=id.g2c25874eeee_0_0
               </Link>
+
+              <Divider className="my-4" />
+
+              <h1 className="font-semibold mt-4 text-gray-800 text-xl">
+                Important Info
+              </h1>
+
+              <ImportantInfo user={user}></ImportantInfo>
             </div>
           </ScrollShadow>
         </div>

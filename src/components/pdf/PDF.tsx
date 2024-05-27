@@ -21,6 +21,7 @@ import { Ubuntu } from "next/font/google";
 import Payment from "../Payment";
 import PaymentPlan from "../PaymentPlan";
 import Link from "next/link";
+import ImportantInfo from "../ImportantInfo";
 
 const inter = Ubuntu({
   weight: ["400", "500", "300", "700"],
@@ -248,6 +249,14 @@ function PDF({
             >
               https://docs.google.com/presentation/d/1aqy-FGL02KV3Or0O-vz9uO9cCuzZP7Cyytu5VOgXuEQ/edit#slide=id.g2c25874eeee_0_0
             </Link>
+
+            <Divider className="my-4" />
+
+            <h1 className="font-semibold mt-4 text-gray-800 text-xl">
+              Important Info
+            </h1>
+
+            <ImportantInfo isPDFView={true} user={user}></ImportantInfo>
           </div>
         </div>
       </div>
