@@ -58,7 +58,8 @@ async function UserProfile({
 
   let allTripAddOns = tripAddOns.filter(
     (addon) =>
-      !user?.onSiteTripAddOns?.find((userAddon) => userAddon.id === addon.id)
+      !user?.onSiteTripAddOns?.find((userAddon) => userAddon.id === addon.id) &&
+      addon.advanceBookingRequired
   );
 
   //get all the trip addons excluding the ones in user.tripAddOns or the ones that has advanceBookingRequired as true
