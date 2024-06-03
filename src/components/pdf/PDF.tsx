@@ -180,8 +180,7 @@ function PDF({
             <Divider className="my-4" />
 
             <h1 className="font-semibold flex items-center gap-2 text-gray-800 text-lg">
-              Trip Addons (Must be booked in advance, per person, excludes
-              transport)
+              Trip Add-Ons (Prepaid, Per Person - added to your booking amount)
             </h1>
 
             {user?.tripAddOns && user.tripAddOns.length > 0 ? (
@@ -198,7 +197,7 @@ function PDF({
             <Divider className="my-4" />
 
             <h1 className="font-semibold flex items-center gap-2 text-gray-800 text-lg">
-              Trip Addons (Independently booked before or during the trip)
+              Trip Add-Ons (Book Independently Below)
             </h1>
 
             {user?.onSiteTripAddOns && user.onSiteTripAddOns.length > 0 ? (

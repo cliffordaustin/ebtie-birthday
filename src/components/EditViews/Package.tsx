@@ -241,7 +241,7 @@ function EditPackage({
             radius="none"
             className="w-full h-[300px] border-none after:bg-black after:inset-0 after:absolute after:bg-opacity-30"
           >
-            <div className="flex gap-2 flex-col">
+            {/* <div className="flex gap-2 flex-col">
               <h1 className="text-sm">Add to package</h1>
 
               <div className="flex items-center gap-2">
@@ -253,7 +253,7 @@ function EditPackage({
                   +
                 </div>
               </div>
-            </div>
+            </div> */}
             <CardHeader className="absolute z-10 bottom-1 flex-col !items-start">
               <p className="text-sm text-white/80 uppercase font-bold">
                 ${selectedPackage.price.toLocaleString()}

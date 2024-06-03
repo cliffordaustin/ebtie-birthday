@@ -7,6 +7,8 @@ import React from "react";
 import { FaPlus } from "react-icons/fa6";
 import { FiDelete } from "react-icons/fi";
 import Cookies from "js-cookie";
+import Link from "next/link";
+import { add } from "date-fns";
 
 function TripAddons({
   tripAddons,
@@ -90,9 +92,25 @@ function TripAddons({
           </div>
 
           <div className="flex items-center gap-1">
-            {addon.price ? (
+            {addon.price && !isOnSite ? (
               <p className="text-gray-600">${addon.price}</p>
             ) : null}
+            {isOnSite && !isPDFView && addon.link && (
+              <Link href={addon.link} target="_blank">
+                <Button
+                  className="text-white text-sm"
+                  color="primary"
+                  size="sm"
+                  radius="none"
+                  onClick={() => {}}
+                >
+                  Book now - ${addon.price ? addon.price : 0}
+                </Button>
+              </Link>
+            )}
+            {isOnSite && !isPDFView && !addon.link && (
+              <p className="text-gray-600">${addon.price ? addon.price : 0}</p>
+            )}
             {!isPDFView && (
               <Tooltip showArrow placement="bottom" content="Delete">
                 <Button

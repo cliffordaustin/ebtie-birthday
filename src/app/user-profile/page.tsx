@@ -169,8 +169,8 @@ async function UserProfile({
               <Divider className="my-4" />
 
               <h1 className="font-semibold flex items-center gap-2 text-gray-800 text-lg">
-                Trip Addons (Must be booked in advance, per person, excludes
-                transport)
+                Trip Add-Ons (Prepaid, Per Person - added to your booking
+                amount)
               </h1>
 
               <TripAddons
@@ -182,7 +182,7 @@ async function UserProfile({
               <Divider className="my-4" />
 
               <h1 className="font-semibold flex items-center gap-2 text-gray-800 text-lg">
-                Trip Addons (Independently booked before or during the trip)
+                Trip Add-Ons (Book Independently Below)
               </h1>
 
               <TripAddons
