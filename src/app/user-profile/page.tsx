@@ -22,6 +22,7 @@ import PaymentPlan from "@/components/PaymentPlan";
 import { BsFillInfoCircleFill } from "react-icons/bs";
 import Link from "next/link";
 import Logout from "@/components/Logout";
+import ImportantInfo from "@/components/ImportantInfo";
 
 async function UserProfile({
   searchParams,
@@ -228,6 +229,8 @@ async function UserProfile({
               <h1 className="font-semibold mt-4 text-gray-800 text-xl">
                 Important Info
               </h1>
+
+              <ImportantInfo user={user}></ImportantInfo>
             </div>
           </ScrollShadow>
         </div>
