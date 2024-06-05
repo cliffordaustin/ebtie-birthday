@@ -1,5 +1,4 @@
 "use client";
-
 import { Button, Divider, Select, SelectItem } from "@nextui-org/react";
 import { CardPaymentLink, PaymentMethods, PaymentPlan } from "@prisma/client";
 import Link from "next/link";
