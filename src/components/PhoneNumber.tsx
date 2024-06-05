@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Button, Input } from "@nextui-org/react";
+import { Button } from "@nextui-org/react";
 import PhoneInput from "react-phone-number-input";
 import CustomPhoneNumber from "../components/ui/phone-number";
 import Cookies from "js-cookie";
