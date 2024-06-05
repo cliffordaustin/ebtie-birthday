@@ -32,7 +32,7 @@ function Itinerary() {
     {
       heading: "🚘 Mon, October 21st - Tue, 22nd",
       description:
-        "[Half trip] You can depart the evening of the 21st or the morning of 22nd from Nairobi. If you’re joining the second half of the trip - plan to arrive in Nairobi on the 21st.",
+        "You’ll be driven back to Nairobi after breakfast. Spend the night there. Explore more of Nairobi. Checkout the alchemist or have dinner at ankole restaurant. [Half trip] You can depart the evening of the 21st or the morning of the 22nd from Nairobi. If you're joining the second half of the trip - plan to arrive in Nairobi on the 21st.",
       subDescription: "Overnight Trademark Hotel, 1 Night",
     },
 

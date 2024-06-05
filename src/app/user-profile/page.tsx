@@ -135,11 +135,13 @@ async function UserProfile({
                     {user?.name}
                   </h1>
                   <p className="text-gray-500">{user?.email}</p>
+                  <p className="text-gray-500">{user?.phone}</p>
                   <div className="flex items-center gap-2">
                     <ProfilePic></ProfilePic>
                     <div className="w-[1px] h-[20px] bg-gray-500"></div>
                     <Logout />
                   </div>
+
                   <div className="lg:hidden">
                     <PDF
                       user={user}
@@ -158,6 +160,7 @@ async function UserProfile({
                 />
               </div>
             </div>
+            <PhoneNumber user={user}></PhoneNumber>
 
             <Divider className="my-4" />
 
@@ -255,8 +258,6 @@ async function UserProfile({
               </h1>
 
               <ImportantInfo user={user}></ImportantInfo>
-
-              <PhoneNumber user={user}></PhoneNumber>
             </div>
           </ScrollShadow>
         </div>

@@ -8,6 +8,7 @@ const PhoneInput = (props: any, ref: React.ForwardedRef<HTMLInputElement>) => {
       {...props}
       InputProps={{}}
       inputRef={ref}
+      size="small"
       fullWidth
       label="Phone Number"
       variant="filled"

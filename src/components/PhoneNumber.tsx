@@ -41,12 +41,12 @@ function PhoneNumber({ user }: { user: User | undefined }) {
   return (
     <div className="flex flex-col justify-center gap-2">
       <div className="flex gap-4 mt-6">
-        <div className="w-[350px]">
+        <div className="w-[300px]">
           <PhoneInput
             placeholder="Enter phone number"
             value={phone}
             onChange={setPhone}
-            defaultCountry="KE"
+            defaultCountry="US"
             focusInputOnCountrySelection={false}
             inputComponent={CustomPhoneNumber}
           />
@@ -57,7 +57,7 @@ function PhoneNumber({ user }: { user: User | undefined }) {
           variant="solid"
           size="lg"
           radius="none"
-          className="text-white py-[27px]"
+          className="text-white py-[18px]"
           onClick={updatePhoneNumber}
           isLoading={loading}
           disabled={loading}

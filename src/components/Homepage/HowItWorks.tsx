@@ -81,9 +81,9 @@ function HowItWorks({
         </p>
 
         <p className="text-center">
-          Packages cover dates between the 18th and 26th; extra nights are
-          charged separately. Partial trip packages will cover only the relevant
-          dates within this period.
+          The full trip packages cover dates between the 18th and 26th October;
+          extra nights are charged separately. Partial trip packages will cover
+          only the relevant dates within this period.
         </p>
 
         <p>Looking forward to hosting you all!</p>

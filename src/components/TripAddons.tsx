@@ -98,7 +98,7 @@ function TripAddons({
             {isOnSite && !isPDFView && addon.link && (
               <Link href={addon.link} target="_blank">
                 <Button
-                  className="text-white text-sm"
+                  className="text-white text-sm w-[130px]"
                   color="primary"
                   size="sm"
                   radius="none"
@@ -148,7 +148,7 @@ function TripAddons({
             <Select
               label="Addons"
               variant="bordered"
-              placeholder="Select an addon"
+              placeholder="Select activity"
               selectedKeys={addon}
               className="max-w-60"
               classNames={{

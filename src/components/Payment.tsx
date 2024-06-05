@@ -177,13 +177,6 @@ function Payment({
               <div className="w-1.5 h-1.5 rounded-full bg-gray-600"></div>
               <p className="text-sm text-gray-600">
                 You will receive credit card links based on your payment plan.
-              </p>
-            </div>
-
-            <div className="flex items-center gap-2">
-              <div className="w-1.5 h-1.5 rounded-full bg-gray-600"></div>
-              <p className="text-sm text-gray-600">
-                You will receive credit card links based on your payment plan.
                 See the full payment terms{" "}
                 <Link
                   href="https://drive.google.com/file/d/1h6EqjUh7so3m3yW1xgyWD_9cspmzhc77/view"
@@ -255,13 +248,6 @@ function Payment({
               <div className="w-1.5 h-1.5 rounded-full bg-gray-600"></div>
               <p className="text-sm text-gray-600">
                 You will receive credit card links based on your payment plan.
-              </p>
-            </div>
-
-            <div className="flex items-center gap-2">
-              <div className="w-1.5 h-1.5 rounded-full bg-gray-600"></div>
-              <p className="text-sm text-gray-600">
-                You will receive credit card links based on your payment plan.
                 See the full payment terms{" "}
                 <Link
                   href="https://drive.google.com/file/d/1h6EqjUh7so3m3yW1xgyWD_9cspmzhc77/view"
@@ -280,7 +266,8 @@ function Payment({
             <div className="flex items-center gap-2">
               <div className="w-1.5 h-1.5 rounded-full bg-gray-600"></div>
               <p className="text-sm text-gray-600">
-                You will receive credit card links based on your payment plan.
+                You can proceed to make a payment to the bank account below
+                based on your payment plan.
               </p>
             </div>
 
