@@ -30,10 +30,6 @@ function Payment({
   }[] = [
     { id: "CARD", name: "Card" },
     { id: "BANK", name: "Bank" },
-    {
-      id: "REVOLUT_TRANSFERWISE",
-      name: "Revolut/Transferwise",
-    },
   ];
 
   const updatePaymentOption = async () => {
@@ -180,8 +176,7 @@ function Payment({
             <div className="flex items-center gap-2">
               <div className="w-1.5 h-1.5 rounded-full bg-gray-600"></div>
               <p className="text-sm text-gray-600">
-                You will receive a link to a payment agreement to sign via
-                docusign.
+                You will receive credit card links based on your payment plan.
               </p>
             </div>
 
@@ -189,6 +184,14 @@ function Payment({
               <div className="w-1.5 h-1.5 rounded-full bg-gray-600"></div>
               <p className="text-sm text-gray-600">
                 You will receive credit card links based on your payment plan.
+                See the full payment terms{" "}
+                <Link
+                  href="https://drive.google.com/file/d/1h6EqjUh7so3m3yW1xgyWD_9cspmzhc77/view"
+                  target="_blank"
+                  className="text-blue-600 hover:underline"
+                >
+                  here
+                </Link>
               </p>
             </div>
           </div>
@@ -199,98 +202,59 @@ function Payment({
             <div className="flex items-center gap-2">
               <div className="w-1.5 h-1.5 rounded-full bg-gray-600"></div>
               <p className="text-sm text-gray-600">
-                You will receive a link to a payment agreement to sign via
-                docusign.
-              </p>
-            </div>
-
-            <div className="flex items-center gap-2">
-              <div className="w-1.5 h-1.5 rounded-full bg-gray-600"></div>
-              <p className="text-sm text-gray-600">
                 You can proceed to make a payment to the bank account below
                 based on your payment plan.
               </p>
             </div>
 
-            <p className="mt-2">Bank details here</p>
-            <Link
-              href="https://drive.google.com/file/d/1EvFKBut_rqbeM_YgSOCks0BzXbnb0y-c/view?usp=sharing"
-              target="_blank"
-              className="text-blue-600 hover:underline"
-            >
-              https://drive.google.com/file/d/1EvFKBut_rqbeM_YgSOCks0BzXbnb0y-c/view?usp=sharing
-            </Link>
+            <div className="mt-2 text-sm text-gray-600">
+              <span>Account Name: Numinous Holdings Limited</span>
+              <br />
+              <span>
+                Bank Name: Standard Chartered Bank Kenya Limited Bank Branch:
+                Chiromo
+              </span>
+              <br />
+              <span>Branch Code: 02084</span> <br />
+              <span>SWIFT Code: SCBLKENXXXX</span> <br />
+              <span>USD Account Number: 8702479992200</span> <br />
+              <span>Account Currency: USD</span> <br />
+              <span>
+                Email:{" "}
+                <Link
+                  href="mailto:ndiko@winda.guide"
+                  className="text-blue-600 hover:underline"
+                  target="_blank"
+                >
+                  ndiko@winda.guide
+                </Link>
+              </span>{" "}
+              <br />
+              <span>
+                Physical address: Peponi gardens road, P.O. Box 1345, 00606,
+                Westlands, Nairobi, Kenya
+              </span>
+            </div>
+
+            <p className="text-sm text-gray-600 mt-2">
+              See the full payment terms{" "}
+              <Link
+                href="https://drive.google.com/file/d/1h6EqjUh7so3m3yW1xgyWD_9cspmzhc77/view"
+                target="_blank"
+                className="text-blue-600 hover:underline"
+              >
+                here
+              </Link>
+            </p>
           </div>
         )}
-
-        {paymentOption &&
-          paymentOption?.anchorKey === "REVOLUT_TRANSFERWISE" && (
-            <div className="flex flex-col gap-1">
-              <div className="">
-                <p className="text-sm text-gray-600 ml-1">
-                  Revolut (You can either do a direct transfer if you have
-                  revolut <b>@karenmbi</b> or transfer using the details below)
-                </p>
-
-                <p className="text-sm text-gray-600 ml-1 mt-2">
-                  Beneficiary: Karen Mwaura
-                  <br />
-                  IBAN: GB23 REVO 0099 7088 7578 63
-                  <br />
-                  BIC / SWIFT code: REVOGB21
-                  <br />
-                  Bank Name and Address: Revolut Ltd, 7 Westferry Circus, E14
-                  4HD, London, United Kingdom
-                  <br />
-                  Correspondent BIC: CHASGB2L
-                  <br />
-                </p>
-              </div>
-
-              <div className="mt-2">
-                <p className="text-sm text-gray-600 ml-1">
-                  Transferwise (You can either do a direct transfer to{" "}
-                  <Link
-                    className="text-blue-600 hover:underline"
-                    href="https://wise.com/pay/me/karena213"
-                    target="_blank"
-                  >
-                    https://wise.com/pay/me/karena213
-                  </Link>{" "}
-                  if you have wise or transfer using the details below)
-                </p>
-
-                <p className="text-sm text-gray-600 ml-1 mt-2">
-                  Account holder: Karen Ndiko Mwaura
-                  <br />
-                  ACH and Wire routing number: 084009519
-                  <br />
-                  Account number: 9600003178812512
-                  <br />
-                  Account type: Checking
-                  <br />
-                  Currency: USD
-                  <br />
-                  Wise&apos;s address: 30 W. 26th Street, Sixth Floor
-                  <br />
-                  New York NY 10010
-                  <br />
-                  United States
-                  <br />
-                  Email: ndikomwaura77@gmail.com
-                  <br />
-                </p>
-              </div>
-            </div>
-          )}
 
         {paymentMethods === "CARD" && !paymentOption && (
           <div className="flex flex-col gap-1">
             <div className="flex items-center gap-2">
               <div className="w-1.5 h-1.5 rounded-full bg-gray-600"></div>
               <p className="text-sm text-gray-600">
-                You will receive a link to a payment agreement to sign via
-                docusign.
+                You will receive credit card links based on your payment plan.
               </p>
             </div>
 
@@ -298,6 +262,14 @@ function Payment({
               <div className="w-1.5 h-1.5 rounded-full bg-gray-600"></div>
               <p className="text-sm text-gray-600">
                 You will receive credit card links based on your payment plan.
+                See the full payment terms{" "}
+                <Link
+                  href="https://drive.google.com/file/d/1h6EqjUh7so3m3yW1xgyWD_9cspmzhc77/view"
+                  target="_blank"
+                  className="text-blue-600 hover:underline"
+                >
+                  here
+                </Link>
               </p>
             </div>
           </div>
@@ -308,87 +280,45 @@ function Payment({
             <div className="flex items-center gap-2">
               <div className="w-1.5 h-1.5 rounded-full bg-gray-600"></div>
               <p className="text-sm text-gray-600">
-                You will receive a link to a payment agreement to sign via
-                docusign.
+                You will receive credit card links based on your payment plan.
               </p>
             </div>
 
-            <div className="flex items-center gap-2">
-              <div className="w-1.5 h-1.5 rounded-full bg-gray-600"></div>
-              <p className="text-sm text-gray-600">
-                You can proceed to make a payment to the bank account below
-                based on your payment plan.
-              </p>
+            <div className="mt-2 text-sm text-gray-600">
+              <span>Account Name: Numinous Holdings Limited</span>
+              <br />
+              <span>
+                Bank Name: Standard Chartered Bank Kenya Limited Bank Branch:
+                Chiromo
+              </span>
+              <br />
+              <span>Branch Code: 02084</span> <br />
+              <span>SWIFT Code: SCBLKENXXXX</span> <br />
+              <span>USD Account Number: 8702479992200</span> <br />
+              <span>Account Currency: USD</span> <br />
+              <span>
+                Email:{" "}
+                <Link href="mailto:ndiko@winda.guide" target="_blank">
+                  ndiko@winda.guide
+                </Link>
+              </span>{" "}
+              <br />
+              <span>
+                Physical address: Peponi gardens road, P.O. Box 1345, 00606,
+                Westlands, Nairobi, Kenya
+              </span>
             </div>
 
-            <p className="mt-2">Bank details here</p>
-            <Link
-              href="https://drive.google.com/file/d/1EvFKBut_rqbeM_YgSOCks0BzXbnb0y-c/view?usp=sharing"
-              target="_blank"
-              className="text-blue-600 hover:underline"
-            >
-              https://drive.google.com/file/d/1EvFKBut_rqbeM_YgSOCks0BzXbnb0y-c/view?usp=sharing
-            </Link>
-          </div>
-        )}
-
-        {paymentMethods === "REVOLUT_TRANSFERWISE" && !paymentOption && (
-          <div className="flex flex-col gap-1">
-            <div className="">
-              <p className="text-sm text-gray-600 ml-1">
-                Revolut (You can either do a direct transfer if you have revolut{" "}
-                <b>@karenmbi</b> or transfer using the details below)
-              </p>
-
-              <p className="text-sm text-gray-600 ml-1 mt-2">
-                Beneficiary: Karen Mwaura
-                <br />
-                IBAN: GB23 REVO 0099 7088 7578 63
-                <br />
-                BIC / SWIFT code: REVOGB21
-                <br />
-                Bank Name and Address: Revolut Ltd, 7 Westferry Circus, E14 4HD,
-                London, United Kingdom
-                <br />
-                Correspondent BIC: CHASGB2L
-                <br />
-              </p>
-            </div>
-
-            <div className="mt-2">
-              <p className="text-sm text-gray-600 ml-1">
-                Transferwise (You can either do a direct transfer to{" "}
-                <Link
-                  className="text-blue-600 hover:underline"
-                  href="https://wise.com/pay/me/karena213"
-                  target="_blank"
-                >
-                  https://wise.com/pay/me/karena213
-                </Link>{" "}
-                if you have wise or transfer using the details below)
-              </p>
-
-              <p className="text-sm text-gray-600 ml-1 mt-2">
-                Account holder: Karen Ndiko Mwaura
-                <br />
-                ACH and Wire routing number: 084009519
-                <br />
-                Account number: 9600003178812512
-                <br />
-                Account type: Checking
-                <br />
-                Currency: USD
-                <br />
-                Wise&apos;s address: 30 W. 26th Street, Sixth Floor
-                <br />
-                New York NY 10010
-                <br />
-                United States
-                <br />
-                Email: ndikomwaura77@gmail.com
-                <br />
-              </p>
-            </div>
+            <p className="text-sm text-gray-600 mt-2">
+              See the full payment terms{" "}
+              <Link
+                href="https://drive.google.com/file/d/1h6EqjUh7so3m3yW1xgyWD_9cspmzhc77/view"
+                target="_blank"
+                className="text-blue-600 hover:underline"
+              >
+                here
+              </Link>
+            </p>
           </div>
         )}
       </div>

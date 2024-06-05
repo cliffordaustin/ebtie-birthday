@@ -81,9 +81,9 @@ function HowItWorks({
         </p>
 
         <p className="text-center">
-          For those participating in only a portion of the trip, please select
-          {' "other"'} as your package option and we will send you a custom
-          quote based on your profile.
+          Packages cover dates between the 18th and 26th; extra nights are
+          charged separately. Partial trip packages will cover only the relevant
+          dates within this period.
         </p>
 
         <p>Looking forward to hosting you all!</p>

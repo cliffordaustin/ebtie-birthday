@@ -44,6 +44,8 @@ model User {
   paymentPlan           PaymentPlan?
   paymentMethod         PaymentMethods?
   doubleRoomDescription String?
+  phone                 String?
+  profilePicture        String?
   createdAt             DateTime            @default(now())
   updatedAt             DateTime            @updatedAt
   tripAddOns            TripAddOn[]
@@ -101,6 +103,6 @@ model Property {
   name      String  @db.VarChar(255)
   room      String  @db.VarChar(255)
   capacity  Int?    @default(0)
-  Package   Package @relation(fields: [packageId], references: [id])
+  Package   Package @relation(fields: [packageId], references: [id], onDelete: Cascade)
   packageId String
 }
