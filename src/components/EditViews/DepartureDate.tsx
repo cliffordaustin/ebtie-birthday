@@ -6,8 +6,14 @@ import { DayPicker } from "react-day-picker";
 import "react-day-picker/dist/style.css";
 import Cookies from "js-cookie";
 
-function DepartureDate({ departureDate }: { departureDate: Date | undefined }) {
-  const [selected, setSelected] = useState<Date | undefined>(departureDate);
+function DepartureDate({
+  departureDate,
+}: {
+  departureDate: Date | null | undefined;
+}) {
+  const [selected, setSelected] = useState<Date | undefined>(
+    departureDate ? departureDate : undefined
+  );
   const [loading, setLoading] = useState(false);
 
   const router = useRouter();

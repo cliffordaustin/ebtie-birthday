@@ -75,7 +75,9 @@ function ProfileSection({
             <h1 className="text-xl md:text-2xl font-bold">{user?.name}</h1>
             <p className="text-gray-500">{user?.email}</p>
             <div className="flex items-center gap-1">
-              <p className="text-gray-500">{user?.phone}</p>
+              <p className="text-gray-500">
+                {user?.phone ? user.phone : "No phone number added"}
+              </p>
               <Tooltip
                 className=""
                 showArrow

@@ -6,8 +6,14 @@ import React, { useState } from "react";
 import { DayPicker } from "react-day-picker";
 import Cookies from "js-cookie";
 
-function ArrivalDate({ arrivalDate }: { arrivalDate: Date | undefined }) {
-  const [selected, setSelected] = useState<Date | undefined>(arrivalDate);
+function ArrivalDate({
+  arrivalDate,
+}: {
+  arrivalDate: Date | null | undefined;
+}) {
+  const [selected, setSelected] = useState<Date | undefined>(
+    arrivalDate ? arrivalDate : undefined
+  );
   const [loading, setLoading] = useState(false);
 
   const router = useRouter();

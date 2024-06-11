@@ -4,9 +4,11 @@ import { useRouter } from "next-nprogress-bar";
 import React from "react";
 import Cookies from "js-cookie";
 
-function DepartureInfo({ info }: { info: string | undefined }) {
+function DepartureInfo({ info }: { info: string | null | undefined }) {
   const [loading, setLoading] = React.useState(false);
-  const [departureFlightInfo, setDepartureFlightInfo] = React.useState(info);
+  const [departureFlightInfo, setDepartureFlightInfo] = React.useState(
+    info ? info : ""
+  );
   const router = useRouter();
 
   const updateDepartureInfo = async () => {

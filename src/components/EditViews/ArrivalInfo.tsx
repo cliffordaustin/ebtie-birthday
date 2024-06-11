@@ -4,9 +4,9 @@ import { useRouter } from "next-nprogress-bar";
 import React, { useState } from "react";
 import Cookies from "js-cookie";
 
-function ArrivalInfo({ info }: { info: string | undefined }) {
+function ArrivalInfo({ info }: { info: string | null | undefined }) {
   const [loading, setLoading] = useState(false);
-  const [arrivalFlightInfo, setArrivalFlightInfo] = useState(info);
+  const [arrivalFlightInfo, setArrivalFlightInfo] = useState(info ? info : "");
 
   const router = useRouter();
 

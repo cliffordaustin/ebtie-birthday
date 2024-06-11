@@ -97,6 +97,8 @@ async function UserProfile({
     },
   });
 
+  console.log("param", searchParams["edit"]);
+
   return (
     <div>
       <div className="bg-white z-[50] sticky top-0 left-0 right-0 w-full">
@@ -214,20 +216,18 @@ async function UserProfile({
           </ScrollShadow>
         </div>
         <div className="md:w-[45%] lg:w-[40%] hidden md:block overflow-y-scroll bg-white border shadow">
-          {searchParams["edit"] === "departureDate" && user?.departureDate && (
+          {searchParams["edit"] === "departureDate" && (
             <DepartureDate departureDate={user?.departureDate}></DepartureDate>
           )}
-          {searchParams["edit"] === "arrivalDate" && user?.arrivalDate && (
+          {searchParams["edit"] === "arrivalDate" && (
             <ArrivalDate arrivalDate={user?.arrivalDate}></ArrivalDate>
           )}
-          {searchParams["edit"] === "arrivalInfo" &&
-            user?.arrivalFlightInfo && (
-              <ArrivalInfo info={user?.arrivalFlightInfo}></ArrivalInfo>
-            )}
-          {searchParams["edit"] === "departureInfo" &&
-            user?.departureFlightInfo && (
-              <DepartureInfo info={user?.departureFlightInfo}></DepartureInfo>
-            )}
+          {searchParams["edit"] === "arrivalInfo" && (
+            <ArrivalInfo info={user?.arrivalFlightInfo}></ArrivalInfo>
+          )}
+          {searchParams["edit"] === "departureInfo" && (
+            <DepartureInfo info={user?.departureFlightInfo}></DepartureInfo>
+          )}
           {searchParams["edit"] === "package" && (
             <EditPackage
               dbPackages={packages}
