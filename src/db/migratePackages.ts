@@ -7,27 +7,22 @@ const prisma = new PrismaClient();
 async function migratePackages() {
   // Fetch all users that have a package
   const users = await prisma.user.findMany({
-    where: {
-      packageId: {
-        not: null,
-      },
-    },
     include: {
-      package: true,
+      userPackages: true,
     },
   });
 
   // For each user, create a new record in the UserPackages relation with the same package
   for (const user of users) {
-    if (user.packageId) {
+    for (const userPackage of user.userPackages) {
       await prisma.user.update({
         where: {
           id: user.id,
         },
         data: {
-          userPackages: {
-            connect: {
-              id: user.packageId,
+          newUserPackages: {
+            create: {
+              packageId: userPackage.id,
             },
           },
         },

@@ -54,6 +54,7 @@ model User {
   package               Package?            @relation(fields: [packageId], references: [id])
   packageId             String?
   userPackages          Package[]           @relation("UserPackages")
+  newUserPackages       UserPackage[]
   CardPaymentLink       CardPaymentLink[]
   yellow_fever_vaccine  Boolean             @default(false)
   visa_received         Boolean             @default(false)
@@ -85,17 +86,29 @@ model TripAddOn {
 }
 
 model Package {
-  id               String     @id @default(cuid())
-  name             String     @db.VarChar(255)
+  id               String        @id @default(cuid())
+  name             String        @db.VarChar(255)
   description      String?
   imageUrl         String?
   imageUrls        String[]
   price            Float
-  availableVolume  Int        @default(0)
+  availableVolume  Int           @default(0)
   properties       Property[]
   User             User[]
-  userPackages     User[]     @relation("UserPackages")
-  selectedPackages Int        @default(1)
+  userPackages     User[]        @relation("UserPackages")
+  selectedPackages Int           @default(1)
+  UserPackage      UserPackage[]
+}
+
+model UserPackage {
+  id             String  @id @default(cuid())
+  userId         String
+  packageId      String
+  selectedNumber Int     @default(1)
+  user           User    @relation(fields: [userId], references: [id])
+  package        Package @relation(fields: [packageId], references: [id])
+
+  @@unique([userId, packageId])
 }
 
 model Property {

@@ -98,15 +98,6 @@ function ImportantInfo({
           <span className="text-gray-500">{isVisaReceived ? "Yes" : "No"}</span>
         )}
       </div>
-
-      {isPDFView && (
-        <div className="flex items-center w-full justify-between">
-          <span>Phone</span>
-          <span className="text-gray-500">
-            {user?.phone ? user.phone : "None"}
-          </span>
-        </div>
-      )}
     </div>
   );
 }

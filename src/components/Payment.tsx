@@ -13,10 +13,12 @@ function Payment({
   paymentLinks,
   paymentMethods,
   isPDFView,
+  name,
 }: {
   paymentLinks: CardPaymentLink[] | undefined;
   paymentMethods: PaymentMethods | null | undefined;
   isPDFView?: boolean;
+  name?: string;
 }) {
   const [paymentOption, setPaymentOption] = React.useState<any>();
   const [loading, setLoading] = React.useState(false);
@@ -50,11 +52,12 @@ function Payment({
         }),
       });
 
-      await fetch("/api/contact-us", {
+      await fetch("/api/send-slack-payment", {
         method: "POST",
         body: JSON.stringify({
-          message,
-          to: "+254757629101",
+          name,
+          email,
+          paymentMethod: paymentOption?.anchorKey,
         }),
       });
     } catch (error) {

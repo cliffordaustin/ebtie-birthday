@@ -15,7 +15,7 @@ export default async function Home() {
     include: {
       properties: true,
       User: true,
-      userPackages: true,
+      UserPackage: true,
     },
     orderBy: {
       price: "asc",

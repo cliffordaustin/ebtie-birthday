@@ -4,7 +4,7 @@ import { cn } from "@/utils/cn";
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
 import { useState } from "react";
-import { Package, Property, User } from "@prisma/client";
+import { Package, Property, User, UserPackage } from "@prisma/client";
 import { Card } from "./card";
 import { FaUser } from "react-icons/fa6";
 import { HiUsers } from "react-icons/hi";
@@ -42,7 +42,7 @@ export const HoverEffect = ({
   items: ({
     properties: Property[];
     User: User[];
-    userPackages: User[];
+    UserPackage: UserPackage[];
   } & Package)[];
   packageRef: React.RefObject<HTMLDivElement>;
   className?: string;
@@ -51,6 +51,17 @@ export const HoverEffect = ({
   const [selectedPackage, setSelectedPackage] = useState<
     (Package & ({ properties: Property[] } & Package)) | null | undefined
   >(null);
+
+  const numberOfPackages = (
+    item: {
+      UserPackage: UserPackage[];
+      properties: Property[];
+      User: User[];
+    } & Package
+  ): number => {
+    return item.UserPackage.reduce((acc, item) => acc + item.selectedNumber, 0);
+  };
+
   return (
     <div
       ref={packageRef}
@@ -65,17 +76,17 @@ export const HoverEffect = ({
           className="w-full sm:w-[48%] lg:w-1/3 relative group block p-2 h-full"
         >
           <Card item={item}>
-            {item.availableVolume - item.userPackages.length > 0 && (
+            {item.availableVolume - numberOfPackages(item) > 0 && (
               <p className="text-sm text-gray-500">
-                {item.availableVolume - item.userPackages.length}{" "}
-                {item.availableVolume - item.userPackages.length > 1
+                {item.availableVolume - numberOfPackages(item)}{" "}
+                {item.availableVolume - numberOfPackages(item) > 1
                   ? "slots"
                   : "slot"}{" "}
                 left
               </p>
             )}
 
-            {item.availableVolume - item.userPackages.length < 1 && (
+            {item.availableVolume - numberOfPackages(item) < 1 && (
               <p className="text-sm text-gray-500">No available slots left</p>
             )}
             <CardTitle>{item.name}</CardTitle>
@@ -83,7 +94,7 @@ export const HoverEffect = ({
               ${item.price.toLocaleString()}
             </h1>
             <div className="my-3">
-              {item.availableVolume - item.userPackages.length > 0 && (
+              {item.availableVolume - numberOfPackages(item) > 0 && (
                 <Button
                   color="primary"
                   radius="none"
@@ -97,7 +108,7 @@ export const HoverEffect = ({
                 </Button>
               )}
 
-              {item.availableVolume - item.userPackages.length < 1 && (
+              {item.availableVolume - numberOfPackages(item) < 1 && (
                 <Button radius="none" className="w-full text-gray-800" disabled>
                   Sold out
                 </Button>

@@ -28,11 +28,12 @@ function ContactUs({ isTextOnly }: { isTextOnly?: boolean }) {
     setLoading(true);
     const message = `Name:${name}\nEmail:${email}\nMessage: ${description}`;
 
-    const res = await fetch("/api/contact-us", {
+    const res = await fetch("/api/send-slack-contact", {
       method: "POST",
       body: JSON.stringify({
+        name,
+        email,
         message,
-        to: "+254757629101",
       }),
     });
 

@@ -1,6 +1,11 @@
 "use client";
 
-import { Package, Property, User } from "@prisma/client";
+import {
+  Package,
+  Property,
+  User,
+  UserPackage as UserPackageType,
+} from "@prisma/client";
 import React, { useCallback } from "react";
 import parse from "html-react-parser";
 import {
@@ -34,12 +39,17 @@ function UserPackage({
   packageDescription,
   dbPackages,
 }: {
-  packageType: ({ properties: Property[] } & Package)[] | null | undefined;
+  packageType:
+    | ({ package: { properties: Property[] } & Package } & UserPackageType)[]
+    | null
+    | undefined;
   isPDFView?: boolean;
   others?: string | null;
   userId: string | undefined;
   packageDescription: string | undefined | null;
-  dbPackages?: ({ User: User[] } & { userPackages: User[] } & Package)[];
+  dbPackages?: ({ User: User[] } & { UserPackage: UserPackageType[] } & {
+    properties: Property[];
+  } & Package)[];
 }) {
   const [displayParseHTML, setDisplayParseHTML] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
@@ -184,6 +194,7 @@ function UserPackage({
                   <EditPackage
                     others={others}
                     dbPackages={dbPackages}
+                    userId={userId}
                   ></EditPackage>
                 )}
               </ModalBody>
@@ -192,9 +203,9 @@ function UserPackage({
         </ModalContent>
       </Modal>
 
-      {(!packageType || packageType.length === 0) && !others && (
+      {(!packageType || packageType.length === 0) && (
         <div className="flex justify-between items-center">
-          <p className="text-gray-500 text-sm text-center mt-3">
+          <p className="text-gray-500 text-sm text-center">
             No package created yet
           </p>
         </div>
@@ -210,9 +221,22 @@ function UserPackage({
           {packageType.map((packageType, index) => (
             <AccordionItem
               key={`${index}`}
-              aria-label={packageType.name}
-              title={packageType.name}
-              subtitle={`$${packageType.price.toLocaleString()}`}
+              aria-label={packageType.package.name}
+              title={
+                <div>
+                  {packageType.package.name}{" "}
+                  {packageType.selectedNumber > 1 && (
+                    <span className="text-gray-500 text-sm ml-1">
+                      {" "}
+                      x
+                      <span className="text-base text-gray-500">
+                        {packageType.selectedNumber}
+                      </span>
+                    </span>
+                  )}
+                </div>
+              }
+              subtitle={`$${packageType.package.price.toLocaleString()}`}
               classNames={{
                 title: "font-medium text-base",
                 subtitle: "text-gray-500",
@@ -244,20 +268,20 @@ function UserPackage({
                       <p
                         className={"!font-normal text-gray-500 line-clamp-[12]"}
                       >
-                        {packageType?.description &&
-                          parse(packageType?.description)}
+                        {packageType?.package.description &&
+                          parse(packageType?.package.description)}
                       </p>
                     )}
 
                     {isPDFView && (
                       <p className={"!font-normal text-gray-500"}>
-                        {packageType?.description &&
-                          parse(packageType?.description)}
+                        {packageType?.package.description &&
+                          parse(packageType?.package.description)}
                       </p>
                     )}
 
                     {!isPDFView && (
-                      <Card actionText={true} item={packageType} />
+                      <Card actionText={true} item={packageType.package} />
                     )}
                   </div>
                 )}
@@ -316,7 +340,7 @@ function UserPackage({
                 )}
 
                 <div className="flex flex-col gap-2">
-                  {packageType?.properties.map((property) => (
+                  {packageType?.package.properties.map((property) => (
                     <div className="ml-1" key={property.id}>
                       <h1 className="font-medium">{property.name}</h1>
 
@@ -369,14 +393,14 @@ function UserPackage({
             <div className="flex justify-between mt-3 items-center">
               <h1 className="font-bold">Package Name</h1>
 
-              <p className="text-gray-500">{packageType?.name}</p>
+              <p className="text-gray-500">{packageType?.package.name}</p>
             </div>
 
             <div className="flex justify-between items-center">
               <h1 className="font-bold">Package Price</h1>
 
               <p className="text-gray-500">
-                ${packageType?.price.toLocaleString()}
+                ${packageType?.package.price.toLocaleString()}
               </p>
             </div>
 
@@ -389,19 +413,21 @@ function UserPackage({
                 <div className="flex flex-col gap-1">
                   {!isPDFView && (
                     <p className={"!font-normal text-gray-500 line-clamp-[12]"}>
-                      {packageType?.description &&
-                        parse(packageType?.description)}
+                      {packageType?.package.description &&
+                        parse(packageType?.package.description)}
                     </p>
                   )}
 
                   {isPDFView && (
                     <p className={"!font-normal text-gray-500"}>
-                      {packageType?.description &&
-                        parse(packageType?.description)}
+                      {packageType?.package.description &&
+                        parse(packageType?.package.description)}
                     </p>
                   )}
 
-                  {!isPDFView && <Card actionText={true} item={packageType} />}
+                  {!isPDFView && (
+                    <Card actionText={true} item={packageType.package} />
+                  )}
                 </div>
               )}
             </div>
@@ -459,7 +485,7 @@ function UserPackage({
               )}
 
               <div className="flex flex-col gap-2">
-                {packageType?.properties.map((property) => (
+                {packageType?.package.properties.map((property) => (
                   <div className="ml-1" key={property.id}>
                     <h1 className="font-medium">{property.name}</h1>
 
@@ -503,7 +529,7 @@ function UserPackage({
           </>
         ))}
 
-      <Divider className="my-4" />
+      <Divider className="my-2" />
 
       {others && (
         <div className="flex flex-col gap-4 text-base">

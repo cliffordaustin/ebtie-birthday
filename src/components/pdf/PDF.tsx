@@ -8,6 +8,7 @@ import {
   Property,
   TripAddOn,
   User,
+  UserPackage as UserPackageType,
 } from "@prisma/client";
 import React, { useRef } from "react";
 import { useReactToPrint } from "react-to-print";
@@ -22,6 +23,7 @@ import Payment from "../Payment";
 import PaymentPlan from "../PaymentPlan";
 import Link from "next/link";
 import ImportantInfo from "../ImportantInfo";
+import ActivitiesInfo from "../ActivitiesInfo";
 
 const inter = Ubuntu({
   weight: ["400", "500", "300", "700"],
@@ -35,7 +37,11 @@ function PDF({
 }: {
   user:
     | ({ package: ({ properties: Property[] } & Package) | null } & {
-        userPackages: ({ properties: Property[] } & Package)[] | null;
+        newUserPackages:
+          | ({
+              package: { properties: Property[] } & Package;
+            } & UserPackageType)[]
+          | null;
       } & User & {
           tripAddOns: TripAddOn[];
           onSiteTripAddOns: TripAddOn[];
@@ -123,6 +129,7 @@ function PDF({
               <div className="flex flex-col gap-1">
                 <h1 className="text-2xl font-bold">{user?.name}</h1>
                 <p className="text-gray-500">{user?.email}</p>
+                <p className="text-gray-500">{user?.phone}</p>
               </div>
             </div>
           </div>
@@ -145,19 +152,19 @@ function PDF({
 
             <Divider className="my-4" />
 
-            {user?.userPackages && user?.userPackages.length > 0 && (
+            {user?.newUserPackages && user?.newUserPackages.length > 0 && (
               <div className="mt-4 flex flex-col gap-5 text-sm">
                 <UserPackage
                   userId={user.id}
                   isPDFView={true}
-                  packageType={user?.userPackages}
+                  packageType={user?.newUserPackages}
                   packageDescription={user.doubleRoomDescription}
                 />
               </div>
             )}
 
-            {user?.userPackages &&
-              user?.userPackages.length === 0 &&
+            {user?.newUserPackages &&
+              user?.newUserPackages.length === 0 &&
               !user?.others && (
                 <p className="text-gray-500 text-sm text-center mt-3">
                   No package added yet
@@ -187,7 +194,8 @@ function PDF({
             ) : (
               <p className="mt-1 ml-1 text-sm text-gray-600">None</p>
             )}
-
+            <Divider className="my-4" />
+            <ActivitiesInfo></ActivitiesInfo>
             <Divider className="my-4" />
 
             <h1 className="font-semibold flex items-center gap-2 text-gray-800 text-lg">

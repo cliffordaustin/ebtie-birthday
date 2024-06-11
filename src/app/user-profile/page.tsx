@@ -29,8 +29,8 @@ import { BsFillInfoCircleFill } from "react-icons/bs";
 import Link from "next/link";
 import Logout from "@/components/Logout";
 import ImportantInfo from "@/components/ImportantInfo";
-import PhoneNumber from "@/components/PhoneNumber";
-import ProfilePic from "@/components/ProfilePic";
+import ProfileSection from "@/components/ProfileSection";
+import ActivitiesInfo from "@/components/ActivitiesInfo";
 
 async function UserProfile({
   searchParams,
@@ -48,9 +48,13 @@ async function UserProfile({
       tripAddOns: true,
       onSiteTripAddOns: true,
       dietryRestrictions: true,
-      userPackages: {
+      newUserPackages: {
         include: {
-          properties: true,
+          package: {
+            include: {
+              properties: true,
+            },
+          },
         },
       },
       CardPaymentLink: true,
@@ -89,7 +93,7 @@ async function UserProfile({
     include: {
       properties: true,
       User: true,
-      userPackages: true,
+      UserPackage: true,
     },
   });
 
@@ -101,66 +105,11 @@ async function UserProfile({
       <div className="w-screen md:h-screen md:p-5 flex gap-4">
         <div className="w-full md:w-[55%] lg:w-[60%] py-5 md:px-5 px-6 md:pl-6 md:pr-4 overflow-y-scroll md:bg-white md:border md:shadow">
           <ScrollShadow>
-            <div className="flex justify-between items-center">
-              <div className="flex items-center gap-2 ">
-                <div className="p-2">
-                  {!user.profilePicture ? (
-                    <div className="bg-gray-200 rounded-full h-[100px] w-[100px] flex items-center justify-center">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width={80}
-                        height={80}
-                        className="text-gray-300"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          fill="currentColor"
-                          d="M19.652 19.405c.552-.115.882-.693.607-1.187c-.606-1.087-1.56-2.043-2.78-2.771C15.907 14.509 13.98 14 12 14c-1.981 0-3.907.508-5.479 1.447c-1.22.728-2.174 1.684-2.78 2.771c-.275.494.055 1.072.607 1.187a37.503 37.503 0 0 0 15.303 0"
-                        />
-                        <circle cx="12" cy="8" r="5" fill="currentColor" />
-                      </svg>
-                    </div>
-                  ) : (
-                    <Avatar
-                      src={user.profilePicture}
-                      isBordered
-                      color="secondary"
-                      className="h-[100px] w-[100px]"
-                    />
-                  )}
-                </div>
-
-                <div className="flex flex-col gap-1">
-                  <h1 className="text-xl md:text-2xl font-bold">
-                    {user?.name}
-                  </h1>
-                  <p className="text-gray-500">{user?.email}</p>
-                  <p className="text-gray-500">{user?.phone}</p>
-                  <div className="flex items-center gap-2">
-                    <ProfilePic></ProfilePic>
-                    <div className="w-[1px] h-[20px] bg-gray-500"></div>
-                    <Logout />
-                  </div>
-
-                  <div className="lg:hidden">
-                    <PDF
-                      user={user}
-                      allTripAddOns={allTripAddOns}
-                      allOnSiteTripAddOns={allOnSiteTripAddOns}
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div className="hidden lg:block">
-                <PDF
-                  user={user}
-                  allTripAddOns={allTripAddOns}
-                  allOnSiteTripAddOns={allOnSiteTripAddOns}
-                />
-              </div>
-            </div>
-            <PhoneNumber user={user}></PhoneNumber>
+            <ProfileSection
+              user={user}
+              allTripAddOns={allTripAddOns}
+              allOnSiteTripAddOns={allOnSiteTripAddOns}
+            ></ProfileSection>
 
             <Divider className="my-4" />
 
@@ -177,7 +126,7 @@ async function UserProfile({
                 <Package
                   userId={user.id}
                   others={user?.others}
-                  packageType={user?.userPackages}
+                  packageType={user?.newUserPackages}
                   packageDescription={user.doubleRoomDescription}
                   dbPackages={packages}
                 />
@@ -194,6 +143,8 @@ async function UserProfile({
                 dietaryRestrictions={user?.dietryRestrictions}
               />
 
+              <Divider className="my-4" />
+              <ActivitiesInfo></ActivitiesInfo>
               <Divider className="my-4" />
 
               <h1 className="font-semibold flex items-center gap-2 text-gray-800 text-lg">
@@ -235,6 +186,7 @@ async function UserProfile({
               <Payment
                 paymentMethods={user.paymentMethod}
                 paymentLinks={user?.CardPaymentLink}
+                name={user.name}
               />
 
               <Divider className="my-4" />
@@ -279,6 +231,7 @@ async function UserProfile({
           {searchParams["edit"] === "package" && (
             <EditPackage
               dbPackages={packages}
+              userId={user.id}
               others={user.others}
             ></EditPackage>
           )}

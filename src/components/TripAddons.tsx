@@ -88,7 +88,28 @@ function TripAddons({
         >
           <div className="flex items-center gap-2">
             <div className="w-1.5 h-1.5 rounded-full bg-gray-600"></div>
-            <p className="text-sm text-gray-600">{addon.name}</p>
+            <div className="flex items-center gap-1">
+              <p className="text-sm text-gray-600">{addon.name}</p>
+              {!isOnSite && addon.link && (
+                <Link
+                  className="text-blue-500 text-sm hover:underline"
+                  href={addon.link}
+                  target="_blank"
+                >
+                  View more
+                </Link>
+              )}
+
+              {isOnSite && addon.link && isPDFView && (
+                <Link
+                  className="text-blue-500 text-sm hover:underline"
+                  href={addon.link}
+                  target="_blank"
+                >
+                  Book here
+                </Link>
+              )}
+            </div>
           </div>
 
           <div className="flex items-center gap-1">
@@ -150,7 +171,7 @@ function TripAddons({
               variant="bordered"
               placeholder="Select activity"
               selectedKeys={addon}
-              className="max-w-60"
+              className="max-w-52"
               classNames={{
                 popoverContent: "w-fit",
               }}
@@ -173,19 +194,26 @@ function TripAddons({
                   key={item.id}
                   textValue={item.name}
                 >
-                  <div className="flex items-center w-full justify-between">
-                    <span
-                      className={
-                        "text-ellipsis overflow-hidden " +
-                        (item.price ? "w-[80%]" : "w-full")
-                      }
-                    >
-                      {item.name}
-                    </span>
-                    {item.price && (
-                      <span className="self-end">${item.price}</span>
-                    )}
-                  </div>
+                  <Tooltip
+                    className=""
+                    showArrow
+                    placement="bottom"
+                    content={item.name}
+                  >
+                    <div className="flex items-center w-full justify-between">
+                      <span
+                        className={
+                          "text-ellipsis overflow-hidden " +
+                          (item.price ? "w-[80%]" : "w-full")
+                        }
+                      >
+                        {item.name}
+                      </span>
+                      {item.price && (
+                        <span className="self-end">${item.price}</span>
+                      )}
+                    </div>
+                  </Tooltip>
                 </SelectItem>
               )}
             </Select>

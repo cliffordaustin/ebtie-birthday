@@ -4,7 +4,7 @@ import React, { useRef } from "react";
 import HowItWorks from "./HowItWorks";
 import Itinerary from "./Itinerary";
 import { HoverEffect } from "../ui/card-hover-effect";
-import { Package, Property, User } from "@prisma/client";
+import { Package, Property, User, UserPackage } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@nextui-org/react";
@@ -15,7 +15,7 @@ function Main({
   packages: ({
     properties: Property[];
     User: User[];
-    userPackages: User[];
+    UserPackage: UserPackage[];
   } & Package)[];
 }) {
   const packageRef = useRef<HTMLDivElement>(null);

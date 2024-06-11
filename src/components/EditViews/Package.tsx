@@ -10,7 +10,7 @@ import {
   SelectItem,
   Textarea,
 } from "@nextui-org/react";
-import { Package, User } from "@prisma/client";
+import { Package, Property, User, UserPackage } from "@prisma/client";
 import { usePathname, useSearchParams } from "next/navigation";
 import React, { useCallback } from "react";
 import parse from "html-react-parser";
@@ -25,9 +25,13 @@ import "swiper/css/navigation";
 function EditPackage({
   dbPackages,
   others,
+  userId,
 }: {
-  dbPackages: ({ User: User[] } & { userPackages: User[] } & Package)[];
+  dbPackages: ({ User: User[] } & { UserPackage: UserPackage[] } & {
+    properties: Property[];
+  } & Package)[];
   others?: string | null;
+  userId: string | undefined;
 }) {
   const [value, setValue] = React.useState<any>(new Set([]));
 
@@ -60,10 +64,17 @@ function EditPackage({
       const {
         packageUnique,
       }: {
-        packageUnique: { User: User[] } & { userPackages: User[] } & Package;
+        packageUnique: { User: User[] } & { userPackages: User[] } & {
+          UserPackage: UserPackage[];
+        } & Package;
       } = await packageRes.json();
 
-      if (packageUnique.userPackages.length === packageUnique.availableVolume) {
+      const sumOfSelectedNumberOfPackages = packageUnique.UserPackage.reduce(
+        (acc, item) => acc + item.selectedNumber,
+        0
+      );
+
+      if (sumOfSelectedNumberOfPackages === packageUnique.availableVolume) {
         toast.error("Sorry, Package is not available");
         setLoading(false);
         setValue(new Set([]));
@@ -77,11 +88,14 @@ function EditPackage({
       body: JSON.stringify({
         email: email.toString(),
         packageId: packageId.toString(),
+        selectedNumber: numberOfPackages,
+        userId,
       }),
     });
 
     if (res.ok) {
       router.refresh();
+      setNumberOfPackages(1);
       setValue(new Set([]));
       setLoading(false);
     } else {
@@ -100,13 +114,18 @@ function EditPackage({
     [searchParams]
   );
 
-  const [packages, setPackages] =
-    React.useState<({ User: User[] } & { userPackages: User[] } & Package)[]>(
-      dbPackages
-    );
+  const [packages, setPackages] = React.useState<
+    ({ User: User[] } & { UserPackage: UserPackage[] } & {
+      properties: Property[];
+    } & Package)[]
+  >(dbPackages);
 
-  const [selectedPackage, setSelectedPackage] =
-    React.useState<Package | null>();
+  const [selectedPackage, setSelectedPackage] = React.useState<
+    | ({ User: User[] } & { UserPackage: UserPackage[] } & {
+        properties: Property[];
+      } & Package)
+    | null
+  >();
 
   React.useEffect(() => {
     if (searchParams.has("packageId")) {
@@ -120,7 +139,10 @@ function EditPackage({
 
   React.useEffect(() => {
     const filteredPackages = packages.filter(
-      (item) => item.availableVolume - item.userPackages.length > 0
+      (item) =>
+        item.availableVolume -
+          item.UserPackage.reduce((acc, item) => acc + item.selectedNumber, 0) >
+        0
     );
     setPackages([
       ...filteredPackages,
@@ -134,7 +156,8 @@ function EditPackage({
         imageUrls: [],
         User: [],
         selectedPackages: 1,
-        userPackages: [],
+        UserPackage: [],
+        properties: [],
       },
     ]);
   }, []);
@@ -188,51 +211,88 @@ function EditPackage({
         <h1 className="font-semibold text-gray-800 text-xl">Package</h1>
       </div>
 
-      <div className="flex items-center gap-2 sticky left-0 top-0 border-b bottom-0 bg-white z-20 py-4 px-3">
-        <Select
-          label="Package"
-          variant="bordered"
-          placeholder="Select a package"
-          selectedKeys={value}
-          classNames={{
-            popoverContent: "w-fit",
-          }}
-          className="md:max-w-40 lg:max-w-60"
-          radius="none"
-          onSelectionChange={(e: any) => {
-            setValue(e);
+      <div className="sticky left-0 top-0 border-b bottom-0 bg-white z-20 py-4 px-3">
+        <div className="flex items-center gap-2">
+          <Select
+            label="Package"
+            variant="bordered"
+            placeholder="Select a package"
+            selectedKeys={value}
+            classNames={{
+              popoverContent: "w-fit",
+            }}
+            className="md:max-w-40 lg:max-w-60"
+            radius="none"
+            onSelectionChange={(e: any) => {
+              setValue(e);
+              setNumberOfPackages(1);
 
-            router.replace(
-              pathname + "?" + createQueryString("packageId", e.anchorKey || "")
-            );
-          }}
-        >
-          {packages.map((item) => (
-            <SelectItem className="w-[250px]" key={item.id} value={item.id}>
-              {item.name}
-            </SelectItem>
-          ))}
-        </Select>
+              router.replace(
+                pathname +
+                  "?" +
+                  createQueryString("packageId", e.anchorKey || "")
+              );
+            }}
+          >
+            {packages.map((item) => (
+              <SelectItem className="w-[250px]" key={item.id} value={item.id}>
+                {item.name}
+              </SelectItem>
+            ))}
+          </Select>
 
-        <Button
-          radius="none"
-          disabled={
-            !searchParams.has("packageId") ||
-            searchParams.get("packageId") === ""
-          }
-          isLoading={loading}
-          onClick={updatePackage}
-          color={
-            !searchParams.has("packageId") ||
-            searchParams.get("packageId") === ""
-              ? "default"
-              : "primary"
-          }
-          className="text-white px-4 !py-[27px]"
-        >
-          <span className="hidden md:block">Update Package</span>
-          <span className="md:hidden">Update</span>
-        </Button>
+          <Button
+            radius="none"
+            disabled={
+              !searchParams.has("packageId") ||
+              searchParams.get("packageId") === ""
+            }
+            isLoading={loading}
+            onClick={updatePackage}
+            color={
+              !searchParams.has("packageId") ||
+              searchParams.get("packageId") === ""
+                ? "default"
+                : "primary"
+            }
+            className="text-white px-4 !py-[27px]"
+          >
+            <span className="hidden md:block">Update Package</span>
+            <span className="md:hidden">Update</span>
+          </Button>
+        </div>
+
+        <div className="flex items-center gap-2 mt-2">
+          <div
+            onClick={() => {
+              if (numberOfPackages > 1) {
+                setNumberOfPackages(numberOfPackages - 1);
+              }
+            }}
+            className="flex items-center border hover:bg-gray-200 justify-center w-8 h-8 cursor-pointer"
+          >
+            -
+          </div>
+          <h1 className="font-medium">x{numberOfPackages}</h1>
+          <div
+            onClick={() => {
+              if (
+                selectedPackage &&
+                numberOfPackages <
+                  selectedPackage.availableVolume -
+                    selectedPackage.UserPackage.reduce(
+                      (acc, item) => acc + item.selectedNumber,
+                      0
+                    )
+              ) {
+                setNumberOfPackages(numberOfPackages + 1);
+              }
+            }}
+            className="flex items-center border hover:bg-gray-200 justify-center w-8 h-8 cursor-pointer"
+          >
+            +
+          </div>
+        </div>
       </div>
 
       {selectedPackage && selectedPackage.id !== "others" && (
@@ -241,19 +301,6 @@ function EditPackage({
             radius="none"
             className="w-full h-[300px] border-none after:bg-black after:inset-0 after:absolute after:bg-opacity-30"
           >
-            {/* <div className="flex gap-2 flex-col">
-              <h1 className="text-sm">Add to package</h1>
-
-              <div className="flex items-center gap-2">
-                <div className="flex items-center border hover:bg-gray-200 justify-center w-8 h-8 rounded-full ">
-                  -
-                </div>
-                <h1 className="font-semibold">{numberOfPackages}</h1>
-                <div className="flex items-center border hover:bg-gray-200                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  justify-center w-8 h-8 rounded-full">
-                  +
-                </div>
-              </div>
-            </div> */}
             <CardHeader className="absolute z-10 bottom-1 flex-col !items-start">
               <p className="text-sm text-white/80 uppercase font-bold">
                 ${selectedPackage.price.toLocaleString()}

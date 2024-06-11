@@ -28,17 +28,20 @@ export async function POST(request: Request) {
     }
   } else {
     try {
-      const user = await prisma.user.update({
+      const user = await prisma.userPackage.upsert({
         where: {
-          email: body.email,
-        },
-
-        data: {
-          userPackages: {
-            connect: {
-              id: body.packageId,
-            },
+          userId_packageId: {
+            userId: body.userId,
+            packageId: body.packageId,
           },
+        },
+        update: {
+          selectedNumber: body.selectedNumber,
+        },
+        create: {
+          userId: body.userId,
+          packageId: body.packageId,
+          selectedNumber: body.selectedNumber,
         },
       });
 
@@ -66,6 +69,7 @@ export async function GET(request: Request) {
       include: {
         User: true,
         userPackages: true,
+        UserPackage: true,
       },
     });
 
@@ -79,16 +83,10 @@ export async function DELETE(request: Request) {
   const body = await request.json();
 
   try {
-    await prisma.user.update({
+    await prisma.userPackage.delete({
       where: {
-        id: body.userId,
-      },
-      data: {
-        userPackages: {
-          disconnect: {
-            id: body.packageId,
-          },
-        },
+        id: body.packageId,
+        userId: body.userId,
       },
     });
 
