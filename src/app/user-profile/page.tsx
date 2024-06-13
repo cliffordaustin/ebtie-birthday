@@ -1,12 +1,6 @@
 import React from "react";
 import prisma from "@/db/db";
-import {
-  Avatar,
-  Button,
-  Divider,
-  ScrollShadow,
-  Tooltip,
-} from "@nextui-org/react";
+import { Divider, ScrollShadow } from "@nextui-org/react";
 import moment from "moment";
 import parse from "html-react-parser";
 import Package from "@/components/Package";
