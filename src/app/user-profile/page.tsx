@@ -1,8 +1,6 @@
 import React from "react";
 import prisma from "@/db/db";
 import { Divider, ScrollShadow } from "@nextui-org/react";
-import moment from "moment";
-import parse from "html-react-parser";
 import Package from "@/components/Package";
 import ClientOnly from "@/components/ui/client-only";
 import Flight from "@/components/Flight";
