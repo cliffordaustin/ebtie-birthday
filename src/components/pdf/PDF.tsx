@@ -34,6 +34,7 @@ function PDF({
   user,
   allTripAddOns,
   allOnSiteTripAddOns,
+  countries,
 }: {
   user:
     | ({ package: ({ properties: Property[] } & Package) | null } & {
@@ -51,6 +52,7 @@ function PDF({
     | null;
   allTripAddOns: TripAddOn[];
   allOnSiteTripAddOns: TripAddOn[];
+  countries: { key: string; value: string; index: number }[];
 }) {
   const componentRef = useRef<HTMLDivElement>(null);
   const handlePrint = useReactToPrint({
@@ -144,7 +146,17 @@ function PDF({
             user?.arrivalFlightInfo ||
             user?.departureFlightInfo ? (
               <>
-                <Flight isPDFView={true} user={user} />
+                <Flight
+                  flightFirstName={user?.flightFirstName}
+                  flightLastName={user?.flightLastName}
+                  flightMiddleName={user?.flightMiddleName}
+                  flightDateOfBirth={user?.flightDateOfBirth}
+                  flightNationality={user?.flightNationality}
+                  countries={countries}
+                  flightPassportNumber={user?.flightPassportNumber}
+                  isPDFView={true}
+                  user={user}
+                />
               </>
             ) : (
               <p className="mt-1 ml-1 text-sm text-gray-600">None</p>

@@ -139,10 +139,13 @@ function Flight({
         }),
       });
       setLoading(false);
+      router.refresh();
     } catch (error) {
       console.log("error", error);
     }
   };
+
+  let formatter = useDateFormatter({ dateStyle: "medium" });
 
   return (
     <div className="mt-4 flex flex-col gap-5 text-sm">
@@ -499,97 +502,122 @@ function Flight({
 
       <div className="mt-4">
         <h1 className="mb-3 font-bold">Passport info</h1>
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            createFlightPersonalInfo();
-          }}
-          className="flex flex-col gap-3"
-        >
-          <div className="flex gap-1 items-start justify-between flex-wrap">
-            <Input
-              label="First Name"
-              variant="bordered"
-              placeholder="First Name"
-              radius="none"
-              type="text"
-              className="w-full md:w-[49%] lg:w-[32%]"
-              value={firstName}
-              onChange={(e: any) => {
-                setFirstName(e.target.value);
-              }}
-              isRequired
-            />
-
-            <Input
-              label="Middle Name(Optional)"
-              variant="bordered"
-              placeholder="Middle Name(Optional)"
-              radius="none"
-              type="text"
-              className="w-full md:w-[49%] lg:w-[32%]"
-              value={middleName}
-              onChange={(e: any) => {
-                setMiddleName(e.target.value);
-              }}
-            />
-
-            <Input
-              label="Last Name"
-              variant="bordered"
-              placeholder="Last Name"
-              radius="none"
-              type="text"
-              className="w-full lg:w-[32%]"
-              value={lastName}
-              onChange={(e: any) => {
-                setLastName(e.target.value);
-              }}
-              isRequired
-            />
-          </div>
-
-          <DatePicker
-            className="max-w-[384px]"
-            label="Date of birth"
-            radius="none"
-            variant="bordered"
-            value={dob}
-            onChange={setDob}
-            isRequired
-          />
-
-          <Nationality
-            setSelectedCountry={setSelectedCountry}
-            selectedCountry={selectedCountry}
-            countries={countries}
-          ></Nationality>
-
-          <Input
-            label="Passport Number"
-            variant="bordered"
-            placeholder="Passport Number"
-            radius="none"
-            type="text"
-            className="max-w-[384px]"
-            value={passportNumber}
-            onChange={(e: any) => {
-              setPassportNumber(e.target.value);
+        {!isPDFView && (
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              createFlightPersonalInfo();
             }}
-            isRequired
-          />
-
-          <Button
-            radius="none"
-            color="primary"
-            isLoading={loading}
-            size="md"
-            className="w-fit mt-2 text-white"
-            type="submit"
+            className="flex flex-col gap-3"
           >
-            Save
-          </Button>
-        </form>
+            <div className="flex gap-1 items-start justify-between flex-wrap">
+              <Input
+                label="First Name"
+                variant="bordered"
+                placeholder="First Name"
+                radius="none"
+                type="text"
+                className="w-full md:w-[49%] lg:w-[32%]"
+                value={firstName}
+                onChange={(e: any) => {
+                  setFirstName(e.target.value);
+                }}
+                isRequired
+              />
+
+              <Input
+                label="Middle Name(Optional)"
+                variant="bordered"
+                placeholder="Middle Name(Optional)"
+                radius="none"
+                type="text"
+                className="w-full md:w-[49%] lg:w-[32%]"
+                value={middleName}
+                onChange={(e: any) => {
+                  setMiddleName(e.target.value);
+                }}
+              />
+
+              <Input
+                label="Last Name"
+                variant="bordered"
+                placeholder="Last Name"
+                radius="none"
+                type="text"
+                className="w-full lg:w-[32%]"
+                value={lastName}
+                onChange={(e: any) => {
+                  setLastName(e.target.value);
+                }}
+                isRequired
+              />
+            </div>
+
+            <DatePicker
+              className="max-w-[384px]"
+              label="Date of birth"
+              radius="none"
+              variant="bordered"
+              value={dob}
+              onChange={setDob}
+              isRequired
+            />
+
+            <Nationality
+              setSelectedCountry={setSelectedCountry}
+              selectedCountry={selectedCountry}
+              countries={countries}
+            ></Nationality>
+
+            <Input
+              label="Passport Number"
+              variant="bordered"
+              placeholder="Passport Number"
+              radius="none"
+              type="text"
+              className="max-w-[384px]"
+              value={passportNumber}
+              onChange={(e: any) => {
+                setPassportNumber(e.target.value);
+              }}
+              isRequired
+            />
+
+            <Button
+              radius="none"
+              color="primary"
+              isLoading={loading}
+              size="md"
+              className="w-fit mt-2 text-white"
+              type="submit"
+            >
+              Save
+            </Button>
+          </form>
+        )}
+
+        {isPDFView && (
+          <div className="flex flex-col gap-2">
+            <div className="flex items-center gap-0.5">
+              <span className="font-bold">{firstName}</span>
+              <span className="font-bold">{middleName}</span>
+              <span className="font-bold">{lastName}</span>
+            </div>
+
+            <span>
+              Date of birth:{"  "}
+              {dob ? formatter.format(dob.toDate(getLocalTimeZone())) : "--"}
+            </span>
+
+            <span>
+              Nationality:{"  "} {flightNationality}
+            </span>
+
+            <span>
+              Passport number:{"  "} {flightPassportNumber}
+            </span>
+          </div>
+        )}
       </div>
     </div>
   );

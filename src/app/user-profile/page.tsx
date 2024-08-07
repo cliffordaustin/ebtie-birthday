@@ -118,6 +118,7 @@ async function UserProfile({
               user={user}
               allTripAddOns={allTripAddOns}
               allOnSiteTripAddOns={allOnSiteTripAddOns}
+              countries={countries}
             ></ProfileSection>
 
             <Divider className="my-4" />
