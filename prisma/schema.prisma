@@ -41,6 +41,12 @@ model User {
   arrivalFlightInfo     String?
   departureDate         DateTime?
   departureFlightInfo   String?
+  flightFirstName       String?
+  flightLastName        String?
+  flightMiddleName      String?
+  flightDateOfBirth     DateTime?
+  flightNationality     String?
+  flightPassportNumber  String?
   paymentPlan           PaymentPlan?
   paymentMethod         PaymentMethods?
   doubleRoomDescription String?

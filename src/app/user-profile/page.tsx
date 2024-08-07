@@ -89,7 +89,22 @@ async function UserProfile({
     },
   });
 
-  console.log("param", searchParams["edit"]);
+  const res = await fetch(
+    "https://valid.layercode.workers.dev/list/countries?format=select&flags=true&value=code"
+  );
+
+  let countries: { key: string; value: string; index: number }[] = [];
+
+  if (res.ok) {
+    const data = await res.json();
+    countries = data.countries.map(
+      (country: { label: string; value: string }, index: number) => ({
+        index: index + 1,
+        key: country.label,
+        value: country.value,
+      })
+    );
+  }
 
   return (
     <div>
@@ -112,7 +127,16 @@ async function UserProfile({
                 Flight Info
               </h1>
 
-              <Flight user={user} />
+              <Flight
+                flightFirstName={user?.flightFirstName}
+                flightLastName={user?.flightLastName}
+                flightMiddleName={user?.flightMiddleName}
+                flightDateOfBirth={user?.flightDateOfBirth}
+                flightNationality={user?.flightNationality}
+                flightPassportNumber={user?.flightPassportNumber}
+                countries={countries}
+                user={user}
+              />
 
               <Divider className="my-4" />
 
