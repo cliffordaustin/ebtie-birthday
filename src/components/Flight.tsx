@@ -39,6 +39,7 @@ function Flight({
   flightPassportNumber,
   flightNationality,
   countries,
+  userCountry,
 }: {
   user:
     | ({ package: ({ properties: Property[] } & Package) | null } & User)
@@ -51,6 +52,7 @@ function Flight({
   flightPassportNumber?: string | null;
   flightNationality?: string | null;
   countries: { key: string; value: string; index: number }[];
+  userCountry: { label: string; value: string; index: number } | null;
 }) {
   const [displayParseHTML, setDisplayParseHTML] = React.useState(false);
 
@@ -115,7 +117,7 @@ function Flight({
   );
 
   const [selectedCountry, setSelectedCountry] = React.useState<string>(
-    flightNationality || ""
+    flightNationality || userCountry?.label || ""
   );
 
   const [loading, setLoading] = React.useState(false);

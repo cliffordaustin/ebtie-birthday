@@ -23,6 +23,7 @@ function ProfileSection({
   allTripAddOns,
   allOnSiteTripAddOns,
   countries,
+  userCountry,
 }: {
   user:
     | ({ package: ({ properties: Property[] } & Package) | null } & {
@@ -39,6 +40,7 @@ function ProfileSection({
   allTripAddOns: TripAddOn[];
   allOnSiteTripAddOns: TripAddOn[];
   countries: { key: string; value: string; index: number }[];
+  userCountry: { label: string; value: string; index: number } | null;
 }) {
   const [showPhoneNumberSection, setShowPhoneNumberSection] =
     React.useState(false);
@@ -129,6 +131,7 @@ function ProfileSection({
                 user={user}
                 allTripAddOns={allTripAddOns}
                 allOnSiteTripAddOns={allOnSiteTripAddOns}
+                userCountry={userCountry}
               />
             </div>
           </div>
@@ -140,6 +143,7 @@ function ProfileSection({
             user={user}
             allTripAddOns={allTripAddOns}
             allOnSiteTripAddOns={allOnSiteTripAddOns}
+            userCountry={userCountry}
           />
         </div>
       </div>

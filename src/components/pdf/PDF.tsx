@@ -35,6 +35,7 @@ function PDF({
   allTripAddOns,
   allOnSiteTripAddOns,
   countries,
+  userCountry,
 }: {
   user:
     | ({ package: ({ properties: Property[] } & Package) | null } & {
@@ -53,6 +54,7 @@ function PDF({
   allTripAddOns: TripAddOn[];
   allOnSiteTripAddOns: TripAddOn[];
   countries: { key: string; value: string; index: number }[];
+  userCountry: { label: string; value: string; index: number } | null;
 }) {
   const componentRef = useRef<HTMLDivElement>(null);
   const handlePrint = useReactToPrint({
@@ -156,6 +158,7 @@ function PDF({
                   flightPassportNumber={user?.flightPassportNumber}
                   isPDFView={true}
                   user={user}
+                  userCountry={userCountry}
                 />
               </>
             ) : (

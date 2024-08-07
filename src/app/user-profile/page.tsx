@@ -95,8 +95,11 @@ async function UserProfile({
 
   let countries: { key: string; value: string; index: number }[] = [];
 
+  let userCountry = null;
+
   if (res.ok) {
     const data = await res.json();
+    userCountry = data.userSelectValue;
     countries = data.countries.map(
       (country: { label: string; value: string }, index: number) => ({
         index: index + 1,
@@ -119,6 +122,7 @@ async function UserProfile({
               allTripAddOns={allTripAddOns}
               allOnSiteTripAddOns={allOnSiteTripAddOns}
               countries={countries}
+              userCountry={userCountry}
             ></ProfileSection>
 
             <Divider className="my-4" />
@@ -136,6 +140,7 @@ async function UserProfile({
                 flightNationality={user?.flightNationality}
                 flightPassportNumber={user?.flightPassportNumber}
                 countries={countries}
+                userCountry={userCountry}
                 user={user}
               />
 
