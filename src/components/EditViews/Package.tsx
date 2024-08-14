@@ -140,7 +140,6 @@ function EditPackage({
   }, [searchParams, packages]);
 
   React.useEffect(() => {
-    console.log("hello");
     const filteredPackages = packages.filter(
       (item) =>
         item.availableVolume -
@@ -163,7 +162,7 @@ function EditPackage({
         properties: [],
       },
     ]);
-  }, [dbPackages, packages]);
+  }, []);
 
   const [userPackage, setUserPackage] = React.useState(others || "");
 
