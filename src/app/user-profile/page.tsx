@@ -23,6 +23,7 @@ import Logout from "@/components/Logout";
 import ImportantInfo from "@/components/ImportantInfo";
 import ProfileSection from "@/components/ProfileSection";
 import ActivitiesInfo from "@/components/ActivitiesInfo";
+import RequestedTrip from "@/components/EditViews/RequestedTrip";
 
 async function UserProfile({
   searchParams,
@@ -256,6 +257,9 @@ async function UserProfile({
               userId={user.id}
               others={user.others}
             ></EditPackage>
+          )}
+          {searchParams["edit"] === "others" && (
+            <RequestedTrip info={user.others}></RequestedTrip>
           )}
         </div>
       </div>

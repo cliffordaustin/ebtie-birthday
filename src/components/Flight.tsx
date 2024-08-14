@@ -16,6 +16,7 @@ import {
   ModalHeader,
   Tooltip,
   useDisclosure,
+  ModalProps,
 } from "@nextui-org/react";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useRouter } from "next-nprogress-bar";
@@ -28,6 +29,7 @@ import Nationality from "./Nationality";
 import Cookies from "js-cookie";
 
 import { useDateFormatter } from "@react-aria/i18n";
+import { IoClose } from "react-icons/io5";
 
 function Flight({
   user,
@@ -221,9 +223,7 @@ function Flight({
                   Update your arrival date
                 </ModalHeader>
                 <ModalBody>
-                  {user?.arrivalDate && (
-                    <ArrivalDate arrivalDate={user?.arrivalDate}></ArrivalDate>
-                  )}
+                  <ArrivalDate arrivalDate={user?.arrivalDate}></ArrivalDate>
                 </ModalBody>
               </>
             )}
@@ -292,11 +292,45 @@ function Flight({
             </>
           )}
 
-          <Modal
+          {isOpenArrivalInfo && (
+            <div
+              onClick={() => {
+                onOpenChangeArrivalInfo();
+              }}
+              className="fixed inset-0 bg-black bg-opacity-20 z-20"
+            >
+              <div
+                onClick={(e) => {
+                  e.stopPropagation();
+                }}
+                className="absolute bottom-1 p-4 bg-white -translate-x-0 w-full z-20 h-[400px]"
+              >
+                <h1 className="font-bold text-xl my-3">
+                  Update your flight arrival info
+                </h1>
+
+                <ArrivalInfo info={user?.arrivalFlightInfo}></ArrivalInfo>
+
+                <div
+                  onClick={() => {
+                    onOpenChangeArrivalInfo();
+                  }}
+                  className="cursor-pointer w-[30px] h-[30px] rounded-full flex items-center justify-center bg-gray-100 absolute top-2 right-2"
+                >
+                  <IoClose></IoClose>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* <Modal
             isOpen={isOpenArrivalInfo}
-            placement="bottom"
+            // placement="auto"
             onOpenChange={onOpenChangeArrivalInfo}
             radius="none"
+            // scrollBehavior="outside"
+            size="full"
+            className="overflow-y-scroll"
           >
             <ModalContent>
               {(onClose) => (
@@ -312,7 +346,7 @@ function Flight({
                 </>
               )}
             </ModalContent>
-          </Modal>
+          </Modal> */}
         </div>
 
         {displayParseHTML && user?.arrivalFlightInfo && (
@@ -399,11 +433,9 @@ function Flight({
                   Update your departure date
                 </ModalHeader>
                 <ModalBody>
-                  {user?.departureDate && (
-                    <DepartureDate
-                      departureDate={user?.departureDate}
-                    ></DepartureDate>
-                  )}
+                  <DepartureDate
+                    departureDate={user?.departureDate}
+                  ></DepartureDate>
                 </ModalBody>
               </>
             )}
@@ -467,7 +499,38 @@ function Flight({
           )}
         </div>
 
-        <Modal
+        {isOpenDepartureInfo && (
+          <div
+            onClick={() => {
+              onOpenChangeDepartureInfo();
+            }}
+            className="fixed inset-0 bg-black bg-opacity-20 z-20"
+          >
+            <div
+              onClick={(e) => {
+                e.stopPropagation();
+              }}
+              className="absolute bottom-1 p-4 bg-white -translate-x-0 w-full z-20 h-[400px]"
+            >
+              <h1 className="font-bold text-xl my-3">
+                Update your flight departure info
+              </h1>
+
+              <DepartureInfo info={user?.departureFlightInfo}></DepartureInfo>
+
+              <div
+                onClick={() => {
+                  onOpenChangeDepartureInfo();
+                }}
+                className="cursor-pointer w-[30px] h-[30px] rounded-full flex items-center justify-center bg-gray-100 absolute top-2 right-2"
+              >
+                <IoClose></IoClose>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* <Modal
           isOpen={isOpenDepartureInfo}
           placement="bottom"
           onOpenChange={onOpenChangeDepartureInfo}
@@ -489,7 +552,7 @@ function Flight({
               </>
             )}
           </ModalContent>
-        </Modal>
+        </Modal> */}
 
         {displayParseHTML && user?.departureFlightInfo && (
           <p className="text-gray-500 whitespace-pre-line">

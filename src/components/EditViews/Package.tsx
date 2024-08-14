@@ -35,6 +35,8 @@ function EditPackage({
 }) {
   const [value, setValue] = React.useState<any>(new Set([]));
 
+  // console.log("pereamughan20@gmail.com", dbPackages);
+
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -138,6 +140,7 @@ function EditPackage({
   }, [searchParams, packages]);
 
   React.useEffect(() => {
+    console.log("hello");
     const filteredPackages = packages.filter(
       (item) =>
         item.availableVolume -
@@ -160,7 +163,7 @@ function EditPackage({
         properties: [],
       },
     ]);
-  }, []);
+  }, [dbPackages, packages]);
 
   const [userPackage, setUserPackage] = React.useState(others || "");
 
@@ -170,8 +173,6 @@ function EditPackage({
     const email = Cookies.get("email");
     if (!email) return;
 
-    const message = `Email:${email}\nTrip Plan: ${userPackage}`;
-
     try {
       await fetch("/api/packages", {
         method: "POST",
@@ -179,14 +180,6 @@ function EditPackage({
           email: email.toString(),
           packageId: "others",
           userPackage: userPackage,
-        }),
-      });
-
-      await fetch("/api/contact-us", {
-        method: "POST",
-        body: JSON.stringify({
-          message,
-          to: "+254757629101",
         }),
       });
 
