@@ -1,7 +1,7 @@
 "use client";
 
-import { Select, Selection, SelectItem } from "@nextui-org/react";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
+import Select from "react-select";
 
 function Nationality({
   selectedCountry,
@@ -12,32 +12,46 @@ function Nationality({
   setSelectedCountry: (value: string) => void;
   countries: { key: string; value: string; index: number }[];
 }) {
-  const handleSelectionChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedCountry(e.target.value);
-  };
-
   return (
     <div className="w-full">
-      {countries && countries.length > 0 && (
+      <div className="max-w-[384px]">
         <Select
-          label="Nationality"
-          variant="bordered"
-          placeholder="Select a nationality"
-          selectedKeys={[selectedCountry]}
-          className="max-w-[384px]"
-          radius="none"
-          onChange={handleSelectionChange}
-          classNames={
-            {
-              // popoverContent: "bg-green-400",
-            }
+          options={
+            countries.map((country) => ({
+              label: country.key,
+              value: country.key.toLowerCase(),
+            })) as any
           }
-        >
-          {countries.map((item) => (
-            <SelectItem key={item.key}>{item.key}</SelectItem>
-          ))}
-        </Select>
-      )}
+          placeholder="Select a nationality"
+          required={true}
+          value={{
+            label: selectedCountry,
+            value: selectedCountry.toLowerCase(),
+          }}
+          onChange={(country: any) => {
+            setSelectedCountry(country.label);
+          }}
+          styles={{
+            menu: (defaultStyles) => ({
+              ...defaultStyles,
+              backgroundColor: "white",
+              zIndex: 20,
+            }),
+            control: (defaultStyles) => ({
+              ...defaultStyles,
+              height: 50,
+              boxShadow: "none",
+              borderRadius: 0,
+              backgroundColor: "transparent",
+              borderColor: "#e5e5e5",
+              borderWidth: 2,
+              ":hover": {
+                borderColor: "#adb5bd",
+              },
+            }),
+          }}
+        />
+      </div>
     </div>
   );
 }
