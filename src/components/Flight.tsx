@@ -585,7 +585,7 @@ function Flight({
               }}
               radius="none"
               variant="light"
-              className="hover:!bg-gray-100 md:hidden !px-0 !min-w-fit"
+              className="hover:!bg-gray-100 !px-0 md:!px-3 !min-w-fit"
             >
               Edit
             </Button>
@@ -600,7 +600,7 @@ function Flight({
               }}
               radius="none"
               variant="light"
-              className="hover:!bg-gray-100 md:hidden !px-0 !min-w-fit"
+              className="hover:!bg-gray-100 !px-0 md:!px-3 !min-w-fit"
             >
               Close edit
             </Button>
