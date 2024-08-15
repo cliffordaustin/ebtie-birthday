@@ -17,6 +17,7 @@ import {
   Tooltip,
   useDisclosure,
   ModalProps,
+  Divider,
 } from "@nextui-org/react";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useRouter } from "next-nprogress-bar";
@@ -143,6 +144,7 @@ function Flight({
         }),
       });
       setLoading(false);
+      setShowEdit(false);
       router.refresh();
     } catch (error) {
       console.log("error", error);
@@ -150,6 +152,8 @@ function Flight({
   };
 
   let formatter = useDateFormatter({ dateStyle: "medium" });
+
+  const [showEdit, setShowEdit] = React.useState(false);
 
   return (
     <div className="mt-4 flex flex-col gap-5 text-sm">
@@ -566,8 +570,44 @@ function Flight({
       </div>
 
       <div className="mt-4">
-        <h1 className="mb-3 font-bold">Passport info</h1>
-        {!isPDFView && (
+        <div className="flex items-center justify-between">
+          <h1 className="mb-3 font-bold">Passport info</h1>
+          {!showEdit && (
+            <Button
+              endContent={
+                <RiEdit2Line
+                  size={20}
+                  className="cursor-pointer text-blue-500"
+                />
+              }
+              onClick={() => {
+                setShowEdit(true);
+              }}
+              radius="none"
+              variant="light"
+              className="hover:!bg-gray-100 md:hidden !px-0 !min-w-fit"
+            >
+              Edit
+            </Button>
+          )}
+          {showEdit && (
+            <Button
+              endContent={
+                <IoClose size={20} className="cursor-pointer text-blue-500" />
+              }
+              onClick={() => {
+                setShowEdit(false);
+              }}
+              radius="none"
+              variant="light"
+              className="hover:!bg-gray-100 md:hidden !px-0 !min-w-fit"
+            >
+              Close edit
+            </Button>
+          )}
+        </div>
+        <Divider className="my-2" />
+        {/* {!isPDFView && (
           <form
             onSubmit={(e) => {
               e.preventDefault();
@@ -682,7 +722,130 @@ function Flight({
               Passport number:{"  "} {flightPassportNumber}
             </span>
           </div>
+        )} */}
+
+        {!isPDFView && showEdit && (
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              createFlightPersonalInfo();
+            }}
+            className="flex flex-col gap-3"
+          >
+            <div className="flex gap-1 items-start justify-between flex-wrap">
+              <Input
+                label="First Name"
+                variant="bordered"
+                placeholder="First Name"
+                radius="none"
+                type="text"
+                className="w-full md:w-[49%] lg:w-[32%]"
+                value={firstName}
+                onChange={(e: any) => {
+                  setFirstName(e.target.value);
+                }}
+                isRequired
+              />
+
+              <Input
+                label="Middle Name(Optional)"
+                variant="bordered"
+                placeholder="Middle Name(Optional)"
+                radius="none"
+                type="text"
+                className="w-full md:w-[49%] lg:w-[32%]"
+                value={middleName}
+                onChange={(e: any) => {
+                  setMiddleName(e.target.value);
+                }}
+              />
+
+              <Input
+                label="Last Name"
+                variant="bordered"
+                placeholder="Last Name"
+                radius="none"
+                type="text"
+                className="w-full lg:w-[32%]"
+                value={lastName}
+                onChange={(e: any) => {
+                  setLastName(e.target.value);
+                }}
+                isRequired
+              />
+            </div>
+
+            <DatePicker
+              className="max-w-[384px]"
+              label="Date of birth"
+              radius="none"
+              variant="bordered"
+              value={dob}
+              onChange={setDob}
+              isRequired
+            />
+
+            <Nationality
+              setSelectedCountry={setSelectedCountry}
+              selectedCountry={selectedCountry}
+              countries={countries}
+            ></Nationality>
+
+            <Input
+              label="Passport Number"
+              variant="bordered"
+              placeholder="Passport Number"
+              radius="none"
+              type="text"
+              className="max-w-[384px]"
+              value={passportNumber}
+              onChange={(e: any) => {
+                setPassportNumber(e.target.value);
+              }}
+              isRequired
+            />
+
+            <Button
+              radius="none"
+              color="primary"
+              isLoading={loading}
+              size="md"
+              className="w-fit mt-2 text-white"
+              type="submit"
+            >
+              Save
+            </Button>
+          </form>
         )}
+
+        {isPDFView ||
+          (!showEdit && (
+            <div className="flex flex-col gap-5">
+              <div className="flex items-center gap-0.5">
+                <span className="font-medium">Full name: </span>
+                <span className="">{firstName}</span>
+                <span className="">{middleName}</span>
+                <span className="">{lastName}</span>
+              </div>
+
+              <span>
+                <span className="font-medium">Date of birth:{"  "}</span>
+                {dob
+                  ? formatter.format(dob.toDate(getLocalTimeZone()))
+                  : "No data"}
+              </span>
+
+              <span>
+                <span className="font-medium">Nationality:{"  "}</span>
+                {flightNationality || "No data"}
+              </span>
+
+              <span>
+                <span className="font-medium">Passport number:{"  "}</span>
+                {flightPassportNumber || "No data"}
+              </span>
+            </div>
+          ))}
       </div>
     </div>
   );
