@@ -4,6 +4,7 @@ import { Avatar, Button, Divider } from "@nextui-org/react";
 import {
   CardPaymentLink,
   DietryRestriction,
+  OtherPassportInfo,
   Package,
   Property,
   TripAddOn,
@@ -39,6 +40,8 @@ function PDF({
 }: {
   user:
     | ({ package: ({ properties: Property[] } & Package) | null } & {
+        otherPassportInfo: OtherPassportInfo[];
+      } & {
         newUserPackages:
           | ({
               package: { properties: Property[] } & Package;

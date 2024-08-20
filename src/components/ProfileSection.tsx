@@ -3,6 +3,7 @@
 import {
   CardPaymentLink,
   DietryRestriction,
+  OtherPassportInfo,
   Package,
   Property,
   TripAddOn,
@@ -30,6 +31,8 @@ function ProfileSection({
         newUserPackages:
           | ({ package: { properties: Property[] } & Package } & UserPackage)[]
           | null;
+      } & {
+        otherPassportInfo: OtherPassportInfo[];
       } & User & {
           tripAddOns: TripAddOn[];
           onSiteTripAddOns: TripAddOn[];
