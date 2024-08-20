@@ -41,6 +41,7 @@ async function UserProfile({
       tripAddOns: true,
       onSiteTripAddOns: true,
       dietryRestrictions: true,
+      otherPassportInfo: true,
       newUserPackages: {
         include: {
           package: {

@@ -47,6 +47,7 @@ model User {
   flightDateOfBirth     DateTime?
   flightNationality     String?
   flightPassportNumber  String?
+  otherPassportInfo     OtherPassportInfo[]
   paymentPlan           PaymentPlan?
   paymentMethod         PaymentMethods?
   doubleRoomDescription String?
@@ -64,6 +65,18 @@ model User {
   CardPaymentLink       CardPaymentLink[]
   yellow_fever_vaccine  Boolean             @default(false)
   visa_received         Boolean             @default(false)
+}
+
+model OtherPassportInfo {
+  id                   String    @id @default(cuid())
+  flightFirstName      String?
+  flightLastName       String?
+  flightMiddleName     String?
+  flightDateOfBirth    DateTime?
+  flightNationality    String?
+  flightPassportNumber String?
+  User                 User?     @relation(fields: [userId], references: [id])
+  userId               String?
 }
 
 model DietryRestriction {

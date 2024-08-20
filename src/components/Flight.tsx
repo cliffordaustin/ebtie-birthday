@@ -1,6 +1,6 @@
 "use client";
 
-import { Package, Property, User } from "@prisma/client";
+import { OtherPassportInfo, Package, Property, User } from "@prisma/client";
 import React, { useCallback } from "react";
 import moment from "moment";
 import { RiEdit2Line } from "react-icons/ri";
@@ -30,7 +30,9 @@ import Nationality from "./Nationality";
 import Cookies from "js-cookie";
 
 import { useDateFormatter } from "@react-aria/i18n";
-import { IoClose } from "react-icons/io5";
+import { IoAdd, IoClose } from "react-icons/io5";
+import AddPassportInfo from "./AddOtherPassportInfo";
+import PassportInfo from "./OtherPassportInfo";
 
 function Flight({
   user,
@@ -45,7 +47,9 @@ function Flight({
   userCountry,
 }: {
   user:
-    | ({ package: ({ properties: Property[] } & Package) | null } & User)
+    | ({ package: ({ properties: Property[] } & Package) | null } & User & {
+          otherPassportInfo: OtherPassportInfo[];
+        })
     | null;
   isPDFView?: boolean;
   flightFirstName?: string | null;
@@ -154,6 +158,8 @@ function Flight({
   let formatter = useDateFormatter({ dateStyle: "medium" });
 
   const [showEdit, setShowEdit] = React.useState(false);
+
+  const [addAnotherPassport, setAddAnotherPassport] = React.useState(false);
 
   return (
     <div className="mt-4 flex flex-col gap-5 text-sm">
@@ -268,7 +274,7 @@ function Flight({
                   }}
                   radius="none"
                   variant="light"
-                  className="hover:!bg-gray-100 hidden md:flex"
+                  className="!bg-gray-100 hidden md:flex"
                 >
                   Edit
                 </Button>
@@ -289,7 +295,7 @@ function Flight({
                 }}
                 radius="none"
                 variant="light"
-                className="hover:!bg-gray-100 md:hidden !px-0 !min-w-fit"
+                className="!bg-gray-100 md:hidden !px-0 !min-w-fit"
               >
                 Edit
               </Button>
@@ -474,7 +480,7 @@ function Flight({
                   }}
                   radius="none"
                   variant="light"
-                  className="hover:!bg-gray-100 md:flex hidden"
+                  className="!bg-gray-100 md:flex hidden"
                 >
                   Edit
                 </Button>
@@ -489,7 +495,7 @@ function Flight({
                 }}
                 radius="none"
                 variant="light"
-                className="hover:!bg-gray-100 md:hidden !px-0 !min-w-fit"
+                className="!bg-gray-100 md:hidden !px-0 !min-w-fit"
                 endContent={
                   <RiEdit2Line
                     size={20}
@@ -571,38 +577,25 @@ function Flight({
 
       <div className="mt-4">
         <div className="flex items-center justify-between">
-          <h1 className="mb-3 font-bold">Passport info</h1>
-          {!showEdit && (
+          <h1 className="font-bold">Passport info</h1>
+
+          {!isPDFView && (
             <Button
               endContent={
-                <RiEdit2Line
-                  size={20}
-                  className="cursor-pointer text-blue-500"
-                />
+                addAnotherPassport ? (
+                  <IoClose size={20} className="cursor-pointer text-blue-500" />
+                ) : (
+                  <IoAdd size={20} className="cursor-pointer text-blue-500" />
+                )
               }
               onClick={() => {
-                setShowEdit(true);
+                setAddAnotherPassport(!addAnotherPassport);
               }}
               radius="none"
               variant="light"
               className="hover:!bg-gray-100 !px-0 md:!px-3 !min-w-fit"
             >
-              Edit
-            </Button>
-          )}
-          {showEdit && (
-            <Button
-              endContent={
-                <IoClose size={20} className="cursor-pointer text-blue-500" />
-              }
-              onClick={() => {
-                setShowEdit(false);
-              }}
-              radius="none"
-              variant="light"
-              className="hover:!bg-gray-100 !px-0 md:!px-3 !min-w-fit"
-            >
-              Close edit
+              {addAnotherPassport ? "Cancel" : "Add another passport info"}
             </Button>
           )}
         </div>
@@ -805,23 +798,39 @@ function Flight({
               isRequired
             />
 
-            <Button
-              radius="none"
-              color="primary"
-              isLoading={loading}
-              size="md"
-              className="w-fit mt-2 text-white"
-              type="submit"
-            >
-              Save
-            </Button>
+            <div className="flex items-center gap-2 mt-2">
+              <Button
+                radius="none"
+                color="primary"
+                isLoading={loading}
+                size="md"
+                className="w-fit text-white"
+                type="submit"
+              >
+                Save
+              </Button>
+
+              <Button
+                endContent={
+                  <IoClose size={20} className="cursor-pointer text-blue-500" />
+                }
+                onClick={() => {
+                  setShowEdit(false);
+                }}
+                radius="none"
+                variant="light"
+                className="hover:!bg-gray-100 !px-0 md:!px-3 !min-w-fit"
+              >
+                Close edit
+              </Button>
+            </div>
           </form>
         )}
 
-        {isPDFView ||
-          (!showEdit && (
+        {(isPDFView || !showEdit) && (
+          <>
             <div className="flex flex-col gap-5">
-              <div className="flex items-center gap-0.5">
+              <div className="flex items-center gap-1">
                 <span className="font-medium">Full name: </span>
                 <span className="">{firstName}</span>
                 <span className="">{middleName}</span>
@@ -845,7 +854,59 @@ function Flight({
                 {flightPassportNumber || "No data"}
               </span>
             </div>
-          ))}
+
+            {!isPDFView && (
+              <div className="mt-2">
+                <Button
+                  endContent={
+                    <RiEdit2Line
+                      size={20}
+                      className="cursor-pointer text-blue-500"
+                    />
+                  }
+                  onClick={() => {
+                    setShowEdit(true);
+                  }}
+                  radius="none"
+                  variant="light"
+                  className="!bg-gray-100 !px-0 md:!px-3 !min-w-fit"
+                >
+                  Edit
+                </Button>
+              </div>
+            )}
+          </>
+        )}
+
+        {(addAnotherPassport ||
+          (user?.otherPassportInfo && user?.otherPassportInfo.length > 0)) && (
+          <Divider className="mt-5" />
+        )}
+
+        <div className="mt-5">
+          {user?.otherPassportInfo &&
+            user?.otherPassportInfo.map((passport) => (
+              <PassportInfo
+                key={passport.id}
+                userCountry={userCountry}
+                countries={countries}
+                passportInfo={passport}
+                user={user}
+                isPDFView={isPDFView}
+              ></PassportInfo>
+            ))}
+        </div>
+
+        {addAnotherPassport && !isPDFView && (
+          <div className="mt-5">
+            <AddPassportInfo
+              countries={countries}
+              userCountry={userCountry}
+              userId={user?.id}
+              setAddAnotherPassport={setAddAnotherPassport}
+            ></AddPassportInfo>
+          </div>
+        )}
       </div>
     </div>
   );
