@@ -4,6 +4,7 @@ import { Avatar, Button, Divider } from "@nextui-org/react";
 import {
   CardPaymentLink,
   DietryRestriction,
+  EmergencyContact,
   OtherPassportInfo,
   Package,
   Property,
@@ -25,6 +26,7 @@ import PaymentPlan from "../PaymentPlan";
 import Link from "next/link";
 import ImportantInfo from "../ImportantInfo";
 import ActivitiesInfo from "../ActivitiesInfo";
+import AddEmergencyContact from "../AddEmergencyContact";
 
 const inter = Ubuntu({
   weight: ["400", "500", "300", "700"],
@@ -40,6 +42,8 @@ function PDF({
 }: {
   user:
     | ({ package: ({ properties: Property[] } & Package) | null } & {
+        emergencyContact: EmergencyContact[];
+      } & {
         otherPassportInfo: OtherPassportInfo[];
       } & {
         newUserPackages:
@@ -167,6 +171,14 @@ function PDF({
             ) : (
               <p className="mt-1 ml-1 text-sm text-gray-600">None</p>
             )}
+
+            <Divider className="my-4" />
+
+            <AddEmergencyContact
+              userId={user?.id}
+              contacts={user?.emergencyContact}
+              isPDFView={true}
+            ></AddEmergencyContact>
 
             <Divider className="my-4" />
 

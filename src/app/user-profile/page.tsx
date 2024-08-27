@@ -24,6 +24,7 @@ import ImportantInfo from "@/components/ImportantInfo";
 import ProfileSection from "@/components/ProfileSection";
 import ActivitiesInfo from "@/components/ActivitiesInfo";
 import RequestedTrip from "@/components/EditViews/RequestedTrip";
+import AddEmergencyContact from "@/components/AddEmergencyContact";
 
 async function UserProfile({
   searchParams,
@@ -42,6 +43,7 @@ async function UserProfile({
       onSiteTripAddOns: true,
       dietryRestrictions: true,
       otherPassportInfo: true,
+      emergencyContact: true,
       newUserPackages: {
         include: {
           package: {
@@ -145,6 +147,13 @@ async function UserProfile({
                 userCountry={userCountry}
                 user={user}
               />
+
+              <Divider className="my-4" />
+
+              <AddEmergencyContact
+                userId={user?.id}
+                contacts={user.emergencyContact}
+              ></AddEmergencyContact>
 
               <Divider className="my-4" />
 

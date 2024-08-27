@@ -3,6 +3,7 @@
 import {
   CardPaymentLink,
   DietryRestriction,
+  EmergencyContact,
   OtherPassportInfo,
   Package,
   Property,
@@ -28,6 +29,8 @@ function ProfileSection({
 }: {
   user:
     | ({ package: ({ properties: Property[] } & Package) | null } & {
+        emergencyContact: EmergencyContact[];
+      } & {
         newUserPackages:
           | ({ package: { properties: Property[] } & Package } & UserPackage)[]
           | null;

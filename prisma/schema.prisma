@@ -65,6 +65,17 @@ model User {
   CardPaymentLink       CardPaymentLink[]
   yellow_fever_vaccine  Boolean             @default(false)
   visa_received         Boolean             @default(false)
+  emergencyContact      EmergencyContact[]
+}
+
+model EmergencyContact {
+  id           String  @id @default(cuid())
+  name         String?
+  phone        String?
+  email        String?
+  relationship String?
+  user         User    @relation(fields: [userId], references: [id])
+  userId       String
 }
 
 model OtherPassportInfo {
