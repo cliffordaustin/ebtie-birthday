@@ -42,8 +42,8 @@ function AddEmergencyContact({
 
   const addEmergencyContactInfo = async () => {
     setLoading(true);
-    const email = Cookies.get("email");
-    if (!email) return;
+    const userEmail = Cookies.get("email");
+    if (!userEmail) return;
 
     try {
       const res = await fetch("/api/add-emergency-contact", {
