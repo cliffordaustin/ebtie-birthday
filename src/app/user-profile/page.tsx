@@ -2,7 +2,6 @@ import React from "react";
 import prisma from "@/db/db";
 import { Divider, ScrollShadow } from "@nextui-org/react";
 import Package from "@/components/Package";
-import ClientOnly from "@/components/ui/client-only";
 import Flight from "@/components/Flight";
 import TripAddons from "@/components/TripAddons";
 import DietaryRestriction from "@/components/DietaryRestriction";
